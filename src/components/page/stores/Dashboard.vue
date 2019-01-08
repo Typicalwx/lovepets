@@ -4,10 +4,10 @@
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
-                        <img src="../../assets/img/img.jpg" class="user-avator" alt="">
+                        <img src="../../../assets/img/img.jpg" class="user-avator" alt="">
                         <div class="user-info-cont">
-                            <div class="user-info-name">{{name}}</div>
-                            <div>{{role}}</div>
+                            <div class="user-info-name"></div>
+                            <div></div>
                         </div>
                     </div>
                     <div class="user-info-list">上次登录时间：<span>2019-01-01</span></div>
@@ -24,7 +24,7 @@
 <script>
 
     export default {
-        name: 'dashboard',
+        // name: 'dashboard',
         data() {
             return {
    

@@ -64,8 +64,6 @@
                         index: 'statistics',
                         title: '统计'
                     },
-
-
                 ]
             }
         },

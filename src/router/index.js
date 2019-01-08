@@ -9,19 +9,22 @@ import Supplier from "../components/page/supplier.vue";
 import Users from "../components/page/users.vue";
 export default new Router({
     routes: [
-        
+        {
+            path: '/',
+            redirect: '/dashboard'
+        },
         {
             path: '/',
             component: Home,
-            children:[
+            children: [
                 {
                     path: '/dashboard',
-                    component:Dashboard,
+                    component: Dashboard,
                     meta: { title: '系统首页' }
                 },
                 {
                     path: '/store',
-                    component:Store ,
+                    component: Store,
                     meta: { title: '门店管理' }
                 },
                 {
@@ -36,10 +39,10 @@ export default new Router({
                 },
                 {
                     path: '/statistics',
-                    component:Statistics,
+                    component: Statistics,
                     meta: { title: '统计' }
                 },
-              
+
             ]
         },
         {

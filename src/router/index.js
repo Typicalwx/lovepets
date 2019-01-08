@@ -1,14 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
-import Home from "../components/common/Home.vue";
-import Dashboard from "../components/page/Dashboard.vue";
-import Statistics from "../components/page/statistics.vue";
-import Store from "../components/page/store.vue";
-import Supplier from "../components/page/supplier.vue";
-import Users from "../components/page/users.vue";
+import Storehome from "../components/common/Storehome.vue";
+import Dashboard from "../components/page/stores/Dashboard.vue";
+import Statistics from "../components/page/stores/statistics.vue";
+import Store from "../components/page/stores/store.vue";
+import Supplier from "../components/page/stores/supplier.vue";
+import Users from "../components/page/stores/users.vue";
+// import Login from "../components/page/stores/Login.vue"
 export default new Router({
+    mode: 'history',
     routes: [
+<<<<<<< HEAD
         {
             path: '/',
             redirect: '/dashboard'
@@ -21,6 +24,20 @@ export default new Router({
                     path: '/dashboard',
                     component: Dashboard,
                     meta: { title: '系统首页' }
+=======
+        {
+            path:"/",
+            redirect:"/dashboard"
+        },
+        {
+            path: '/store',
+            component: Storehome,
+            children:[
+                {
+                    path: '/dashboard',
+                    component:Dashboard,
+                    meta: { title: '门店信息' }
+>>>>>>> remotes/origin/typ
                 },
                 {
                     path: '/store',
@@ -45,13 +62,6 @@ export default new Router({
 
             ]
         },
-        {
-            path: '/login',
-            component: resolve => require(['../components/page/Login.vue'], resolve)
-        },
-        {
-            path: '*',
-            redirect: '/404'
-        }
+     
     ]
 })

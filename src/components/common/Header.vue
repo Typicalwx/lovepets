@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">后台管理系统</div>
+        <div class="logo">{{headtitle}}</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
@@ -41,6 +41,7 @@
 <script>
     import bus from '../common/bus';
     export default {
+        props:["headtitle"],
         data() {
             return {
                 collapse: false,

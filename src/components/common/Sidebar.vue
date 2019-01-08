@@ -37,35 +37,7 @@
         props:["items"],
         data() {
             return {
-                collapse: false,
-                // items: [
-                //     {
-                //         icon: 'el-icon-setting',
-                //         index: 'dashboard',
-                //         title: '系统首页'
-                //     },
-                //     {
-                //         icon: 'el-icon-document',
-                //         index: 'store',
-                //         title: '门店管理'
-                //     },
-                //     {
-                //         icon: 'el-icon-goods',
-                //         index: 'supplier',
-                //         title: '供应商管理'
-                //     },
-     
-                //     {
-                //         icon: 'el-icon-info',
-                //         index: 'users',
-                //         title: '用户管理'
-                //     },
-                //     {
-                //         icon: 'el-icon-edit-outline',
-                //         index: 'statistics',
-                //         title: '统计'
-                //     },
-                // ]
+                collapse: false,           
             }
         },
         computed:{

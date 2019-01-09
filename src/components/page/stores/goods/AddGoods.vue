@@ -99,10 +99,8 @@ export default {
         features: "",
         price: "",
         newPrice: "",
-        sales:"",
-        images: [
-          { name: "iii.jpg", url: "/upload/_DNQyPR_j_0smFrB8vhA9YCs.jpg" }
-        ]
+        sales: "",
+        images: []
       },
       formLabelWidth: "120px",
       dialogImageUrl: "",
@@ -113,14 +111,13 @@ export default {
     ...mapActions(["setStudents"]),
     addStoreGood() {
       console.log(this.form);
+      this.form.images = JSON.stringify(this.form.images);
       axios({
         url: "/stores",
         method: "post",
         data: this.form
       }).then(({ data }) => {
         this.dialogFormVisible = false;
-        this.$refs.addForm.resetFields();
-        this.setStudents();
       });
     },
     handleAvatarSuccess(res, file) {

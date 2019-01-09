@@ -43,16 +43,37 @@ export default {
             })
         },
         //所有学生的信息
-        setStudents({ commit }, payload = { page: 1, rows: 5 }) {
-            axios({
-                method: "get",
-                url: "/students",
-                params: payload
-            }).then(({ data }) => {
-                console.log(data);
+        // setStudents({ commit }, payload = { page: 1, rows: 5 }) {
+        //     axios({
+        //         method: "get",
+        //         url: "/students",
+        //         params: payload
+        //     }).then(({ data }) => {
+        //         console.log(data);
 
-                commit("setPageNation", data)
-                commit("setStudents", data.rows)
+        //         commit("setPageNation", data)
+        //         commit("setStudents", data.rows)
+        //     });
+        // }
+        setStores() {
+            axios({
+                url: "/students",
+                method: "get",
+                params: {
+                    page: pagination.curpage || 1,
+                    rows: pagination.eachpage || 5,
+                    type: search.type || "",
+                    value: search.value || ""
+                }
+            }).then(({ data }) => {
+                console.log(data, 789);
+                context.commit("setStudents", data.rows)
+                context.commit("setPagination", {
+                    curpage: data.curpage,
+                    maxpage: data.maxpage,
+                    total: data.total,
+                    eachpage: data.eachpage
+                });
             });
         }
     }

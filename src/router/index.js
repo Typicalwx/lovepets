@@ -1,27 +1,32 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
-import Home from "../components/common/Home.vue";
-import Dashboard from "../components/page/Dashboard.vue";
-import Statistics from "../components/page/statistics.vue";
-import Store from "../components/page/store.vue";
-import Supplier from "../components/page/supplier.vue";
-import Users from "../components/page/users.vue";
+import PlatformHome from "../components/common/platformHome.vue";
+import Dashboard from "../components/page/platform/Dashboard.vue";
+import Statistics from "../components/page/platform/statistics.vue";
+import Store from "../components/page/platform/store.vue";
+import Supplier from "../components/page/platform/supplier.vue";
+import Users from "../components/page/platform/users/index.vue";
+
 export default new Router({
+    mode:"history",
     routes: [
-        
         {
-            path: '/',
-            component: Home,
-            children:[
+            path: "/",
+            redirect: '/dashboard'
+        },
+        {
+            path: '/platform',
+            component: PlatformHome,
+            children: [
                 {
                     path: '/dashboard',
-                    component:Dashboard,
+                    component: Dashboard,
                     meta: { title: '系统首页' }
                 },
                 {
                     path: '/store',
-                    component:Store ,
+                    component: Store,
                     meta: { title: '门店管理' }
                 },
                 {
@@ -36,19 +41,11 @@ export default new Router({
                 },
                 {
                     path: '/statistics',
-                    component:Statistics,
+                    component: Statistics,
                     meta: { title: '统计' }
                 },
-              
+
             ]
-        },
-        {
-            path: '/login',
-            component: resolve => require(['../components/page/Login.vue'], resolve)
-        },
-        {
-            path: '*',
-            redirect: '/404'
         }
     ]
 })

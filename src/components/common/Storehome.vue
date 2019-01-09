@@ -33,7 +33,7 @@
                     },
                     {
                         icon: 'el-icon-document',
-                        index: 'store',
+                        index: 'storegoods',
                         title: '门店商品'
                     },
                     {

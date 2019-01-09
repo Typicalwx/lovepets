@@ -7,42 +7,29 @@ import Statistics from "../components/page/stores/statistics.vue";
 import Store from "../components/page/stores/store.vue";
 import Supplier from "../components/page/stores/supplier.vue";
 import Users from "../components/page/stores/users.vue";
+
+import StoreGoods from "../components/page/stores/goods/index.vue"
 // import Login from "../components/page/stores/Login.vue"
 export default new Router({
     mode: 'history',
     routes: [
-<<<<<<< HEAD
         {
             path: '/',
             redirect: '/dashboard'
         },
         {
-            path: '/',
-            component: Home,
+            path: '/store',
+            component: Storehome,
             children: [
                 {
                     path: '/dashboard',
                     component: Dashboard,
-                    meta: { title: '系统首页' }
-=======
-        {
-            path:"/",
-            redirect:"/dashboard"
-        },
-        {
-            path: '/store',
-            component: Storehome,
-            children:[
-                {
-                    path: '/dashboard',
-                    component:Dashboard,
-                    meta: { title: '门店信息' }
->>>>>>> remotes/origin/typ
+                    meta: { title: '门店首页' }
                 },
                 {
-                    path: '/store',
-                    component: Store,
-                    meta: { title: '门店管理' }
+                    path: '/storegoods',
+                    component: StoreGoods,
+                    meta: { title: '门店商品' }
                 },
                 {
                     path: '/supplier',

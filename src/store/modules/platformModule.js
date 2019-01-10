@@ -1,20 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
-Vue.use(Vuex);
 import axios from "axios";
-export default new Vuex.Store({
+export default {
     strict: true,
+    namespaced: true,
     state: {
-        updateVisible:false,
-        //修改时学生信息
-        student: {},
-        //渲染学生信息
-        students: [],
         pagination: {},
-        search: {type:"",value:""},
+        search: { type: "", value: "" },
     },
     mutations: {
-        setVisible(state,Visible){
+        setVisible(state, Visible) {
             state.updateVisible = Visible;
         },
         setStudent(state, student) {
@@ -36,7 +31,7 @@ export default new Vuex.Store({
     actions: {
         setStudent(context, id) {
             axios({
-                url: "/students/" + id,
+                url: "/users/" + id,
                 method: "get"
             }).then(({ data }) => {
 
@@ -46,7 +41,7 @@ export default new Vuex.Store({
         setStudents(context) {
             let { pagination, search } = context.state;
             axios({
-                url: "/students",
+                url: "/users",
                 method: "get",
                 params: {
                     page: pagination.curpage || 1,
@@ -64,4 +59,4 @@ export default new Vuex.Store({
             });
         },
     }
-})
+}

@@ -34,7 +34,15 @@
       </el-table-column>
     </el-table>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        background
+        @size-change="changeSize"
+        @current-change="changePage"
+        :page-sizes="[3, 10, 15, 20]"
+        :page-size="100"
+        layout=" sizes, prev, pager, next, jumper"
+        :total="pagination.total"
+      ></el-pagination>
     </div>
     <el-dialog title="增加管理员" :visible.sync="dialogTableVisible">
       <el-form :model="users" status-icon ref="addForm" label-width="100px">
@@ -69,14 +77,17 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers(
   "platformModule"
 );
 export default {
+  created() {
+    this.setStudents();
+  },
   computed: {
-    ...mapState(["search"]),
+    ...mapState(["search", "admins", "pagination"]),
     type: {
       get() {
         return this.search.type;
       },
       set(value) {
-        this.$store.commit("setType", value);
+        this.setType(value);
       }
     },
     value: {
@@ -84,11 +95,11 @@ export default {
         return this.search.value;
       },
       set(value) {
-        this.$store.commit("setValue", value);
+        this.setValue(value);
       }
     }
   },
-  props: ["admins", "reduceBtn", "increaseBtn", "showadmins"],
+  props: ["reduceBtn", "increaseBtn", "showadmins"],
   data() {
     return {
       dialogTableVisible: false,
@@ -110,6 +121,16 @@ export default {
     infoBtn() {
       this.dialogTableVisible = true;
     },
+    ...mapMutations(["setPagination"]),
+    ...mapActions(["setStudents"]),
+    changePage(page) {
+      this.setPagination({ ...this.pagination, curpage: page });
+      this.setStudents({ page, rows: this.pagination.eachpage });
+    },
+    changeSize(size) {
+      this.setPagination({ ...this.pagination, eachpage: size });
+      this.setStudents({ page: 1, rows: size });
+    },
     add() {
       axios({
         method: "post",
@@ -125,6 +146,7 @@ export default {
         }
       }).then(() => {
         this.showadmins();
+        this.setStudents();
         this.dialogTableVisible = false;
         this.users = {
           name: "",

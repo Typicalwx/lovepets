@@ -37,7 +37,7 @@
             >
               <img v-if="licenseImage" :src="licenseImage" class="avatar" @click="big">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              <el-dialog :visible.sync="dialogVisible" >
+              <el-dialog :visible.sync="dialogVisible">
                 <img width="60%" :src="licenseImage" alt>
               </el-dialog>
             </el-upload>
@@ -60,15 +60,32 @@
       </el-table-column>
     </el-table>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        background
+        @size-change="changeSize"
+        @current-change="changePage"
+        :page-sizes="[3, 10, 15, 20]"
+        :page-size="100"
+        layout=" sizes, prev, pager, next, jumper"
+        :total="platpagination.total"
+      ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
+  "platformModule"
+);
 export default {
+  created() {
+    this.setPlatform();
+  },
+  computed: {
+    ...mapState(["platforms", "platpagination"])
+  },
   data() {
     return {
       supplier: {
@@ -82,8 +99,18 @@ export default {
       dialogVisible: false
     };
   },
-  props: ["platforms", "noBtn", "yesBtn"],
+  props: ["noBtn", "yesBtn"],
   methods: {
+    ...mapActions(["setPlatform"]),
+    ...mapMutations(["setPlatpagination"]),
+    changePage(page) {
+      this.setPlatpagination({ ...this.platpagination, curpage: page });
+      this.setPlatform({ page, rows: this.platpagination.eachpage });
+    },
+    changeSize(size) {
+      this.setPlatpagination({ ...this.platpagination, eachpage: size });
+      this.setPlatform({ page: 1, rows: size });
+    },
     big() {
       this.dialogVisible = true;
     },

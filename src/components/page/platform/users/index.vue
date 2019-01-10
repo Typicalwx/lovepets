@@ -6,7 +6,12 @@
     </div>
     <div>
       <h3>平台管理员管理</h3>
-      <AdminList :admins="admins" :increaseBtn="increaseBtn" :reduceBtn="reduceBtn" :showadmins="showadmins"></AdminList>
+      <AdminList
+        :admins="admins"
+        :increaseBtn="increaseBtn"
+        :reduceBtn="reduceBtn"
+        :showadmins="showadmins"
+      ></AdminList>
     </div>
   </div>
 </template>
@@ -19,16 +24,12 @@ import AdminList from "./adminList.vue";
 // import studentsUpdate from "./studentsUpdate.vue";
 // import studentsPage from "./studentsPage.vue";
 // import studentsSearch from "./studentsSearch";
-// import { createNamespacedHelpers } from "vuex";
+import { createNamespacedHelpers } from "vuex";
 import axios from "axios";
-// const { mapActions, mapMutations } = createNamespacedHelpers(
-//   "platformModule" //模块名
-// );
+const { mapActions } = createNamespacedHelpers(
+  "platformModule" //模块名
+);
 export default {
-  created() {
-    this.showplatform();
-    this.showadmins();
-  },
   data() {
     return {
       platforms: [],
@@ -40,6 +41,7 @@ export default {
     AdminList
   },
   methods: {
+    ...mapActions(["setStudents", "setPlatform"]),
     showplatform() {
       this.platforms = [];
       axios({
@@ -78,6 +80,7 @@ export default {
         }
       }).then(() => {
         this.showplatform();
+        this.setPlatform();
         this.$message({
           message: "店铺审核状态为不可用",
           type: "warning"
@@ -93,6 +96,7 @@ export default {
         }
       }).then(() => {
         this.showplatform();
+        this.setPlatform();
         this.$message({
           message: "店铺审核通过",
           type: "success"
@@ -108,6 +112,7 @@ export default {
         }
       }).then(() => {
         this.showadmins();
+        this.setStudents();
       });
     },
     reduceBtn(id) {
@@ -119,6 +124,7 @@ export default {
         }
       }).then(() => {
         this.showadmins();
+        this.setStudents();
       });
     }
   }

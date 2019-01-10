@@ -134,21 +134,38 @@
         </el-dialog>
        <!-- 增加弹出框 -->
         <el-dialog title="增加" :visible.sync="addVisible" width="25%">
-       
             <el-form  label-width="50px">
-                 <el-form-item label="电话">
+                 <el-form-item label="店名">
                     <el-input v-model="form.phone"></el-input>
                  </el-form-item>
-                <el-form-item label="昵称">
+                <el-form-item label="营业执照号码">
                     <el-input v-model="form.Nickname"></el-input>
                 </el-form-item>
-                <el-form-item label="姓名">
+                <el-form-item label="营业执照图片">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-                <el-form-item label="送货地址">
+                <el-form-item label="营业地址">
                     <el-input v-model="form.addr"></el-input>
                 </el-form-item>
-               <el-form-item label="区域">
+               <el-form-item label="定位">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                 <el-form-item label="所在城市">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                 <el-form-item label="法人">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                   <el-form-item label="头图">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                   <el-form-item label="特色">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                   <el-form-item label="VIP等级">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+                 <el-form-item label="联系电话">
                     <el-input v-model="form.area"></el-input>
                 </el-form-item>
                 <el-form-item label="宠物">

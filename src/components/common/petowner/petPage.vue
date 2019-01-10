@@ -28,7 +28,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.setPetowners(val)
-      // console.log(`当前页: ${val}`);
+      console.log(`当前页: ${val}`);
     },
     //     showPage(e) {
     //   this.setStudents(e);

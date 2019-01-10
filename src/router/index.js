@@ -44,7 +44,7 @@ export default new Router({
                     // PetPage
                     // Petowners
                     path: '/petowners',
-                    component: PetPage,
+                    component: Petowners,
                     meta: { title: '宠主管理' }
                 },
                 {

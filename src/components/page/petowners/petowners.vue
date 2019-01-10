@@ -9,19 +9,20 @@
             <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-add " @click="add">增加宠主</el-button>
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-                <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
+                <el-select v-model="type" placeholder="筛选省份" class="handle-select mr10">
+                    <el-option key="1" label="广东省" value="name"></el-option>
+                    <el-option key="2" label="湖南省" value="age"></el-option>
                 </el-select>
-                <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="search">搜索</el-button>
+                <el-input v-model="value" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="search" @click="searchUser">搜索</el-button>
             </div>
             <el-table :data="petowners" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center">
                 </el-table-column>
                 <el-table-column prop="phone" label="电话" sortable width="150">
                 </el-table-column>
-                <el-table-column prop="Nickname" label="昵称" width="120">
+            
+                <el-table-column prop="Nickname" label="昵称" width="150">
                 </el-table-column>
                 <el-table-column prop="name" label="姓名" width="120">
                 </el-table-column>
@@ -38,7 +39,7 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="1000">
+                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="pagination.total" >
                 </el-pagination>
             </div>
         </div>
@@ -192,6 +193,8 @@
 </template>
 <script>
 import axios from "axios";
+import { mapActions, mapMutations, mapState } from "vuex";
+// import { mapState } from "vuex";
 // import Pet from "../common/Pet.vue";
 // import InputElement from "../common/InputElement.vue";
 export default {
@@ -202,14 +205,6 @@ export default {
   name: "basetable",
   data() {
     return {
-      petowners: [],
-      tableData: [],
-      cur_page: 1,
-      multipleSelection: [],
-      select_cate: "",
-      select_word: "",
-      del_list: [],
-      is_search: false,
       addVisible: false,
       detailsVisible: false,
       editVisible: false,
@@ -223,19 +218,43 @@ export default {
         phone: "",
         pwd: ""
       },
-
       idx: -1,
       id: ""
     };
   },
   created() {
-    this.getData();
-    this.show();
+    // this.getData();
+    // this.show();
+    // this.pagination = pagination;
+    // console.log
+    console.log(this.pagination);
+    this.setPetowners();
   },
 
-  computed: {},
+  computed: {
+    ...mapState(["petowners", "search", "pagination"]),
+    type: {
+      get() {
+        return this.search.type;
+      },
+      set(value) {
+        console.log(value);
+        this.$store.commit("setType", value);
+      }
+    },
+    value: {
+      get() {
+        return this.search.value;
+      },
+      set(value) {
+        this.$store.commit("setValue", value);
+      }
+    }
+  },
 
   methods: {
+    ...mapMutations(["setType", "setValue","setPagination"]),
+    ...mapActions(["setPetowners"]),
     show() {
       axios({
         method: "get",
@@ -256,8 +275,8 @@ export default {
     },
     // 分页导航
     handleCurrentChange(val) {
-      this.cur_page = val;
-      this.getData();
+     this.setPagination({...this.pagination,curpage:val})
+      this.setPetowners({val, rows:this.pagination.eachpage});
     },
     // 获取 easy-mock 的模拟数据
     getData() {
@@ -273,15 +292,10 @@ export default {
       //       this.tableData = res.data.list;
       //     });
     },
-    search() {
-      this.is_search = true;
+    searchUser() {
+      this.setPetowners();
     },
-    formatter(row, column) {
-      return row.address;
-    },
-    filterTag(value, row) {
-      return row.tag === value;
-    },
+
     // 详情
     handleDetails(index, row) {
       this.detailsVisible = true;
@@ -369,7 +383,7 @@ export default {
         str += this.multipleSelection[i].name + " ";
       }
       this.$message.error("删除了" + str);
-      this.multipleSelection = [];  
+      this.multipleSelection = [];
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

@@ -27,7 +27,14 @@ export default {
       this.showChart();
     });
   },
-  methods: {}
+  methods: {
+    showChart() {
+      let myChart = echarts.init(this.$refs.myChart);
+      if(this.type == "地图分布"){
+          
+      }
+    }
+  }
 };
 </script>
     

@@ -84,21 +84,32 @@ export default {
       is_search: false,
       editVisible: false,
       delVisible: false,
-      id: ""
+      id: "",
+      index: -1
     };
   },
   computed: {
-    ...mapState(["storeInfoData"]),
-    data() {}
+    ...mapState(["storeInfoData", "storeId"])
+    // clerk: {
+    //   get() {
+    //     console.log(this.storeUpdateVisible);
+    //     return this.storeInfoData.clerk;
+    //   },
+    //   set(clerk) {
+    //     console.log("updateSwitch", clerk);
+    //     this.setStoreInfoData({ ...this.storeInfoData, clerk: clerk });
+    //   }
+    // }
   },
   methods: {
     // 分页导航
-    ...mapMutations(["setAddClerkVisible"]),
-    ...mapActions(["setStoregoods", "setStoreGood"]),
-    handleCurrentChange(val) {
-      this.cur_page = val;
-      this.getData();
-    },
+    ...mapMutations([
+      "setClerkUpdateVisible",
+      "setAddClerkVisible",
+      "setClerkInfor",
+      "setUpdateClerkIndex"
+    ]),
+    ...mapActions(["setStoreInfoData", "setStoreGood", "updateClerk"]),
     // 点击新增商品
     addClerk() {
       this.setAddClerkVisible(true);
@@ -114,33 +125,48 @@ export default {
     },
     // 修改弹出框
     handleEdit(index, row) {
-      console.log(index, row);
-      this.setStoreUpdateVisible(true);
-      this.setStoreGood(row._id);
+      // console.log(index, row);
+      console.log(index);
+      this.setUpdateClerkIndex(index);
+      this.setClerkUpdateVisible(true);
+      this.setClerkInfor(this.storeInfoData.clerk[index]);
     },
     // 删除
     handleDelete(index, row) {
-      this.id = row._id;
+      this.index = index;
       this.delVisible = true;
     },
     delAll() {
       const length = this.multipleSelection.length;
+      let deleteData = this.multipleSelection;
       let str = "";
-      this.del_list = this.del_list.concat(this.multipleSelection);
-      console.log(this.multipleSelection);
-      axios({
-        url: "/storegoods",
-        method: "delete",
-        data: {
-          data: JSON.stringify(this.multipleSelection)
+      console.log(444);
+      console.log(deleteData, 77);
+      let clerk = this.storeInfoData.clerk;
+      let arr = [];
+      let j = 0;
+      if (deleteData.length != 0) {
+        for (let i = 0; i < clerk.length; i++) {
+          // console.log(this.multipleSelection[i].phone);
+
+          for (j = 0; j < deleteData.length; j++) {
+            console.log(deleteData[j].phone, clerk[i].phone);
+            if (deleteData[j].phone == clerk[i].phone) {
+              break;
+            }
+          }
+          // for()
+          console.log(j);
+          if (j == deleteData.length - 1) {
+            arr.push(clerk[i]);
+          }
         }
-      }).then(({ data }) => {
-        for (let i = 0; i < length; i++) {
-          str += this.multipleSelection[i].name + " ";
-        }
-        this.$message.error("删除了" + str);
-        this.multipleSelection = [];
-        this.setStoregoods();
+      }
+      console.log(arr);
+      this.updateClerk({
+        ...this.storeInfoData,
+        clerk: JSON.stringify(arr),
+        location: JSON.stringify(this.storeInfoData.location)
       });
     },
     handleSelectionChange(val) {
@@ -150,11 +176,18 @@ export default {
     deleteRow() {
       this.$message.success("删除成功");
       this.delVisible = false;
-      axios({
-        url: "/storegoods/" + this.id,
-        method: "delete"
-      }).then(res => {
-        this.setStoregoods();
+      let clerk = this.storeInfoData.clerk;
+      let arr = [];
+      for (let i in clerk) {
+        if (i != this.index) {
+          arr.push(clerk[i]);
+        }
+      }
+      console.log(arr);
+      this.updateClerk({
+        ...this.storeInfoData,
+        clerk: JSON.stringify(arr),
+        location: JSON.stringify(this.storeInfoData.location)
       });
     },
     handleSizeChange(val) {

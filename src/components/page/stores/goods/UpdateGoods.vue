@@ -329,6 +329,7 @@ export default {
           images: JSON.stringify(this.images)
         }
       }).then(({ data }) => {
+        // console.log(data,7777);
         this.setStoregoods();
       });
     },

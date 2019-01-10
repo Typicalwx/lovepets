@@ -47,7 +47,14 @@
         <el-form-item label="保质期" :label-width="formLabelWidth">
           <el-input v-model="form.shelfLife" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="进货总数" :label-width="formLabelWidth">
+        <el-form-item
+          label="进货总数"
+          :label-width="formLabelWidth"
+          :rules="[
+              { required: true, message: '年龄不能为空'},
+              { type: 'number', message: '年龄必须为数字值'}
+            ]"
+        >
           <el-input v-model="form.total" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="进货价格" :label-width="formLabelWidth">
@@ -107,11 +114,49 @@ export default {
         price: "",
         newPrice: "",
         sales: 0,
-        images: []
+        images: [],
+        goodState: 1
       },
       formLabelWidth: "120px",
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      rules: {
+        name: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        ],
+        region: [
+          { required: true, message: "请选择活动区域", trigger: "change" }
+        ],
+        date1: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change"
+          }
+        ],
+        date2: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择时间",
+            trigger: "change"
+          }
+        ],
+        type: [
+          {
+            type: "array",
+            required: true,
+            message: "请至少选择一个活动性质",
+            trigger: "change"
+          }
+        ],
+        resource: [
+          { required: true, message: "请选择活动资源", trigger: "change" }
+        ],
+        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
+      }
     };
   },
   created() {
@@ -135,22 +180,31 @@ export default {
   methods: {
     ...mapMutations(["setStoreAddVisible"]),
     ...mapActions(["setStoregoods"]),
+    // 确认添加
     addStoreGood(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.addStoreDiolog = false;
+          console.log(this.$refs, "uuu");
+          axios({
+            url: "/storegoods",
+            method: "post",
+            data: {
+              ...this.form,
+              images: JSON.stringify(this.form.images),
+              storeId: this.storeId
+            }
+          }).then(({ data }) => {
+            this.setStoregoods();
+            this.$refs[formName].resetFields();
+          });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
       console.log({ ...this.form, images: JSON.stringify(this.form.images) });
       // this.form.images = JSON.stringify(this.form.images);
-      this.addStoreDiolog = false;
-      this.$refs.form.resetFields();
-      axios({
-        url: "/storegoods",
-        method: "post",
-        data: {
-          ...this.form,
-          images: JSON.stringify(this.form.images),
-          storeId: this.storeId
-        }
-      }).then(({ data }) => {
-        this.setStoregoods();
-      });
     },
     handleAvatarSuccess(res, file) {
       this.form.images = [

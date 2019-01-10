@@ -25,12 +25,14 @@
       </el-col>
     </el-row>
     <AddClerk></AddClerk>
+    <UpdateClerk></UpdateClerk>
   </div>
 </template>
 
 <script>
 import Clerk from "./Clerk.vue";
-import AddClerk from "./AddClerk"
+import AddClerk from "./AddClerk";
+import UpdateClerk from "./UpdateClerk"
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapMutations, mapState } = createNamespacedHelpers(
@@ -42,21 +44,22 @@ export default {
     return {};
   },
   components: {
-    Clerk,AddClerk
+    Clerk,
+    AddClerk,UpdateClerk
   },
-  computed: {
-  
-  },
+  computed: {},
   created() {
-    axios({
-      url: "/getsession",
-      method: "get"
-    }).then(({ data }) => {
-      if (data.phone) {
-        this.setUserId(data._id);
-        this.setStoreInfoData();
-      }
-    });
+    // axios({
+    //   url: "/getsession",
+    //   method: "get"
+    // }).then(({ data }) => {
+    //   if (data.phone) {
+    //     this.setUserId(data._id);
+    //     this.setStoreInfoData();
+    //   }
+    // });
+    this.setUserId("5c358479100838196886b259");
+    this.setStoreInfoData();
   },
 
   methods: {

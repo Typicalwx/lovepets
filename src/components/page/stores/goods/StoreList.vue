@@ -114,10 +114,6 @@ export default {
       "setPagination"
     ]),
     ...mapActions(["setStoregoods", "setStoreGood"]),
-    handleCurrentChange(val) {
-      this.cur_page = val;
-      this.getData();
-    },
     // 点击新增商品
     addStoreGood() {
       this.setStoreAddVisible(true);

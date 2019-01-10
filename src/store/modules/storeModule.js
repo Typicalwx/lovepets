@@ -10,16 +10,27 @@ export default {
         search: { type: "", value: "" },
         storeAddVisible: false,
         storeUpdateVisible: false,
-        addClerkVisible:false,
-        storeId: "",
+        clerkUpdateVisible: false,
+        addClerkVisible: false,
+        storeId: "" || "5c358b2d100838196886b25c",
         storeInfoData: {},
-        userId: ""
+        userId: "" || "5c358479100838196886b259",
+        clerkInfor: {},
+        updateClerkIndex: -1
     },
     getters: {},
     mutations: {
         //更新修改的学生信息的方法
         setStoreGood(state, storeGood) {
             state.storeGood = storeGood
+        },
+        //更新修改的店员信息的方法
+        setClerkInfor(state, clerkInfor) {
+            state.clerkInfor = clerkInfor
+        },
+        //存店员数组下表
+        setUpdateClerkIndex(state, updateClerkIndex) {
+            state.updateClerkIndex = updateClerkIndex
         },
         //存门店用户id
         setStoreId(state, storeId) {
@@ -42,6 +53,10 @@ export default {
             state.storeAddVisible = visible
         },
         // 修改商品弹框显示
+        setClerkUpdateVisible(state, visible) {
+            state.clerkUpdateVisible = visible
+        },
+        // 修改店员弹框显示
         setStoreUpdateVisible(state, visible) {
             state.storeUpdateVisible = visible
         },
@@ -57,18 +72,38 @@ export default {
     actions: {
         //commit提交， 用于mutations
         //dispatch 用于actions
-        setStoreInfoData() {
+        // 获取门店的信息
+        setStoreInfoData(context) {
             let { userId } = context.state;
+            console.log(userId, "userId")
             axios({
                 url: "/stores",
                 method: "get",
-                data: {
+                params: {
                     userId: userId || "5c358479100838196886b259"
                 }
             }).then(({ data }) => {
+                console.log(data)
                 context.commit("setStoreInfoData", data)
-                context.commit("setStoreId", data._id)
+                context.commit("setStoreId", data._id || "5c358b2d100838196886b25c")
             })
+        },
+        // 修改店员
+        updateClerk(context, payload) {
+            let { storeId } = context.state;
+            console.log(payload, typeof payload)
+            axios({
+                url: "/stores/" + storeId,
+                method: "put",
+                data: payload
+            }).then(() => {
+                console.log({ ...payload, _id: storeId }, "xiugai")
+                context.commit("setStoreInfoData", {
+                    ...payload,
+                    clerk: JSON.parse(payload.clerk),
+                    location: JSON.parse(payload.location)
+                })
+            });
         },
         //点击修改通过id获取商品信息
         setStoreGood({ commit }, id) {

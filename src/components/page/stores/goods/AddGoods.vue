@@ -1,8 +1,7 @@
 <template>
   <div>
-    <el-button @click="dialogFormVisible = true" style="float:left">新增商品</el-button>
-    <el-dialog title="增加商品" :visible.sync="dialogFormVisible">
-      <el-form :model="form" ref="addForm">
+    <el-dialog title="增加商品" :visible.sync="addStoreDiolog" width="50%">
+      <el-form :model="form" ref="form" label-width="50px">
         <el-form-item label="商品名" :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
@@ -34,7 +33,13 @@
           <el-input v-model="form.placeOfOrigin" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="出产日期" :label-width="formLabelWidth">
-          <el-input v-model="form.date" autocomplete="off"></el-input>
+          <el-date-picker
+            type="date"
+            placeholder="选择日期"
+            v-model="form.date"
+            value-format="yyyy-MM-dd"
+            style="width: 100%;"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="特点" :label-width="formLabelWidth">
           <el-input v-model="form.features" autocomplete="off"></el-input>
@@ -63,12 +68,12 @@
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt>
+          <img width="100%" :src="dialogImageUrl">
         </el-dialog>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addStoreGood">确 定</el-button>
+        <el-button @click="addStoreDiolog = false">取 消</el-button>
+        <el-button type="primary" @click="addStoreGood('form')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -76,8 +81,10 @@
 
 <script>
 import axios from "axios";
-import { mapActions } from "vuex";
-
+import { createNamespacedHelpers } from "vuex";
+const { mapActions, mapMutations, mapState } = createNamespacedHelpers(
+  "storeModule" //模块名
+);
 export default {
   data() {
     return {
@@ -99,7 +106,7 @@ export default {
         features: "",
         price: "",
         newPrice: "",
-        sales: "",
+        sales: 0,
         images: []
       },
       formLabelWidth: "120px",
@@ -107,17 +114,42 @@ export default {
       dialogVisible: false
     };
   },
+  created() {
+    console.log(this, 78);
+  },
+  computed: {
+    ...mapState(["storeAddVisible", "storeId"]),
+    addStoreDiolog: {
+      get() {
+        console.log(this.storeAddVisible);
+        return this.storeAddVisible;
+        //非map情况下，模块有嵌套的话，想要找到最里层的state 需要加上组件名(就是modules里面的属性名)，然后直接点属性
+      },
+      set(storeAddVisible) {
+        console.log("updateSwitch", storeAddVisible);
+        this.setStoreAddVisible(storeAddVisible);
+        //非map情况下，模块有嵌套的话，想要提交。用模块名/属性名
+      }
+    }
+  },
   methods: {
-    ...mapActions(["setStudents"]),
-    addStoreGood() {
-      console.log(this.form);
-      this.form.images = JSON.stringify(this.form.images);
+    ...mapMutations(["setStoreAddVisible"]),
+    ...mapActions(["setStoregoods"]),
+    addStoreGood(formName) {
+      console.log({ ...this.form, images: JSON.stringify(this.form.images) });
+      // this.form.images = JSON.stringify(this.form.images);
+      this.addStoreDiolog = false;
+      this.$refs.form.resetFields();
       axios({
-        url: "/stores",
+        url: "/storegoods",
         method: "post",
-        data: this.form
+        data: {
+          ...this.form,
+          images: JSON.stringify(this.form.images),
+          storeId: this.storeId
+        }
       }).then(({ data }) => {
-        this.dialogFormVisible = false;
+        this.setStoregoods();
       });
     },
     handleAvatarSuccess(res, file) {
@@ -129,6 +161,14 @@ export default {
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
+      let arr = this.form.images;
+      for (let i in arr) {
+        if (arr[i].uid == file.uid) {
+          arr.splice(i, 1);
+          break;
+        }
+      }
+      this.form.images = arr;
     },
     handlePreview(file) {
       console.log(file);
@@ -174,5 +214,31 @@ a {
 }
 .avatar-uploader {
   margin-top: 10px;
+}
+.handle-box {
+  margin-bottom: 20px;
+}
+
+.handle-select {
+  width: 120px;
+}
+
+.handle-input {
+  width: 300px;
+  display: inline-block;
+}
+.del-dialog-cnt {
+  font-size: 16px;
+  text-align: center;
+}
+.table {
+  width: 100%;
+  font-size: 14px;
+}
+.red {
+  color: #ff0000;
+}
+.mr10 {
+  margin-right: 10px;
 }
 </style>

@@ -4,70 +4,97 @@ export default {
     //想要全部的命名空间是局部的就加 namespaced: true, 
     namespaced: true,
     state: {
-        student: {},//修改学生的信息
-        studentsData: [],//所有学生信息，
-        pageNation: {},//分页信息
-        updateSwitch: false//修改框的开关
+        storeGood: {},//修改学生的信息
+        storesData: [],//所有门店商品信息，
+        pagination: {},//分页信息
+        search: { type: "", value: "" },
+        storeAddVisible: false,
+        storeUpdateVisible: false,
+        addClerkVisible:false,
+        storeId: "",
+        storeInfoData: {},
+        userId: ""
     },
     getters: {},
     mutations: {
         //更新修改的学生信息的方法
-        setStudent(state, student) {
-            state.student = student
+        setStoreGood(state, storeGood) {
+            state.storeGood = storeGood
+        },
+        //存门店用户id
+        setStoreId(state, storeId) {
+            state.storeId = storeId
+        },
+        //存用户id
+        setUserId(state, userId) {
+            state.userId = userId
         },
         //更新所有的学生信息的方法
-        setStudents(state, students) {
-            state.studentsData = students
+        setStoregoods(state, stores) {
+            state.storesData = stores
+        },
+        // 新增店员弹框显示
+        setAddClerkVisible(state, visible) {
+            state.addClerkVisible = visible
+        },
+        // 新增商品弹框显示
+        setStoreAddVisible(state, visible) {
+            state.storeAddVisible = visible
+        },
+        // 修改商品弹框显示
+        setStoreUpdateVisible(state, visible) {
+            state.storeUpdateVisible = visible
         },
         //分页的方法
-        setPageNation(state, pageNation) {
-            state.pageNation = pageNation
+        setPagination(state, pagination) {
+            state.pagination = pagination
         },
-        //更新修改框开关的方法
-        setUpdateSwitch(state, setUpdateSwitch) {
-            state.updateSwitch = setUpdateSwitch
-        }
+        //存门店信息
+        setStoreInfoData(state, storeInfoData) {
+            state.storeInfoData = storeInfoData
+        },
     },
     actions: {
         //commit提交， 用于mutations
         //dispatch 用于actions
-
-        //点击修改通过id获取学生信息
-        setStudent({ commit }, id) {
+        setStoreInfoData() {
+            let { userId } = context.state;
             axios({
+                url: "/stores",
                 method: "get",
-                url: "/students/" + id,
+                data: {
+                    userId: userId || "5c358479100838196886b259"
+                }
             }).then(({ data }) => {
-                console.log("data", data)
-                commit("setStudent", data)
+                context.commit("setStoreInfoData", data)
+                context.commit("setStoreId", data._id)
             })
         },
-        //所有学生的信息
-        // setStudents({ commit }, payload = { page: 1, rows: 5 }) {
-        //     axios({
-        //         method: "get",
-        //         url: "/students",
-        //         params: payload
-        //     }).then(({ data }) => {
-        //         console.log(data);
-
-        //         commit("setPageNation", data)
-        //         commit("setStudents", data.rows)
-        //     });
-        // }
-        setStores() {
+        //点击修改通过id获取商品信息
+        setStoreGood({ commit }, id) {
             axios({
-                url: "/students",
+                method: "get",
+                url: "/storegoods/" + id,
+            }).then(({ data }) => {
+                console.log("data", data)
+                commit("setStoreGood", data)
+            })
+        },
+        //所有商品信息
+        setStoregoods(context) {
+            let { pagination, storeId } = context.state;
+            console.log("ddd")
+            axios({
+                url: "/storegoods",
                 method: "get",
                 params: {
                     page: pagination.curpage || 1,
                     rows: pagination.eachpage || 5,
-                    type: search.type || "",
-                    value: search.value || ""
+                    storeId: storeId || "5c358b2d100838196886b25c"
                 }
             }).then(({ data }) => {
                 console.log(data, 789);
-                context.commit("setStudents", data.rows)
+                context.commit("setStoregoods", data.rows)
                 context.commit("setPagination", {
                     curpage: data.curpage,
                     maxpage: data.maxpage,

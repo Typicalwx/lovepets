@@ -2,9 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
 import Storehome from "../components/common/Storehome.vue";
-import Dashboard from "../components/page/stores/Dashboard.vue";
+import Dashboard from "../components/page/stores/HomePage/Dashboard";
 import Statistics from "../components/page/stores/statistics.vue";
-import Store from "../components/page/stores/store.vue";
 import Supplier from "../components/page/stores/supplier.vue";
 import Users from "../components/page/stores/users.vue";
 

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <v-head></v-head>
-    <v-sidebar></v-sidebar>
+    <v-head :header="headTitle"></v-head>
+    <v-sidebar :items="item"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <v-tags></v-tags>
       <div class="content">
@@ -24,7 +24,31 @@ export default {
   data() {
     return {
       tagsList: [],
-      collapse: false
+      collapse: false,
+      headTitle: "供应商管理系统",
+      item: [
+        {
+          icon: "el-icon-setting",
+          index: "dashboard",
+          title: "系统首页"
+        },
+        {
+          icon: "el-icon-goods",
+          index: "suppliergoods",
+          title: "供应商商品管理"
+        },
+
+        {
+          icon: "el-icon-info",
+          index: "supplier",
+          title: "供应商详情"
+        },
+        {
+          icon: "el-icon-edit-outline",
+          index: "statistics",
+          title: "统计"
+        }
+      ]
     };
   },
   components: {

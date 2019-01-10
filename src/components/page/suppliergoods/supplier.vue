@@ -1,15 +1,23 @@
 <template>
-  <h1>供应商:{{suppliergoods}}</h1>
+  <div>
+    <supplierAdd></supplierAdd>
+    <supplierUpdate></supplierUpdate>
+    <supplierList></supplierList>
+  </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from "vuex";
+import supplierList from "./supplierList";
+import supplierAdd from "./supplierAdd";
+import supplierUpdate from "./supplierUpdate";
+
 const { mapActions, mapState } = createNamespacedHelpers(
   "supplierModules" // 模块名
 );
 export default {
   created: function() {
-    this.setSupplierModules();
+    this.setSuppliergoods();
   },
   //   data() {
   //     return {
@@ -20,7 +28,13 @@ export default {
     ...mapState(["suppliergoods"])
   },
   methods: {
-    ...mapActions(["setSupplierModules"])
+    ...mapActions(["setSuppliergoods"])
+  },
+
+  components: {
+    supplierAdd,
+    supplierUpdate,
+    supplierList
   }
 };
 </script>

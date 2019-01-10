@@ -3,7 +3,7 @@ import axios from "axios"
 export default {
     namespaced: true,
     state: {
-        suppliergoods: [],//商品
+        supplier: [],//商品
         suppliergood: {},//单个商品
         addVisible: false, //增加面板开关
         updateVisible: false,//修改面板开关
@@ -12,8 +12,8 @@ export default {
     getters: {},
     mutations: {
         //获取所有商品保存到suppliergoods
-        setSuppliergoods(state, data) {
-            state.suppliergoods = data
+        setSupplier(state, data) {
+            state.supplier = data
         },
         //新增按钮的开关
         setAddVisible(state, visible) {
@@ -23,10 +23,7 @@ export default {
         setUpdateVisible(state, updateVisible) {
             state.updateVisible = updateVisible
         },
-        //保存修改的id
-        // setUpdateId(state, updateId) {
-        //     state.updateId = updateId
-        // },
+      
         //保存通过id 查取到的商品
         setSuppliergood(state, data) {
             state.suppliergood = data
@@ -35,13 +32,13 @@ export default {
     },
     actions: {
         //show
-        setSuppliergoods({ commit }) {
+        setSuppliers({ commit }) {
             axios({
                 method: "get",
-                url: "/suppliergoods",
+                url: "/supplier",
             }).then(({ data }) => {
                 // console.log("data", data)
-                commit("setSuppliergoods", data)
+                commit("setSupplier", data)
             })
         },
 

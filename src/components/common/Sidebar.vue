@@ -32,73 +32,77 @@
 </template>
 
 <script>
-    import bus from '../common/bus';
-    export default {
-        data() {
-            return {
-                collapse: false,
-                items: [
-                    {
-                        icon: 'el-icon-setting',
-                        index: 'dashboard',
-                        title: '系统首页'
-                    },
-                    {
-                        icon: 'el-icon-document',
-                        index: 'store',
-                        title: '门店管理'
-                    },
-                    {
-                        icon: 'el-icon-goods',
-                        index: 'supplier',
-                        title: '供应商管理'
-                    },
-     
-                    {
-                        icon: 'el-icon-info',
-                        index: 'users',
-                        title: '用户管理'
-                    },
-                    {
-                        icon: 'el-icon-edit-outline',
-                        index: 'statistics',
-                        title: '统计'
-                    },
-
-
-                ]
-            }
+import bus from "../common/bus";
+export default {
+  data() {
+    return {
+      collapse: false,
+      items: [
+        {
+          icon: "el-icon-setting",
+          index: "dashboard",
+          title: "系统首页"
         },
-        computed:{
-            onRoutes(){
-                return this.$route.path.replace('/','');
-            }
+        {
+          icon: "el-icon-document",
+          index: "store",
+          title: "门店管理"
         },
-        created(){
-            // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-            bus.$on('collapse', msg => {
-                this.collapse = msg;
-            })
+        {
+          icon: "el-icon-goods",
+          index: "supplier",
+          title: "供应商管理"
+        },
+
+        {
+          icon: "el-icon-info",
+          index: "users",
+          title: "用户管理"
+        },
+          {
+          icon: "el-icon-edit-outline",
+          index: "petowners",
+          title: "宠主管理"
+        },
+        {
+          icon: "el-icon-edit-outline",
+          index: "statistics",
+          title: "统计"
         }
+          
+      ]
+    };
+  },
+  computed: {
+    onRoutes() {
+      return this.$route.path.replace("/", "");
     }
+  },
+  created() {
+    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+    bus.$on("collapse", msg => {
+      this.collapse = msg;
+    });
+  }
+};
 </script>
 
 <style scoped>
-    .sidebar{
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 70px;
-        bottom:0;
-        overflow-y: scroll;
-    }
-    .sidebar::-webkit-scrollbar{
-        width: 0;
-    }
-    .sidebar-el-menu:not(.el-menu--collapse){
-        width: 250px;
-    }
-    .sidebar > ul {
-        height:100%;
-    }
+.sidebar {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 70px;
+  bottom: 0;
+  overflow-y: scroll;
+}
+.sidebar::-webkit-scrollbar {
+  width: 0;
+}
+.sidebar-el-menu:not(.el-menu--collapse) {
+  width: 250px;
+}
+.sidebar > ul {
+  height: 100%;
+}
 </style>

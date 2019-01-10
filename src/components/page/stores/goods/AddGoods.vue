@@ -1,35 +1,35 @@
 <template>
   <div>
     <el-dialog title="增加商品" :visible.sync="addStoreDiolog" width="50%">
-      <el-form :model="form" ref="form" label-width="50px">
-        <el-form-item label="商品名" :label-width="formLabelWidth">
+      <el-form :model="form" ref="form" label-width="50px" :rules="rules">
+        <el-form-item label="商品名" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="推广标题" :label-width="formLabelWidth">
+        <el-form-item label="推广标题" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.title" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="类型" :label-width="formLabelWidth">
+        <el-form-item label="类型" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.type" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="用料" :label-width="formLabelWidth">
+        <el-form-item label="用料" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.method" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="适合物种" :label-width="formLabelWidth">
+        <el-form-item label="适合物种" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.applySfc" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="专属规格" :label-width="formLabelWidth">
+        <el-form-item label="专属规格" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.exclusiveSfc " autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="包装规格" :label-width="formLabelWidth">
+        <el-form-item label="包装规格" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.packSfc" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="口味" :label-width="formLabelWidth">
+        <el-form-item label="口味" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.flavor" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="特殊功用" :label-width="formLabelWidth">
+        <el-form-item label="特殊功用" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.specialFuc" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="产地" :label-width="formLabelWidth">
+        <el-form-item label="产地" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.placeOfOrigin" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="出产日期" :label-width="formLabelWidth">
@@ -39,28 +39,22 @@
             v-model="form.date"
             value-format="yyyy-MM-dd"
             style="width: 100%;"
+            prop="date1"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="特点" :label-width="formLabelWidth">
+        <el-form-item label="特点" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.features" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="保质期" :label-width="formLabelWidth">
+        <el-form-item label="保质期" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.shelfLife" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item
-          label="进货总数"
-          :label-width="formLabelWidth"
-          :rules="[
-              { required: true, message: '年龄不能为空'},
-              { type: 'number', message: '年龄必须为数字值'}
-            ]"
-        >
+        <el-form-item label="进货总数" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.total" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="进货价格" :label-width="formLabelWidth">
+        <el-form-item label="进货价格" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.price" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="售价" :label-width="formLabelWidth">
+        <el-form-item label="售价" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.newPrice" autocomplete="off"></el-input>
         </el-form-item>
         <!-- 上传图片 -->
@@ -121,13 +115,7 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" }
-        ],
+        name: [{ required: true, message: "请输入内容", trigger: "blur" }],
         date1: [
           {
             type: "date",
@@ -135,27 +123,7 @@ export default {
             message: "请选择日期",
             trigger: "change"
           }
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change"
-          }
-        ],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "请至少选择一个活动性质",
-            trigger: "change"
-          }
-        ],
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" }
-        ],
-        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
+        ]
       }
     };
   },
@@ -181,11 +149,13 @@ export default {
     ...mapMutations(["setStoreAddVisible"]),
     ...mapActions(["setStoregoods"]),
     // 确认添加
-    addStoreGood(formName) {
-      this.$refs[formName].validate(valid => {
+    addStoreGood() {
+      this.$refs["form"].validate(valid => {
+        console.log(valid, "valid");
         if (valid) {
           this.addStoreDiolog = false;
           console.log(this.$refs, "uuu");
+         
           axios({
             url: "/storegoods",
             method: "post",
@@ -196,7 +166,9 @@ export default {
             }
           }).then(({ data }) => {
             this.setStoregoods();
-            this.$refs[formName].resetFields();
+            this.$refs['form'].resetFields();
+            this.form = {};
+             this.$refs['form'].clearValidate();
           });
         } else {
           console.log("error submit!!");

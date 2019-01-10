@@ -29,28 +29,32 @@
                 items:[
                     {
                         icon: 'el-icon-setting',
-                        index: 'dashboard',
+                        index: 'storeinfo',
                         title: '门店信息'
                     },
                     {
                         icon: 'el-icon-document',
-                        index: 'store',
+                        index: 'storemanage',
                         title: '门店商品'
                     },
                     {
-                        icon: 'el-icon-goods',
-                        index: 'supplier',
-                        title: '评论管理'
+                        icon: 'el-icon-phone',
+                        index: 'storeserve',
+                        title: '服务管理'
                     },
-     
                     {
                         icon: 'el-icon-info',
-                        index: 'users',
-                        title: '订单'
+                        index: 'storeusers',
+                        title: '订单管理'
+                    },
+                     {
+                        icon: 'el-icon-goods',
+                        index: 'storesupplier',
+                        title: '评论管理'
                     },
                     {
                         icon: 'el-icon-edit-outline',
-                        index: 'statistics',
+                        index: 'storestatistics',
                         title: '统计'
                     },
                 ]

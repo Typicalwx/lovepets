@@ -7,40 +7,47 @@ import Statistics from "../components/page/stores/statistics.vue";
 import Store from "../components/page/stores/store.vue";
 import Supplier from "../components/page/stores/supplier.vue";
 import Users from "../components/page/stores/users.vue";
+import Serve from "../components/page/stores/serve/serveindex"
+import Order from "../components/page/stores/order/orderindex"
 // import Login from "../components/page/stores/Login.vue"
 export default new Router({
     mode: 'history',
     routes: [
         {
             path:"/",
-            redirect:"/dashboard"
+            redirect:"/storeinfo"
         },
         {
-            path: '/store',
+            path: '/storeguanli',
             component: Storehome,
             children:[
                 {
-                    path: '/dashboard',
+                    path: '/storeinfo',
                     component:Dashboard,
                     meta: { title: '门店信息' }
                 },
                 {
-                    path: '/store',
+                    path: '/storemanage',
                     component:Store ,
-                    meta: { title: '门店管理' }
+                    meta: { title: '门店商品' }
                 },
                 {
-                    path: '/supplier',
+                    path: '/storesupplier',
                     component: Supplier,
-                    meta: { title: '供应商管理' }
+                    meta: { title: '评论管理' }
                 },
                 {
-                    path: '/users',
-                    component: Users,
-                    meta: { title: '用户管理' }
+                    path: '/storeserve',
+                    component: Serve,
+                    meta: { title: '服务管理' }
                 },
                 {
-                    path: '/statistics',
+                    path: '/storeusers',
+                    component: Order,
+                    meta: { title: '订单管理' }
+                },
+                {
+                    path: '/storestatistics',
                     component:Statistics,
                     meta: { title: '统计' }
                 },

@@ -18,7 +18,6 @@ import Supplier from "../components/page/supplier/sup";
 export default new Router({
     mode: 'history',
     routes: [
-
         {
             path: '/suppliergoods',
             component: SupplierHome,

@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <v-head></v-head>
-        <v-sidebar></v-sidebar>
+        <v-sidebar :items="items"></v-sidebar>
         <div class="content-box" :class="{'content-collapse':collapse}">
             <v-tags></v-tags>
             <div class="content">
@@ -24,8 +24,36 @@
         data(){
             return {
                 tagsList: [],
-                collapse: false
-               
+                collapse: false,
+                items:[
+                    {
+                        icon: 'el-icon-setting',
+                        index: 'dashboard',
+                        title: '门店信息'
+                    },
+                    {
+                        icon: 'el-icon-document',
+                        index: 'storegoods',
+                        title: '门店商品'
+                    },
+                    {
+                        icon: 'el-icon-goods',
+                        index: 'supplier',
+                        title: '评论管理'
+                    },
+     
+                    {
+                        icon: 'el-icon-info',
+                        index: 'users',
+                        title: '订单'
+                    },
+                    {
+                        icon: 'el-icon-edit-outline',
+                        index: 'statistics',
+                        title: '统计'
+                    },
+                ]
+
             }
         },
         components:{

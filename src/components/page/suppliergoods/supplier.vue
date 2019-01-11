@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 import supplierList from "./supplierList";
 import supplierAdd from "./supplierAdd";
@@ -17,15 +18,20 @@ const { mapActions, mapState } = createNamespacedHelpers(
 );
 export default {
   created: function() {
-    this.setSuppliergoods();
+    axios({
+      method: "get",
+      url: "/supplier",
+      params: { usersId: "5c3831061b3ba76f6f14bc6e" }
+    }).then(({ data }) => {
+      console.log("哈哈哈", data[0]._id);
+      // this.supId = data[0]._id;
+      this.setSuppliergoods({ page: 1, rows: 5, supplierId: data[0]._id });
+    });
+    // this.setSuppliergoods();
   },
-  //   data() {
-  //     return {
-  //         name:"llllk"
-  //     };
-  //   },
+
   computed: {
-    ...mapState(["suppliergoods"])
+    // ...mapState(["suppliergoods"])
   },
   methods: {
     ...mapActions(["setSuppliergoods"])

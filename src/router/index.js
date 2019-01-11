@@ -15,14 +15,23 @@ import Login from "../components/login/index"
 import Details from "../components/details/index"
 import Detailses from "../components/detailses/index"
 
-
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
 import StoreStatistics from "../components/page/stores/statistics.vue";
+// import Users from "../components/page/stores/users.vue";
+import Serve from "../components/page/stores/serve/serveindex"
+import Order from "../components/page/stores/order/orderindex"
 // import Login from "../components/page/stores/Login.vue"
+import PlatformHome from "../components/common/platformHome.vue";
+import DashboardMoney from "../components/page/platform/Dashboard.vue";
+import StatisticsMoney from "../components/page/platform/statistics.vue";
+import StoreMoney from "../components/page/platform/store.vue";
+import SupplierMoney from "../components/page/platform/supplier.vue";
+import Users from "../components/page/platform/users/index.vue";
+
 export default new Router({
-    mode: 'history',
+    mode: "history",
     routes: [
         {
             path: '/suppliergoods',
@@ -66,18 +75,55 @@ export default new Router({
                     meta: { title: '门店商品' }
                 },
                 {
-                    path: '/storeorder',
-                    component: StoreGoods,
-                    meta: { title: '门店订单' }
+                    path: '/storecomment',
+                    component: Supplier,
+                    meta: { title: '评论管理' }
                 },
                 {
-                    path: '/storecomment',
-                    component: StoreGoods,
-                    meta: { title: '门店评论' }
+                    path: '/storeserve',
+                    component: Serve,
+                    meta: { title: '服务管理' }
+                },
+                {
+                    path: '/storeorder',
+                    component: Order,
+                    meta: { title: '订单管理' }
                 },
                 {
                     path: '/storestatistics',
                     component: StoreStatistics,
+                    meta: { title: '统计' }
+                },
+
+            ]
+        },
+        {
+            path: '/platform',
+            component: PlatformHome,
+            children: [
+                {
+                    path: '/dashboardmoney',
+                    component: DashboardMoney,
+                    meta: { title: '系统首页' }
+                },
+                {
+                    path: '/storemoney',
+                    component: StoreMoney,
+                    meta: { title: '平台门店管理' }
+                },
+                {
+                    path: '/suppliermoney',
+                    component: Serve,
+                    meta: { title: '平台宠管理' }
+                },
+                {
+                    path: '/users',
+                    component: Users,
+                    meta: { title: '平台用户管理' }
+                },
+                {
+                    path: '/statisticsmoney',
+                    component: StatisticsMoney,
                     meta: { title: '统计' }
                 },
 
@@ -103,23 +149,6 @@ export default new Router({
             path: "/detailses",
             component: Detailses
         }
-
     ]
 })
 
-// import Vue from 'vue';
-// import Router from 'vue-router';
-// Vue.use(Router);
-
-// // import Login from "../components/page/stores/Login.vue"
-// export default new Router({
-    
-//     routes: [
-//         {
-//             path: '/',
-//             redirect: '/dashboard'
-//         },
-
-
-//     ]
-// })

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <v-head :headtitle="headtitle"></v-head>
+    <v-head></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <v-tags></v-tags>
@@ -25,39 +25,32 @@ export default {
     return {
       tagsList: [],
       collapse: false,
-      headtitle: "门店管理系统",
       items: [
         {
           icon: "el-icon-setting",
-          index: "storedashboard",
-          title: "门店信息"
+          index: "dashboardmoney",
+          title: "平台系统首页"
         },
         {
           icon: "el-icon-document",
-          index: "storegoods",
-          title: "门店商品"
+          index: "storemoney",
+          title: "平台门店管理"
         },
         {
           icon: "el-icon-goods",
-          index: "storecomment",
-          title: "评论管理"
-        },
-
-        {
-          icon: "el-icon-goods",
-          index: "storeserve",
-          title: "服务管理"
+          index: "suppliermoney",
+          title: "平台宠管理"
         },
 
         {
           icon: "el-icon-info",
-          index: "storeorder",
-          title: "订单管理"
+          index: "users",
+          title: "平台用户管理"
         },
         {
           icon: "el-icon-edit-outline",
-          index: "storestatistics",
-          title: "统计"
+          index: "statisticsmoney",
+          title: "平台统计"
         }
       ]
     };
@@ -79,10 +72,6 @@ export default {
       }
       this.tagsList = arr;
     });
-    axios({
-      url: "/getsession",
-      method: "get"
-    }).then(({ data }) => {});
   }
 };
 </script>

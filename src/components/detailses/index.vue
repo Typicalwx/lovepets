@@ -49,6 +49,7 @@ export default {
         licenseImage: "",
         remark: ""
       },
+
       imageUrl: "",
       rules: {
         phone: [
@@ -63,7 +64,8 @@ export default {
           }
         ]
       },
-      userId: ""
+      userId: "",
+      state:""
     };
   },
   created() {
@@ -73,6 +75,7 @@ export default {
     }).then(({ data }) => {
       if (data.phone) {
         this.userId = data._id;
+        this.state=data.state
       }
     });
   },
@@ -114,11 +117,16 @@ export default {
               addr: this.regForm.addr,
               web: this.regForm.web,
               licenseImage: this.regForm.licenseImage,
-              remark: this.regForm.remark
+              remark: this.regForm.remark,
+              usersId:this.userId
             }
           }).then(({ data }) => {
-            alert("详情填写完成等待审核");
+            if(this.state=="0"){
+              alert("详情填写完成等待审核");
             // this.$router.path("../login/index.vue");
+            }else{
+              this.$router.push("/suppliergoods");
+            }
           });
         } else {
           this.$alert("错误", "失败");

@@ -9,44 +9,52 @@
            <el-form-item label="门店名" prop="name">
     <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
   </el-form-item>
-   <el-form-item label="营业执照号" prop="licenseAccount">
-    <el-input type="text" v-model="regForm.licenseAccount" autocomplete="off"></el-input>
+   <el-form-item label="营业执照号" prop="number">
+    <el-input type="text" v-model="regForm.number" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="营业执照图片" prop="licenseImage">
-    <el-upload
-  action="https://jsonplaceholder.typicode.com/posts/"
-  list-type="picture-card"
-  :on-preview="handlePictureCardPreview"
-  :on-remove="handleRemove">
-  <i class="el-icon-plus"></i>
-</el-upload>
+ <el-upload
+          class="avatar-uploader"
+          action="/upload"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
   </el-form-item>
-  <el-form-item label="地址" prop="licenseAddress">
-    <el-input type="text" v-model="regForm.licenseAddress" autocomplete="off"></el-input>
+  <el-form-item label="地址" prop="addr">
+    <el-input type="text" v-model="regForm.addr" autocomplete="off"></el-input>
   </el-form-item>
-  <el-form-item label="经纬度" prop="positioning">
-    <el-input type="text" v-model="regForm.positioning" autocomplete="off"></el-input>
+  <el-form-item label="经度" prop="location.longitude">
+    <el-input type="text" v-model="regForm.location.longitude" autocomplete="off"></el-input>
+  </el-form-item>
+    <el-form-item label="纬度" prop="location.latitude">
+    <el-input type="text" v-model="regForm.location.latitude" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="所在城市" prop="city">
     <el-input type="text" v-model="regForm.city" autocomplete="off"></el-input>
   </el-form-item>
-  <el-form-item label="法人" prop="person">
-    <el-input type="text" v-model="regForm.person" autocomplete="off"></el-input>
+  <el-form-item label="法人" prop="legal">
+    <el-input type="text" v-model="regForm.legal" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="联系电话" prop="phone">
     <el-input type="text"  v-model="regForm.phone" autocomplete="off"></el-input>
   </el-form-item>
-  <el-form-item label="头图" prop="headPortrait
-">
-      <el-upload
-  action="https://jsonplaceholder.typicode.com/posts/"
-  list-type="picture-card"
-  :on-preview="handlePictureCardPreview"
-  :on-remove="handleRemove">
-  <i class="el-icon-plus"></i>
-</el-upload>
+  <el-form-item label="头图" prop="storeImage">
+    <el-upload
+          class="avatar-uploader"
+          action="/upload"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
   </el-form-item>
-  <el-form-item label="特色" prop="features">
+  <el-form-item label="特色" prop="feature">
     <el-input type="text" v-model="regForm.features" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="佣金比列" prop="commission">
@@ -66,32 +74,19 @@ export default {
   data() {
     return {
    regForm:{
-  account:"",
+     city:"",
+  positioning:"",
    phone:"",
-   pwd:"",
-   email:"",
+   person:"",
+   headPortrait:"",
+   features:"",
+   commission:"",
+   number:"",
+   licenseImage:"",
+   addr:"",
    name:"",
-   role:""
+   location:{longitude:"",latitude:""}
       },
-      rules:{
-      phone:[{ required:true,message: '请输入电话' },
-      { pattern:/^1\d{10}$/,message: '电话格式不正确' },
-      {validator:this.valuedataPhone}],
-      account:[{
-        required:true,message: '请输入登录号'},
-      { pattern:/^\w{6,16}$/,message: '登录号格式不正确' },
-      {validator:this.valuedataAccount}],
-      pwd:[{
-        required:true,message: '请输入密码'  },
-      { pattern:/^\w{6,16}$/,message: '密码格式不正确' }],
-      email:[{
-        required:true,message: '请输入邮箱' },
-      { pattern:/(\S)+[@]{1}(\S)+[.]{1}(\w)+/,message: '邮箱格式不正确' }],
-      name:[{
-        required:true,message: '请输入姓名' },
-      { pattern:/^[\u4e00-\u9fa5]{2,}$/,message: '姓名格式不正确' }],
-      },
-         role: '门店管理员',
     };
   },
  
@@ -103,36 +98,6 @@ export default {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-    valuedataPhone(rule, value, callback){
-      axios({
-        method:"get",
-        url:"/users",
-        params:{
-          phone:value
-        }
-      }).then(({data})=>{
-        if(data.status==0){
-          callback("手机号重复")
-        }else{
-          callback()
-        }
-      })
-    },
-     valuedataAccount(rule, value, callback){
-      axios({
-        method:"get",
-        url:"/users/ww",
-        params:{
-          account:value
-        }
-      }).then(({data})=>{
-        if(data.status ==0){
-          callback("登录号重复")
-        }else{
-          callback()
-        }
-      })
-    },
     submitForm(){
       this.$refs.regForm.validate((valid)=>{
         if(valid){
@@ -140,7 +105,7 @@ export default {
             method:"post",
             url:"/users",
             data:{
-            account:this.regForm.account,
+            city:this.regForm.city,
             pwd: this.regForm.pwd,
             email:this.regForm.email,
             name:this.regForm.name,
@@ -150,7 +115,7 @@ export default {
             }
           }).then(()=>{
             alert("注册成功");
-            this.$router.path("../login/index.vue");
+            this.$router.path("/login");
             })
         }else{
           this.$alert("错误","失败")

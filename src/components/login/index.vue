@@ -59,13 +59,11 @@ export default {
               alert("登录成功");
 
               if (data.data[0].role == "门店管理员") {
-                // if(data.data[0].state =="0" ){
-                if (data.state == 1) {
-                  //  this.$router.push("/details");
-                } else if (data.state == 0) {
-                  this.$router.push("/details");
+                if(data.data[0].state =="0" ){
+                    this.$router.push("/details");
+                }else if (data.data[0].state == 1) {
+                  this.$router.push("/detailses");
                 }
-
                 // }
                 console.log(data.data[0].role);
               } else if (data.data[0].role == "平台管理员") {

@@ -137,8 +137,8 @@ body{
 width: 500px;
 margin: auto;
 position: absolute;
-right: 200px;
-bottom: 200px;
+right: 400px;
+bottom: 400px;
 }
 .juese{
   width: 100%;

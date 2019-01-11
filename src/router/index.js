@@ -23,8 +23,15 @@ import StoreStatistics from "../components/page/stores/statistics.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"
 // import Login from "../components/page/stores/Login.vue"
+import PlatformHome from "../components/common/platformHome.vue";
+import DashboardMoney from "../components/page/platform/Dashboard.vue";
+import StatisticsMoney from "../components/page/platform/statistics.vue";
+import StoreMoney from "../components/page/platform/store.vue";
+import SupplierMoney from "../components/page/platform/supplier.vue";
+import Users from "../components/page/platform/users/index.vue";
+
 export default new Router({
-    mode: 'history',
+    mode:"history",
     routes: [
         {
             path: '/suppliergoods',
@@ -91,6 +98,38 @@ export default new Router({
             ]
         },
         {
+            path: '/platform',
+            component: PlatformHome,
+            children: [
+                {
+                    path: '/dashboardmoney',
+                    component: DashboardMoney,
+                    meta: { title: '系统首页' }
+                },
+                {
+                    path: '/storemoney',
+                    component: StoreMoney,
+                    meta: { title: '平台门店管理' }
+                },
+                {
+                    path: '/suppliermoney',
+                    component: Serve,
+                    meta: { title: '平台宠管理' }
+                },
+                {
+                    path: '/users',
+                    component: Users,
+                    meta: { title: '平台用户管理' }
+                },
+                {
+                    path: '/statisticsmoney',
+                    component:StatisticsMoney,
+                    meta: { title: '统计' }
+                },
+
+            ]
+        },
+        {
             path: "/",
             component: Registere
         },
@@ -111,6 +150,7 @@ export default new Router({
             component: Detailses
         }
 
+        }
     ]
 })
 

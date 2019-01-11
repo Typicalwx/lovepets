@@ -84,7 +84,13 @@ import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
   "supplierModules" // 模块名
 );
+const { mapActions: setSupId, mapState: supId } = createNamespacedHelpers(
+  "supModules" // 供应商详情模块名
+);
 export default {
+  created() {
+    this.setSuppliers();
+  },
   data() {
     return {
       addForm: {
@@ -103,7 +109,7 @@ export default {
         shelfLife: "",
         features: "",
         price: "",
-        images: []
+        images: [],
       },
       dialogImageUrl: "",
       dialogVisible: false
@@ -111,6 +117,7 @@ export default {
   },
   computed: {
     ...mapState(["addVisible"]),
+    ...supId(["supId"]),
     addVisible: {
       get() {
         return this.$store.state.supplierModules.addVisible;
@@ -123,19 +130,22 @@ export default {
   },
   methods: {
     ...mapActions(["setSuppliergoods"]),
+    ...setSupId(["setSuppliers"]),
     confirmAdd() {
-      console.log("123123", this.addForm.date.toLocaleDateString());
+      // console.log("123123", this.addForm.date.toLocaleDateString());
       let images = JSON.stringify(this.addForm.images);
-      let date = this.addForm.date.toLocaleDateString();
+      let date = this.addForm.date && this.addForm.date.toLocaleDateString();
       axios({
         method: "post",
         url: "/suppliergoods",
-        data: { ...this.addForm, images, date }
+        data: { ...this.addForm, images, date, supplierId: this.supId }
       }).then(({ data }) => {
         this.addVisible = false;
-        console.log(data);
         console.log("增加成功");
-        this.setSuppliergoods();
+        this.addForm.images = [];
+        this.$refs["addForm"].resetFields();
+        console.log("qwer", this.supId);
+        this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId });
       });
     },
     //上传图片
@@ -144,12 +154,18 @@ export default {
         ...this.addForm.images,
         { name: file.name, url: "/upload/" + res }
       ];
-      console.log(res, file);
-      console.log(" 数据", this.addForm.images);
+      console.log("上传", res, file);
     },
     handleRemove(file, fileList) {
-      console.log(res, file);
-      console.log(" 数据", this.addForm.images);
+      console.log("增加移除", file, fileList);
+      let imgArr = this.addForm.images;
+      for (let i in imgArr) {
+        if (imgArr[i].uid == file.uid) {
+          console.log("ID", imgArr[i].uid);
+          console.log(i, 11111);
+          imgArr.splice(i, 1);
+        }
+      }
     },
     handlePreview(file) {
       console.log(file);

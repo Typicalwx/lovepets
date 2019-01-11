@@ -16,7 +16,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["supplier"])
+    // ...mapState(["supplier"])
   },
   methods: {
     ...mapActions(["setSuppliers"])

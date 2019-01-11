@@ -13,15 +13,18 @@
                     <div class="user-info-list">上次登录时间：<span>2019-01-01</span></div>
                     <div class="user-info-list">上次登录地点：<span>成都</span></div>
                 </el-card>
+               
             </el-col>
+           
         </el-row>
+      
     </div>
 </template>
 
 <script>
 
     export default {
-        // name: 'dashboard',
+        name: 'dashboard',
         data() {
             return {
    

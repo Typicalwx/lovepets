@@ -83,7 +83,20 @@ import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
   "supplierModules" // 模块名
 );
+const { mapActions: setSupId, mapState: supId } = createNamespacedHelpers(
+  "supModules" // 供应商详情模块名
+);
 export default {
+  created() {
+    // axios({
+    //   method: "get",
+    //   url: "/supplier"
+    // }).then(({ data }) => {
+    //   console.log("供应商详情id", data[0]._id);
+    //   this.supId = data[0]._id;
+    // });
+    this.setSuppliers();
+  },
   updated: function() {
     console.log("dsadsa", this.suppliergood);
   },
@@ -94,11 +107,13 @@ export default {
       },
       dialogImageUrl: "",
       upDialogVisible: false,
-      allImgs: []
+      allImgs: [],
+      // supId: "" //供应商详情的ID
     };
   },
   computed: {
     ...mapState(["updateVisible", "suppliergood"]),
+    ...supId(["supId"]),
     updateVisible: {
       get() {
         return this.$store.state.supplierModules.updateVisible;
@@ -290,7 +305,7 @@ export default {
   methods: {
     // ...mapMutations(["setUpdateVisible"]),
     ...mapActions(["setSuppliergoods"]),
-
+    ...setSupId(["setSuppliers"]),
     //确认修改
     confirmUpdate() {
       let images = JSON.stringify([
@@ -305,7 +320,7 @@ export default {
       }).then(({ data }) => {
         console.log("000000000000", data);
         this.updateVisible = false;
-        this.setSuppliergoods();
+        this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId });
         this.updateForm.images = [];
         // this.allImgs = [];
       });

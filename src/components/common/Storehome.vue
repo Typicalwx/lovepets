@@ -28,7 +28,7 @@
                 items:[
                     {
                         icon: 'el-icon-setting',
-                        index: 'dashboard',
+                        index: 'storedashboard',
                         title: '门店信息'
                     },
                     {
@@ -38,18 +38,18 @@
                     },
                     {
                         icon: 'el-icon-goods',
-                        index: 'supplier',
+                        index: 'storecomment',
                         title: '评论管理'
                     },
      
                     {
                         icon: 'el-icon-info',
-                        index: 'users',
+                        index: 'storeorder',
                         title: '订单'
                     },
                     {
                         icon: 'el-icon-edit-outline',
-                        index: 'statistics',
+                        index: 'storestatistics',
                         title: '统计'
                     },
                 ]

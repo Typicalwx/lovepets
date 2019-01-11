@@ -42,25 +42,25 @@
 </template>
 
 <script>
-import bus from "../common/bus";
-export default {
-  props: ["items"],
-  data() {
-    return {
-      collapse: false
-    };
-  },
-  computed: {
-    onRoutes() {
-      return this.$route.path.replace("/", "");
-    }
-  },
-  created() {
-    // 通过 Event Bus 进行组件间通信，来折叠侧边栏
-    bus.$on("collapse", msg => {
-      this.collapse = msg;
-    });
-  }
+    import bus from '../common/bus';
+    export default {
+        props:["items"],
+        data() {
+            return {
+                collapse: false,           
+            }
+        },
+        computed:{
+            onRoutes(){
+                return this.$route.path.replace('/','');
+            }
+        },
+        created(){
+            // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+            bus.$on('collapse', msg => {
+                this.collapse = msg;
+            })
+        }
 };
 </script>
 

@@ -10,6 +10,7 @@ Vue.use(Vuex) //注册
 export default new Vuex.Store({
     strict: true,//严格模式
     modules: {
+        store,
         supplierModules: supplierModules,  //模块化的supplier
         supModules: supModules,
         storeModule: storeModule

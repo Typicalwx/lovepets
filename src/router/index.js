@@ -1,27 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
-<<<<<<< HEAD
-=======
 
->>>>>>> 94e06d0d4308a7ced018d4f00c7fed30ac17b321
 import SupplierHome from "../components/common/supplierHome.vue";
 import Dashboard from "../components/page/suppliergoods/Dashboard.vue";
 import Statistics from "../components/page/suppliergoods/statistics.vue";
 import Supplier from "../components/page/supplier/sup";
 
-<<<<<<< HEAD
-=======
 
 import Suppliergoods from "../components/page/suppliergoods/supplier.vue"
->>>>>>> 94e06d0d4308a7ced018d4f00c7fed30ac17b321
 import Registere from "../components/registere/index"
 import Login from "../components/login/index"
 import Details from "../components/details/index"
 import Detailses from "../components/detailses/index"
-<<<<<<< HEAD
-import VueRouter from 'vue-router';
-=======
 
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
@@ -37,7 +28,12 @@ import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
 import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
->>>>>>> 94e06d0d4308a7ced018d4f00c7fed30ac17b321
+
+
+import PetLove from "../components/page/petowners/petowners"
+
+import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
+
 
 export default new Router({
     mode: "history",
@@ -62,6 +58,13 @@ export default new Router({
                     meta: { title: '供应商详情' }
                 },
                 {
+                    // PetPage
+                    // Petowners
+                    path: '/petowners',
+                    component: Petowners,
+                    meta: { title: '宠主管理' }
+                },
+                {
                     path: '/statistics',
                     component: Statistics,
                     meta: { title: '统计' }
@@ -69,8 +72,6 @@ export default new Router({
 
             ]
         },
-<<<<<<< HEAD
-=======
         {
             path: '/store',
             component: Storehome,
@@ -119,12 +120,12 @@ export default new Router({
                 },
                 {
                     path: '/storemoney',
-                    component: StoreMoney,
+                    component: StoreAdministrator,
                     meta: { title: '平台门店管理' }
                 },
                 {
                     path: '/suppliermoney',
-                    component: Serve,
+                    component: PetLove,
                     meta: { title: '平台宠管理' }
                 },
                 {
@@ -140,7 +141,6 @@ export default new Router({
 
             ]
         },
->>>>>>> 94e06d0d4308a7ced018d4f00c7fed30ac17b321
         {
             path: "/",
             component: Registere

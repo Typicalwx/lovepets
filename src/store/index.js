@@ -1,6 +1,7 @@
-import Vue from "vue"
+import Vue from "vue";
 import Vuex from "vuex";
-// import axios from "axios"
+import petowner from "./modules/petowner.js";
+import storeAdministrator from "./modules/storeAdministrator.js";
 import supplierModules from "./modules/supplierModules"
 import supModules from "./modules/supModules"
 import store from "./modules/store"
@@ -9,8 +10,9 @@ import storeModule from "./modules/storeModule.js"
 import platformModule from "./modules/platformModule"
 Vue.use(Vuex) //注册
 
+Vue.use(Vuex);
 export default new Vuex.Store({
-    strict: true,//严格模式
+    strict: true,
     modules: {
         store,
         supplierModules: supplierModules,  //模块化的supplier
@@ -18,5 +20,8 @@ export default new Vuex.Store({
         storeModule: storeModule,
         // studentsModule: studentsModule, //模块化的student
         platformModule,
+        petowner, storeAdministrator,
+        supplierModules: supplierModules,  //模块化的supplier
+        supModules: supModules
     }
 })

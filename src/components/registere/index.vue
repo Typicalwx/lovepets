@@ -119,11 +119,11 @@ export default {
             state :"0"
             }
           }).then(()=>{
-            alert("注册成功");
+            this.$alert("注册成功");
             this.$router.push("/login");
             })
         }else{
-          this.$alert("错误","失败")
+          this.$alert("有错误","注册失败")
         }
       })
     }

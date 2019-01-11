@@ -3,16 +3,26 @@
         <div class="ms-login">
             <div class="ms-title">后台管理系统</div>
     <el-form :model="regForm" status-icon :rules="rules" ref="regForm" label-width="0px" class="ms-content">
-      <el-form-item label="登录名" prop="account">
+      <!-- <el-form-item label="登录名" prop="account">
         <el-input type="text" v-model="regForm.account" autocomplete="off"></el-input>
+      </el-form-item> -->
+      <el-form-item prop="account">
+                    <el-input v-model="regForm.account" placeholder="username">
+                    </el-input>
       </el-form-item>
-      
-      <el-form-item label="密码" prop="pwd">
+      <el-form-item prop="pwd">
+                    <el-input v-model="regForm.pwd" placeholder="password">
+                    </el-input>
+      </el-form-item>
+          <div class="login-btn">
+                    <el-button type="primary" @click="submitForm()">登录</el-button>
+                </div>
+      <!-- <el-form-item label="密码" prop="pwd">
         <el-input type="password" v-model="regForm.pwd" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item class="dl">
+      </el-form-item> -->
+      <!-- <el-form-item class="dl">
         <el-button type="primary" @click="submitForm()">登陆</el-button>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
         </div>
     </div>
@@ -55,31 +65,31 @@ export default {
               account: this.regForm.account,
               pwd: this.regForm.pwd
             }
-          }).then(({ data }) => {
-            // let data = response.data
-
-            if (data.stats == 1) {
-
-              if (data.data[0].role == "门店管理员") {
-                if(data.data[0].state =="0" ){
+          }).then(({data} ) => {
+            if (data._id) {
+              if (data.role == "门店管理员") {
+                if(data.state =="0" ){
                     this.$router.push("/details");
-                }else if (data.data[0].state == "1") {
+                }else if (data.state == "1") {
                   this.$router.push("/store");
                 }
-              } else if (data.data[0].role == "供应商管理员") {
-                if(data.data[0].state =="0"){
+              } else if (data.role == "供应商管理员") {
+                if(data.state =="0"){
                  this.$router.push("/detailses");
-                }else if(data.data[0].state =="1"){
+                }else if(data.state =="1"){
                    this.$router.push("/suppliergoods");
-                }else if(data.data[0].state =="2"){
-                   alert("你得账号正在被检查，暂时禁封！");
+                }else if(data.state =="2"){
+                   this.$alert("你得账号正在被检查，暂时禁封！");
                 }
-              } else if (data.data[0].role == "平台管理") {
+              } else if (data.role == "平台管理") {
                
                    this.$router.push("/details");
                 }
             } else {
-                this.$router.push("/");
+                this.$alert("你得账号或密码不正确！");
+                this.regForm.account="";
+                this.regForm.pwd="";
+
             }
           });
         } else {
@@ -103,7 +113,7 @@ export default {
         line-height: 50px;
         text-align: center;
         font-size:20px;
-        color: #fff;
+        color: black;
         border-bottom: 1px solid #ddd;
     }
     .ms-login{
@@ -132,4 +142,5 @@ export default {
         line-height:30px;
         color:#fff;
     }
+    
 </style>

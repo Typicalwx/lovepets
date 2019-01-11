@@ -5,8 +5,7 @@ Vue.use(Router);
 import SupplierHome from "../components/common/supplierHome.vue";
 import Dashboard from "../components/page/suppliergoods/Dashboard.vue";
 import Statistics from "../components/page/suppliergoods/statistics.vue";
-// import Dashboard from "../components/page/stores/HomePage/Dashboard";
-import Supplier from "../components/page/stores/supplier.vue";
+import Supplier from "../components/page/supplier/sup";
 
 
 import Suppliergoods from "../components/page/suppliergoods/supplier.vue"

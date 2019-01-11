@@ -25,7 +25,7 @@ export default {
             axios({
                 method: "get",
                 url: "/supplier",
-                params: { usersId: "5c384dec1b3ba76f6f14f752" }
+                params: { usersId: "5c3831061b3ba76f6f14bc6e" }
             }).then(({ data }) => {
                 console.log("今天", data)
                 commit("setSupplier", data)

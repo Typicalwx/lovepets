@@ -4,7 +4,7 @@
     <div class="collapse-btn" @click="collapseChage">
       <i class="el-icon-menu"></i>
     </div>
-    <div class="logo">{{header}}</div>
+    <div class="logo">{{headtitle}}</div>
     <div class="header-right">
       <div class="header-user-con">
         <!-- 全屏显示 -->
@@ -41,69 +41,69 @@
   </div>
 </template>
 <script>
-import bus from "../common/bus";
-export default {
-  props: ["header"],
-  data() {
-    return {
-      collapse: false,
-      fullscreen: false,
-      name: "朱炜",
-      message: 2
-    };
-  },
-  computed: {
-    username() {
-      let username = localStorage.getItem("ms_username");
-      return username ? username : this.name;
-    }
-  },
-  methods: {
-    // 用户名下拉菜单选择事件
-    handleCommand(command) {
-      if (command == "loginout") {
-        localStorage.removeItem("ms_username");
-        this.$router.push("/login");
-      }
-    },
-    // 侧边栏折叠
-    collapseChage() {
-      this.collapse = !this.collapse;
-      bus.$emit("collapse", this.collapse);
-    },
-    // 全屏事件
-    handleFullScreen() {
-      let element = document.documentElement;
-      if (this.fullscreen) {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
+    import bus from '../common/bus';
+    export default {
+        props:["headtitle"],
+        data() {
+            return {
+                collapse: false,
+                fullscreen: false,
+                name: '朱炜',
+                message: 2
+            }
+        },
+        computed:{
+            username(){
+                let username = localStorage.getItem('ms_username');
+                return username ? username : this.name;
+            }
+        },
+        methods:{
+            // 用户名下拉菜单选择事件
+            handleCommand(command) {
+                if(command == 'loginout'){
+                    localStorage.removeItem('ms_username')
+                    this.$router.push('/login');
+                }
+            },
+            // 侧边栏折叠
+            collapseChage(){
+                this.collapse = !this.collapse;
+                bus.$emit('collapse', this.collapse);
+            },
+            // 全屏事件
+            handleFullScreen(){
+                let element = document.documentElement;
+                if (this.fullscreen) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                } else {
+                    if (element.requestFullscreen) {
+                        element.requestFullscreen();
+                    } else if (element.webkitRequestFullScreen) {
+                        element.webkitRequestFullScreen();
+                    } else if (element.mozRequestFullScreen) {
+                        element.mozRequestFullScreen();
+                    } else if (element.msRequestFullscreen) {
+                        // IE11
+                        element.msRequestFullscreen();
+                    }
+                }
+                this.fullscreen = !this.fullscreen;
+            }
+        },
+        mounted(){
+            if(document.body.clientWidth < 1500){
+                this.collapseChage(); 
         }
-      } else {
-        if (element.requestFullscreen) {
-          element.requestFullscreen();
-        } else if (element.webkitRequestFullScreen) {
-          element.webkitRequestFullScreen();
-        } else if (element.mozRequestFullScreen) {
-          element.mozRequestFullScreen();
-        } else if (element.msRequestFullscreen) {
-          // IE11
-          element.msRequestFullscreen();
-        }
-      }
-      this.fullscreen = !this.fullscreen;
-    }
-  },
-  mounted() {
-    if (document.body.clientWidth < 1500) {
-      this.collapseChage();
-    }
-  }
+      } 
 };
 </script>
 <style scoped>

@@ -3,13 +3,13 @@
     <div class="container">
       <div class="handle-box">
         <el-button @click="addStoreGood" class="handle-del mr10">新增商品</el-button>
-        <el-button @click="addStoreGood" class="handle-del mr10">从供应商添加商品</el-button>
+        <el-button @click="addSupplierGood" class="handle-del mr10">从供应商添加商品</el-button>
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
         <el-select v-model="type" placeholder="搜索属性" class="handle-select mr10">
           <el-option key="1" label="名字" value="name"></el-option>
           <el-option key="2" label="类型" value="type"></el-option>
-           <el-option key="3" label="产地" value="placeOfOrigin"></el-option>
-            <el-option key="4" label="推广标题" value="title"></el-option>
+          <el-option key="3" label="产地" value="placeOfOrigin"></el-option>
+          <el-option key="4" label="推广标题" value="title"></el-option>
         </el-select>
         <el-input v-model="value" placeholder="筛选关键词" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="search" @click="searchGoods">搜索</el-button>
@@ -124,15 +124,20 @@ export default {
       "setStoreGood",
       "setStoreUpdateVisible",
       "setPagination",
-      "setSearch"
+      "setSearch",
+      "setAddSupplierVisible"
     ]),
     ...mapActions(["setStoregoods", "setStoreGood"]),
     // 点击新增商品
     addStoreGood() {
       this.setStoreAddVisible(true);
     },
+    addSupplierGood() {
+      console.log(this,78)
+      this.setAddSupplierVisible(true);
+    },
     searchGoods() {
-      console.log("123")
+      console.log("123");
       // this.is_search = true;
       this.setStoregoods();
     },
@@ -168,7 +173,7 @@ export default {
         for (let i = 0; i < length; i++) {
           str += this.multipleSelection[i].name + " ";
         }
-        this.$message.error("删除了" + str);
+        this.$message.error("删除成功" + str);
         this.multipleSelection = [];
         this.setStoregoods();
       });

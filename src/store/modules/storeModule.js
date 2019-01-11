@@ -18,10 +18,21 @@ export default {
         clerkInfor: {},
         updateClerkIndex: -1,
         clerkPage: {},
-        clerkData: []//要渲染的店员的数组
+        clerkData: [],//要渲染的店员的数组,
+        addSupplierGoodsVisible: false,
+        supplierGood: {},
+        supplierId: ""
     },
     getters: {},
     mutations: {
+        //从供应商增加商品
+        setSupplierGood(state, value) {
+            state.supplierGood = value
+        },
+        //从供应商增加商品的ID
+        setSupplierId(state, value) {
+            state.supplierId = value
+        },
         //店员分页
         setClerkPage(state, value) {
             state.clerkPage = value
@@ -66,6 +77,10 @@ export default {
         setStoreAddVisible(state, visible) {
             state.storeAddVisible = visible
         },
+        //从供应商处获取商品
+        setAddSupplierVisible(state, value) {
+            state.addSupplierGoodsVisible = value
+        },
         // 修改商品弹框显示
         setClerkUpdateVisible(state, visible) {
             state.clerkUpdateVisible = visible
@@ -108,7 +123,13 @@ export default {
                 });
                 let arr = []
                 for (let i = 0; i < (clerkPage.eachpage || 5); i++) {
-                    arr.push(data.clerk[i]);
+                   
+                    if (i < data.clerk.length) {
+                        // console.log("qwefvfdsf")
+                        arr.push(data.clerk[i]);
+                    } else {
+                        break;
+                    }
                 }
                 context.commit("setClerkData", arr)
                 context.commit("setStoreInfoData", data)
@@ -141,7 +162,7 @@ export default {
                         break;
                     }
                 }
-                console.log(arr,"第二页")
+                console.log(arr, "第二页")
                 context.commit("setClerkData", arr)
 
                 context.commit("setClerkPage", {

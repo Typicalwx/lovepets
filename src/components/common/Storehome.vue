@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <v-head></v-head>
+        <v-head :headtitle="headtitle"></v-head>
         <v-sidebar :items="items"></v-sidebar>
         <div class="content-box" :class="{'content-collapse':collapse}">
             <v-tags></v-tags>
@@ -25,6 +25,7 @@
             return {
                 tagsList: [],
                 collapse: false,
+                headtitle:"门店管理系统",
                 items:[
                     {
                         icon: 'el-icon-setting',
@@ -41,11 +42,19 @@
                         index: 'storecomment',
                         title: '评论管理'
                     },
-     
+
+                 {
+                        icon: 'el-icon-goods',
+                        index: 'storeserve',
+                        title: '服务管理'
+                    },  
+
+
+
                     {
                         icon: 'el-icon-info',
                         index: 'storeorder',
-                        title: '订单'
+                        title: '订单管理'
                     },
                     {
                         icon: 'el-icon-edit-outline',

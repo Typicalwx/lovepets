@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog title="修改商品" :visible.sync="updateDialogVisible" width="50%">
-      <el-form v-if="storeGood" :model="form" ref="form" label-width="50px">
+      <el-form v-if="storeGood"  ref="form" label-width="50px">
         <el-form-item label="商品名" :label-width="formLabelWidth">
           <el-input v-model="name" autocomplete="off"></el-input>
         </el-form-item>
@@ -89,26 +89,6 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-      form: {
-        name: "",
-        title: "",
-        type: "",
-        method: "",
-        applySfc: "",
-        exclusiveSfc: "",
-        total: "",
-        packSfc: "",
-        flavor: "",
-        specialFuc: "",
-        placeOfOrigin: "",
-        date: "",
-        shelfLife: "",
-        features: "",
-        price: "",
-        newPrice: "",
-        sales: 0,
-        images: []
-      },
       formLabelWidth: "120px",
       dialogImageUrl: "",
       dialogVisible: false

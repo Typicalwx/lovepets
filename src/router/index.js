@@ -19,7 +19,9 @@ import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
 import StoreStatistics from "../components/page/stores/statistics.vue";
-
+// import Users from "../components/page/stores/users.vue";
+import Serve from "../components/page/stores/serve/serveindex"
+import Order from "../components/page/stores/order/orderindex"
 // import Login from "../components/page/stores/Login.vue"
 export default new Router({
     mode: 'history',
@@ -66,18 +68,23 @@ export default new Router({
                     meta: { title: '门店商品' }
                 },
                 {
-                    path: '/storeorder',
-                    component: StoreGoods,
-                    meta: { title: '门店订单' }
+                    path: '/storecomment',
+                    component: Supplier,
+                    meta: { title: '评论管理' }
                 },
                 {
-                    path: '/storecomment',
-                    component: StoreGoods,
-                    meta: { title: '门店评论' }
+                    path: '/storeserve',
+                    component: Serve,
+                    meta: { title: '服务管理' }
+                },
+                {
+                    path: '/storeorder',
+                    component: Order,
+                    meta: { title: '订单管理' }
                 },
                 {
                     path: '/storestatistics',
-                    component: StoreStatistics,
+                    component:StoreStatistics,
                     meta: { title: '统计' }
                 },
 

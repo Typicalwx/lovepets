@@ -1,61 +1,61 @@
 <template>
   <div>
     <el-dialog title="增加商品" :visible.sync="addStoreDiolog" width="50%">
-      <el-form :model="form" ref="form" label-width="50px" :rules="rules">
+      <el-form :model="supplierGood" ref="form" label-width="50px" :rules="rules">
         <el-form-item label="商品名" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+          <el-input v-model="name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="推广标题" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.title" autocomplete="off"></el-input>
+          <el-input v-model="title" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="类型" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.type" autocomplete="off"></el-input>
+          <el-input v-model="type" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="用料" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.method" autocomplete="off"></el-input>
+          <el-input v-model="method" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="适合物种" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.applySfc" autocomplete="off"></el-input>
+          <el-input v-model="applySfc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="专属规格" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.exclusiveSfc " autocomplete="off"></el-input>
+          <el-input v-model="exclusiveSfc " autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="包装规格" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.packSfc" autocomplete="off"></el-input>
+          <el-input v-model="packSfc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="口味" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.flavor" autocomplete="off"></el-input>
+          <el-input v-model="flavor" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="特殊功用" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.specialFuc" autocomplete="off"></el-input>
+          <el-input v-model="specialFuc" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="产地" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.placeOfOrigin" autocomplete="off"></el-input>
+          <el-input v-model="placeOfOrigin" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="出产日期" :label-width="formLabelWidth">
           <el-date-picker
             type="date"
             placeholder="选择日期"
-            v-model="form.date"
+            v-model="date"
             value-format="yyyy-MM-dd"
             style="width: 100%;"
             prop="date1"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="特点" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.features" autocomplete="off"></el-input>
+          <el-input v-model="features" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="保质期" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.shelfLife" autocomplete="off"></el-input>
+          <el-input v-model="shelfLife" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="进货总数" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.total" autocomplete="off"></el-input>
+          <el-input v-model="total" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="进货价格" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.price" autocomplete="off"></el-input>
+          <el-input v-model="price" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="售价" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.newPrice" autocomplete="off"></el-input>
+          <el-input v-model="newPrice" autocomplete="off"></el-input>
         </el-form-item>
         <!-- 上传图片 -->
         <el-upload
@@ -64,7 +64,7 @@
           :on-success="handleAvatarSuccess"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
-          :file-list="form.images"
+          :file-list="images||[]"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -97,7 +97,6 @@ export default {
         method: "",
         applySfc: "",
         exclusiveSfc: "",
-        total: "",
         packSfc: "",
         flavor: "",
         specialFuc: "",
@@ -107,10 +106,11 @@ export default {
         features: "",
         price: "",
         newPrice: "",
-        sales: 0,
-        images: [],
-        goodState: 1
+
+        images: []
       },
+      total:0,
+      goodState: "商品",
       formLabelWidth: "120px",
       dialogImageUrl: "",
       dialogVisible: false,
@@ -127,11 +127,11 @@ export default {
       }
     };
   },
-  created() {
-    console.log(this, 78);
-  },
+  // beforeUpdate() {
+  //   this.form = this.supplierGood;
+  // },
   computed: {
-    ...mapState(["storeAddVisible", "storeId"]),
+    ...mapState(["storeAddVisible", "storeId", "supplierGood", "supplierId"]),
     addStoreDiolog: {
       get() {
         console.log(this.storeAddVisible);
@@ -143,10 +143,146 @@ export default {
         this.setStoreAddVisible(storeAddVisible);
         //非map情况下，模块有嵌套的话，想要提交。用模块名/属性名
       }
+    },
+    name: {
+      get() {
+        return this.supplierGood.name || "";
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, name: value });
+      }
+    },
+    title: {
+      get() {
+        return this.supplierGood.title;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, title: value });
+      }
+    },
+    type: {
+      get() {
+        return this.supplierGood.type;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, type: value });
+      }
+    },
+    method: {
+      get() {
+        return this.supplierGood.method;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, method: value });
+      }
+    },
+    applySfc: {
+      get() {
+        return this.supplierGood.applySfc;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, applySfc: value });
+      }
+    },
+    exclusiveSfc: {
+      get() {
+        return this.supplierGood.exclusiveSfc;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, exclusiveSfc: value });
+      }
+    },
+    packSfc: {
+      get() {
+        return this.supplierGood.packSfc;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, packSfc: value });
+      }
+    },
+    flavor: {
+      get() {
+        return this.supplierGood.flavor;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, flavor: value });
+      }
+    },
+    specialFuc: {
+      get() {
+        return this.supplierGood.specialFuc;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, specialFuc: value });
+      }
+    },
+    placeOfOrigin: {
+      get() {
+        return this.supplierGood.placeOfOrigin;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, placeOfOrigin: value });
+      }
+    },
+    date: {
+      get() {
+        return this.supplierGood.date;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, date: value });
+      }
+    },
+    features: {
+      get() {
+        return this.supplierGood.features;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, features: value });
+      }
+    },
+    shelfLife: {
+      get() {
+        return this.supplierGood.shelfLife;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, shelfLife: value });
+      }
+    },
+    // total: {
+    //   get() {
+    //     return this.supplierGood.total;
+    //   },
+    //   set(value) {
+    //     this.setSupplierGood({ ...this.supplierGood, total: value });
+    //   }
+    // },
+    newPrice: {
+      get() {
+        return this.supplierGood.newPrice;
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, newPrice: value });
+      }
+    },
+    price: {
+      get() {
+        return this.supplierGood.price || "";
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, price: value });
+      }
+    },
+    images: {
+      get() {
+        return this.supplierGood.images || [];
+      },
+      set(value) {
+        this.setSupplierGood({ ...this.supplierGood, images: value });
+      }
     }
   },
   methods: {
-    ...mapMutations(["setStoreAddVisible"]),
+    ...mapMutations(["setStoreAddVisible", "setSupplierId", "setSupplierGood"]),
     ...mapActions(["setStoregoods"]),
     // 确认添加
     addStoreGood() {
@@ -155,20 +291,25 @@ export default {
         if (valid) {
           this.addStoreDiolog = false;
           console.log(this.$refs, "uuu");
-         
           axios({
             url: "/storegoods",
             method: "post",
             data: {
-              ...this.form,
-              images: JSON.stringify(this.form.images),
-              storeId: this.storeId
+              ...this.supplierGood,
+              images: JSON.stringify(this.images),
+              storeId: this.storeId,
+              goodState: this.goodState,
+              supplierId: this.supplierId,
+              sales: 0,
+              total:this.total
             }
           }).then(({ data }) => {
             this.setStoregoods();
-            this.$refs['form'].resetFields();
-            this.form = {};
-             this.$refs['form'].clearValidate();
+            this.$refs["form"].resetFields();
+            // this.form = {};
+            this.$refs["form"].clearValidate();
+            this.setSupplierId("");
+            this.setSupplierGood({});
           });
         } else {
           console.log("error submit!!");
@@ -179,22 +320,22 @@ export default {
       // this.form.images = JSON.stringify(this.form.images);
     },
     handleAvatarSuccess(res, file) {
-      this.form.images = [
-        ...this.form.images,
+      this.images = [
+        ...this.images,
         { name: file.name, url: "/upload/" + res }
       ];
       console.log(res, file);
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
-      let arr = this.form.images;
+      let arr = this.images;
       for (let i in arr) {
         if (arr[i].uid == file.uid) {
           arr.splice(i, 1);
           break;
         }
       }
-      this.form.images = arr;
+      this.images = arr;
     },
     handlePreview(file) {
       console.log(file);

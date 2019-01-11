@@ -42,10 +42,19 @@
                         index: 'storecomment',
                         title: '评论管理'
                     },
+
+                 {
+                        icon: 'el-icon-goods',
+                        index: 'storeserve',
+                        title: '服务管理'
+                    },  
+
+
+
                     {
                         icon: 'el-icon-info',
                         index: 'storeorder',
-                        title: '订单'
+                        title: '订单管理'
                     },
                     {
                         icon: 'el-icon-edit-outline',

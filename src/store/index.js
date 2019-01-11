@@ -3,7 +3,7 @@ import Vuex from "vuex";
 // import axios from "axios"
 import supplierModules from "./modules/supplierModules"
 import supModules from "./modules/supModules"
-
+import store from "./modules/store"
 import storeModule from "./modules/storeModule.js"
 Vue.use(Vuex) //注册
 

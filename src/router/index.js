@@ -69,29 +69,7 @@ export default new Router({
                     meta: { title: '门店商品' }
                 },
                 {
-                    path: '/storeorder',
-                    component: StoreGoods,
-                    meta: { title: '门店订单' }
-                },
-                {
                     path: '/storecomment',
-                    component: StoreGoods,
-                    meta: { title: '门店评论' }
-                },
-                {
-                    path: '/storestatistics',
-                    component: StoreStatistics,
-                    path: '/storeinfo',
-                    component:Dashboard,
-                    meta: { title: '门店信息' }
-                },
-                {
-                    path: '/storemanage',
-                    component:Store ,
-                    meta: { title: '门店商品' }
-                },
-                {
-                    path: '/storesupplier',
                     component: Supplier,
                     meta: { title: '评论管理' }
                 },
@@ -101,7 +79,7 @@ export default new Router({
                     meta: { title: '服务管理' }
                 },
                 {
-                    path: '/storeusers',
+                    path: '/storeorder',
                     component: Order,
                     meta: { title: '订单管理' }
                 },

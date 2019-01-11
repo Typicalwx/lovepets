@@ -1,16 +1,11 @@
-import Vue from 'vue';
-import App from './App.vue';
-import Datails from "../src/components/details"
-import Login from "../src/components/login"
-import Registere from '../src/components/registere'
-import router from './router/index.js';
-import store from "./store/index.js";
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from "./store"
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import './assets/css/icon.css';
 import './components/common/directives';
-
-
 // Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'
@@ -19,6 +14,6 @@ Vue.use(ElementUI, {
 
 new Vue({
     router,
-    store: store,
+    store,
     render: h => h(App)
 }).$mount('#app')

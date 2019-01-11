@@ -4,19 +4,14 @@ import Vuex from "vuex";
 import supplierModules from "./modules/supplierModules"
 import supModules from "./modules/supModules"
 
+import storeModule from "./modules/storeModule.js"
 Vue.use(Vuex) //注册
 
 export default new Vuex.Store({
     strict: true,//严格模式
     modules: {
-
         supplierModules: supplierModules,  //模块化的supplier
-        supModules: supModules
-    },
-    state: {
-    },
-    getters: {},
-    mutations: {},
-    actions: {}
-
+        supModules: supModules,
+        storeModule: storeModule
+    }
 })

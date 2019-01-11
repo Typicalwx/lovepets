@@ -4,70 +4,182 @@ export default {
     //想要全部的命名空间是局部的就加 namespaced: true, 
     namespaced: true,
     state: {
-        student: {},//修改学生的信息
-        studentsData: [],//所有学生信息，
-        pageNation: {},//分页信息
-        updateSwitch: false//修改框的开关
+        storeGood: {},//修改学生的信息
+        storesData: [],//所有门店商品信息，
+        pagination: {},//分页信息
+        search: { type: "", value: "" },
+        storeAddVisible: false,
+        storeUpdateVisible: false,
+        clerkUpdateVisible: false,
+        addClerkVisible: false,
+        storeId: "" || "5c358b2d100838196886b25c",
+        storeInfoData: {},
+        userId: "" || "5c358479100838196886b259",
+        clerkInfor: {},
+        updateClerkIndex: -1,
+        clerkPage: {},
+        clerkData: []//要渲染的店员的数组
     },
     getters: {},
     mutations: {
+        //店员分页
+        setClerkPage(state, value) {
+            state.clerkPage = value
+        },
+        //店员分页数据
+        setClerkData(state, value) {
+            state.clerkData = value
+        },
+        //商品搜索
+        setSearch(state, value) {
+            state.search = value
+        },
         //更新修改的学生信息的方法
-        setStudent(state, student) {
-            state.student = student
+        setStoreGood(state, storeGood) {
+            state.storeGood = storeGood
+        },
+        //更新修改的店员信息的方法
+        setClerkInfor(state, clerkInfor) {
+            state.clerkInfor = clerkInfor
+        },
+        //存店员数组下表
+        setUpdateClerkIndex(state, updateClerkIndex) {
+            state.updateClerkIndex = updateClerkIndex
+        },
+        //存门店用户id
+        setStoreId(state, storeId) {
+            state.storeId = storeId
+        },
+        //存用户id
+        setUserId(state, userId) {
+            state.userId = userId
         },
         //更新所有的学生信息的方法
-        setStudents(state, students) {
-            state.studentsData = students
+        setStoregoods(state, stores) {
+            state.storesData = stores
+        },
+        // 新增店员弹框显示
+        setAddClerkVisible(state, visible) {
+            state.addClerkVisible = visible
+        },
+        // 新增商品弹框显示
+        setStoreAddVisible(state, visible) {
+            state.storeAddVisible = visible
+        },
+        // 修改商品弹框显示
+        setClerkUpdateVisible(state, visible) {
+            state.clerkUpdateVisible = visible
+        },
+        // 修改店员弹框显示
+        setStoreUpdateVisible(state, visible) {
+            state.storeUpdateVisible = visible
         },
         //分页的方法
-        setPageNation(state, pageNation) {
-            state.pageNation = pageNation
+        setPagination(state, pagination) {
+            state.pagination = pagination
         },
-        //更新修改框开关的方法
-        setUpdateSwitch(state, setUpdateSwitch) {
-            state.updateSwitch = setUpdateSwitch
-        }
+        //存门店信息
+        setStoreInfoData(state, storeInfoData) {
+            state.storeInfoData = storeInfoData
+        },
     },
     actions: {
         //commit提交， 用于mutations
         //dispatch 用于actions
-
-        //点击修改通过id获取学生信息
-        setStudent({ commit }, id) {
+        // 获取门店的信息
+        setStoreInfoData(context) {
+            let { userId, search, clerkPage } = context.state;
+            console.log(userId, "userId")
             axios({
+                url: "/stores",
                 method: "get",
-                url: "/students/" + id,
+                params: {
+                    userId: userId || "5c358479100838196886b259",
+                    type: search.type,
+                    value: search.value,
+                }
             }).then(({ data }) => {
-                console.log("data", data)
-                commit("setStudent", data)
+                console.log(data)
+                context.commit("setClerkPage", {
+                    curpage: clerkPage.curpage || 1,
+                    maxpage: Math.ceil(data.clerk.length / 5),
+                    total: data.clerk.length,
+                    eachpage: clerkPage.eachpage || 5
+                });
+                let arr = []
+                for (let i = 0; i < (clerkPage.eachpage || 5); i++) {
+                    arr.push(data.clerk[i]);
+                }
+                context.commit("setClerkData", arr)
+                context.commit("setStoreInfoData", data)
+                context.commit("setStoreId", data._id || "5c358b2d100838196886b25c")
             })
         },
-        //所有学生的信息
-        // setStudents({ commit }, payload = { page: 1, rows: 5 }) {
-        //     axios({
-        //         method: "get",
-        //         url: "/students",
-        //         params: payload
-        //     }).then(({ data }) => {
-        //         console.log(data);
-
-        //         commit("setPageNation", data)
-        //         commit("setStudents", data.rows)
-        //     });
-        // }
-        setStores() {
+        // 修改店员
+        updateClerk(context, payload) {
+            let { storeId, clerkPage } = context.state;
+            console.log(payload, typeof payload)
             axios({
-                url: "/students",
+                url: "/stores/" + storeId,
+                method: "put",
+                data: payload
+            }).then(() => {
+                console.log({ ...payload, _id: storeId }, "xiugai")
+                context.commit("setStoreInfoData", {
+                    ...payload,
+                    clerk: JSON.parse(payload.clerk),
+                    location: JSON.parse(payload.location)
+                })
+                let arr = []
+                let clerk = JSON.parse(payload.clerk)
+                for (let i = (clerkPage.curpage - 1) * clerkPage.eachpage; i < clerkPage.eachpage * clerkPage.curpage; i++) {
+
+                    if (i < clerk.length) {
+                        // console.log("qwefvfdsf")
+                        arr.push(clerk[i]);
+                    } else {
+                        break;
+                    }
+                }
+                console.log(arr,"第二页")
+                context.commit("setClerkData", arr)
+
+                context.commit("setClerkPage", {
+                    curpage: clerkPage.curpage || 1,
+                    maxpage: Math.ceil(JSON.parse(payload.clerk).length / 5),
+                    total: JSON.parse(payload.clerk).length,
+                    eachpage: 5
+                })
+            });
+        },
+        //点击修改通过id获取商品信息
+        setStoreGood({ commit }, id) {
+            axios({
+                method: "get",
+                url: "/storegoods/" + id,
+            }).then(({ data }) => {
+                console.log("data", data)
+                commit("setStoreGood", data)
+            })
+        },
+        //所有商品信息
+        setStoregoods(context) {
+            let { pagination, storeId, search } = context.state;
+            console.log("ddd")
+            console.log(search)
+            axios({
+                url: "/storegoods",
                 method: "get",
                 params: {
                     page: pagination.curpage || 1,
                     rows: pagination.eachpage || 5,
-                    type: search.type || "",
-                    value: search.value || ""
+                    type: search.type,
+                    value: search.value,
+                    storeId: storeId || "5c358b2d100838196886b25c"
                 }
             }).then(({ data }) => {
                 console.log(data, 789);
-                context.commit("setStudents", data.rows)
+                context.commit("setStoregoods", data.rows)
                 context.commit("setPagination", {
                     curpage: data.curpage,
                     maxpage: data.maxpage,

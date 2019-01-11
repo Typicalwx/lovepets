@@ -49,15 +49,6 @@ export default {
   },
   computed: {},
   created() {
-    // axios({
-    //   url: "/getsession",
-    //   method: "get"
-    // }).then(({ data }) => {
-    //   if (data.phone) {
-    //     this.setUserId(data._id);
-    //     this.setStoreInfoData();
-    //   }
-    // });
     this.setUserId("5c358479100838196886b259");
     this.setStoreInfoData();
   },

@@ -16,10 +16,24 @@ export default {
         storeInfoData: {},
         userId: "" || "5c358479100838196886b259",
         clerkInfor: {},
-        updateClerkIndex: -1
+        updateClerkIndex: -1,
+        clerkPage: {},
+        clerkData: []//要渲染的店员的数组
     },
     getters: {},
     mutations: {
+        //店员分页
+        setClerkPage(state, value) {
+            state.clerkPage = value
+        },
+        //店员分页数据
+        setClerkData(state, value) {
+            state.clerkData = value
+        },
+        //商品搜索
+        setSearch(state, value) {
+            state.search = value
+        },
         //更新修改的学生信息的方法
         setStoreGood(state, storeGood) {
             state.storeGood = storeGood
@@ -74,23 +88,36 @@ export default {
         //dispatch 用于actions
         // 获取门店的信息
         setStoreInfoData(context) {
-            let { userId } = context.state;
+            let { userId, search, clerkPage } = context.state;
             console.log(userId, "userId")
             axios({
                 url: "/stores",
                 method: "get",
                 params: {
-                    userId: userId || "5c358479100838196886b259"
+                    userId: userId || "5c358479100838196886b259",
+                    type: search.type,
+                    value: search.value,
                 }
             }).then(({ data }) => {
                 console.log(data)
+                context.commit("setClerkPage", {
+                    curpage: clerkPage.curpage || 1,
+                    maxpage: Math.ceil(data.clerk.length / 5),
+                    total: data.clerk.length,
+                    eachpage: clerkPage.eachpage || 5
+                });
+                let arr = []
+                for (let i = 0; i < (clerkPage.eachpage || 5); i++) {
+                    arr.push(data.clerk[i]);
+                }
+                context.commit("setClerkData", arr)
                 context.commit("setStoreInfoData", data)
                 context.commit("setStoreId", data._id || "5c358b2d100838196886b25c")
             })
         },
         // 修改店员
         updateClerk(context, payload) {
-            let { storeId } = context.state;
+            let { storeId, clerkPage } = context.state;
             console.log(payload, typeof payload)
             axios({
                 url: "/stores/" + storeId,
@@ -102,6 +129,26 @@ export default {
                     ...payload,
                     clerk: JSON.parse(payload.clerk),
                     location: JSON.parse(payload.location)
+                })
+                let arr = []
+                let clerk = JSON.parse(payload.clerk)
+                for (let i = (clerkPage.curpage - 1) * clerkPage.eachpage; i < clerkPage.eachpage * clerkPage.curpage; i++) {
+
+                    if (i < clerk.length) {
+                        // console.log("qwefvfdsf")
+                        arr.push(clerk[i]);
+                    } else {
+                        break;
+                    }
+                }
+                console.log(arr,"第二页")
+                context.commit("setClerkData", arr)
+
+                context.commit("setClerkPage", {
+                    curpage: clerkPage.curpage || 1,
+                    maxpage: Math.ceil(JSON.parse(payload.clerk).length / 5),
+                    total: JSON.parse(payload.clerk).length,
+                    eachpage: 5
                 })
             });
         },
@@ -117,14 +164,17 @@ export default {
         },
         //所有商品信息
         setStoregoods(context) {
-            let { pagination, storeId } = context.state;
+            let { pagination, storeId, search } = context.state;
             console.log("ddd")
+            console.log(search)
             axios({
                 url: "/storegoods",
                 method: "get",
                 params: {
                     page: pagination.curpage || 1,
                     rows: pagination.eachpage || 5,
+                    type: search.type,
+                    value: search.value,
                     storeId: storeId || "5c358b2d100838196886b25c"
                 }
             }).then(({ data }) => {

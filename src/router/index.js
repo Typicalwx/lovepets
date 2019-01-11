@@ -7,6 +7,9 @@ import Statistics from "../components/page/stores/statistics.vue";
 import Supplier from "../components/page/stores/supplier.vue";
 import Users from "../components/page/stores/users.vue";
 
+
+
+
 import StoreGoods from "../components/page/stores/goods/index.vue"
 // import Login from "../components/page/stores/Login.vue"
 export default new Router({

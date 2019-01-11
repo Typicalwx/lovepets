@@ -10,7 +10,7 @@
                 <el-button type="primary" icon="delete" class="handle-add " @click="add">增加宠主</el-button>
                 <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
                 <el-select v-model="type" placeholder="筛选" class="handle-select mr10">
-                   <el-option key="0" label="全部" value=""></el-option>
+                   <el-option key="0" label="全部" value="all"></el-option>
                 <el-option key="1" label="姓名" value="name"></el-option>
                 <el-option key="2" label="电话" value="phone"></el-option>
                 <el-option key="3" label="昵称" value="Nickname"></el-option>
@@ -42,7 +42,16 @@
                 </el-table-column>
             </el-table>
             <div class="pagination">
-                <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="pagination.total" >
+                <!-- <el-pagination background @current-change="handleCurrentChange" layout="prev, pager, next" :total="pagination.total" >
+                </el-pagination> -->
+                 <el-pagination
+               background
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :page-sizes="[5, 10, 20, 30]"
+      :page-size="5" 
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pagination.total">
                 </el-pagination>
             </div>
         </div>
@@ -83,54 +92,54 @@
                 <el-button type="primary" @click="detailsVisible = false">确 定</el-button>
             </span>
         </el-dialog>
-        <!-- 编辑弹出框 -->
+      <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
               <el-alert
               title="警告！！！！作为一名优秀的平台管理员，擅自修改用户信息将承担相应的法律责任，我劝你善良！！！"
               type="error">
               </el-alert>
-            <el-form ref="form" :model="form" label-width="50px">
-                 <el-form-item label="电话">
-                    <el-input v-model="form.phone"></el-input>
+          <el-form ref="form" :model="form" label-width="50px">
+                <el-form-item label="电话">
+                <el-input v-model="form.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名">
-                    <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.name"></el-input>
                 </el-form-item>
                 <el-form-item label="送货地址">
-                    <el-input v-model="form.addr"></el-input>
+                <el-input v-model="form.addr"></el-input>
                 </el-form-item>
                <el-form-item label="区域">
-                    <el-input v-model="form.area"></el-input>
+                <el-input v-model="form.area"></el-input>
                 </el-form-item>
                 <el-form-item label="宠物">
-                         <div v-for="(item,index) in form.pets" :key="index" class="agent-vlist">
-				    <!-- 增加宠物 -->
-              <el-form-item class="center">宠物{{index+1}} </el-form-item>
-              <el-form-item label="宠物名">
-                    <el-input v-model="form.pets[index].name" ></el-input>
+                <div v-for="(item,index) in form.pets" :key="index" class="agent-vlist">
+<!-- 编辑宠物 -->
+                <el-form-item class="center">宠物{{index+1}} </el-form-item>
+                <el-form-item label="宠物名">
+                <el-input v-model="form.pets[index].name" ></el-input>
                 </el-form-item>
-                  <el-form-item label="品类">
-                    <el-input v-model="form.pets[index].variety" ></el-input>
+                <el-form-item label="品类">
+                <el-input v-model="form.pets[index].variety" ></el-input>
                 </el-form-item>
-                  <el-form-item label="种类">
-                    <el-input v-model="form.pets[index].type" ></el-input>
+                <el-form-item label="种类">
+                <el-input v-model="form.pets[index].type" ></el-input>
                 </el-form-item>
-                      <el-form-item label="颜色">
-                    <el-input v-model="form.pets[index].color" ></el-input>
+                <el-form-item label="颜色">
+                <el-input v-model="form.pets[index].color" ></el-input>
                 </el-form-item>
-                  <el-form-item label="出生日期">
-                    <el-input v-model="form.pets[index].birth" ></el-input>
+                <el-form-item label="出生日期">
+                <el-input v-model="form.pets[index].birth" ></el-input>
                 </el-form-item>
-                  <el-form-item label="性格">
-                  <el-input v-model="form.pets[index].character" ></el-input>
+                <el-form-item label="性格">
+                <el-input v-model="form.pets[index].character" ></el-input>
                 </el-form-item>
-            </div>
+               </div>
                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+          </el-form>
+          <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取消</el-button>
                 <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
+          </span>
         </el-dialog>
        <!-- 增加弹出框 -->
         <el-dialog title="增加" :visible.sync="addVisible" width="25%">
@@ -152,8 +161,8 @@
                     <el-input v-model="form.area"></el-input>
                 </el-form-item>
                 <el-form-item label="宠物">
-                  <div v-for="(item,index) in form.pets" :key="index" class="agent-vlist">
-				    <!-- 增加宠物 -->
+                <div v-for="(item,index) in form.pets" :key="index" class="agent-vlist">
+	<!-- 增加宠物 -->
               <el-form-item class="center">宠物{{index+1}} </el-form-item>
               <el-form-item label="宠物名">
                     <el-input v-model="form.pets[index].name" ></el-input>
@@ -173,10 +182,10 @@
                   <el-form-item label="性格">
                   <el-input v-model="form.pets[index].character" ></el-input>
                 </el-form-item>
-				    <el-button type="plain" size="mini" class="center" @click="delet(index)">删除</el-button>
-            </div>
-            <el-button type="primary" icon="el-icon-edit" @click="addPets">增加宠物</el-button>
-            </el-form-item>
+            <el-button type="plain" size="mini" class="center" @click="delet(index)">删除</el-button>
+               </div>
+                <el-button type="primary" icon="el-icon-edit" @click="addPets">增加宠物</el-button>
+                </el-form-item>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -195,8 +204,13 @@
     </div>
 </template>
 <script>
+/* eslint-disable */
 import axios from "axios";
-import { mapActions, mapMutations, mapState } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+// import { mapActions, mapMutations, mapState } from "vuex";
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
+  "petowner" // 模块名
+);
 // import { mapState } from "vuex";
 // import Pet from "../common/Pet.vue";
 // import InputElement from "../common/InputElement.vue";
@@ -221,19 +235,15 @@ export default {
         phone: "",
         pwd: ""
       },
+      
       idx: -1,
       id: ""
     };
   },
   created() {
-    // this.getData();
-    // this.show();
-    // this.pagination = pagination;
-    // console.log
-    console.log(this.pagination);
     this.setPetowners();
+    console.log(this.petowners)
   },
-
   computed: {
     ...mapState(["petowners", "search", "pagination"]),
     type: {
@@ -241,8 +251,12 @@ export default {
         return this.search.type;
       },
       set(value) {
+        
+        if(value=="all"){
+          value=null;
+        }
         console.log(value);
-        this.$store.commit("setType", value);
+        this.$store.commit("petowner/setType", value);
       }
     },
     value: {
@@ -250,11 +264,10 @@ export default {
         return this.search.value;
       },
       set(value) {
-        this.$store.commit("setValue", value);
+        this.$store.commit("petowner/setValue", value);
       }
     }
   },
-
   methods: {
     ...mapMutations(["setType", "setValue", "setPagination"]),
     ...mapActions(["setPetowners"]),
@@ -263,9 +276,7 @@ export default {
         method: "get",
         url: "/petowners"
       }).then(({ data }) => {
-        // console.log(data);
         this.petowners = data;
-        // console.log(this.petowners);
       });
     },
     showById(id) {
@@ -280,6 +291,9 @@ export default {
     handleCurrentChange(val) {
       this.setPagination({ ...this.pagination, curpage: val });
       this.setPetowners({ val, rows: this.pagination.eachpage });
+    },
+    handleSizeChange(){
+
     },
     // 获取 easy-mock 的模拟数据
     getData() {
@@ -308,7 +322,7 @@ export default {
     handleEdit(index, row) {
       this.idx = index;
       this.id = row._id;
-      // console.log(row);
+      console.log(row);
       this.form = row;
       this.editVisible = true;
     },
@@ -364,18 +378,16 @@ export default {
           pets: JSON.stringify(this.form.pets),
           pwd: this.form.pwd
         }
-      }).then(data => {
-        this.show();
+      }).then(()=> {
+        // this.$store.commit("setPetowner", value);
+         this.setPetowners();
         // console.log(data);
       });
-      // this.form=
     },
     // 删除
     handleDelete(index, row) {
       this.idx = index;
       this.id = row._id;
-      // console.log(row);
-
       this.delVisible = true;
     },
     delAll() {
@@ -398,7 +410,7 @@ export default {
         method: "delete",
         url: "/petowners/" + this.id
       }).then(({ data }) => {
-        this.show();
+        this.setPetowners();
       });
 
       // this.tableData.splice(this.idx, 1);

@@ -1,10 +1,10 @@
 
 import Vue from "vue";
 import Vuex from "vuex";
-Vue.use(Vuex);
 import axios from "axios";
-export default new Vuex.Store({
-    strict: true,
+export default {
+    // strict: true,
+    namespaced:true,
     state: {
         updateVisible: false,
         petowners: [],
@@ -15,10 +15,6 @@ export default new Vuex.Store({
         setVisible(state, Visible) {
             state.updateVisible = Visible;
         },
-        setStudent(state, student) {
-            state.student = student;
-        },
-
         setPagination(state, pagination) {
             state.pagination = pagination;
         },
@@ -32,24 +28,10 @@ export default new Vuex.Store({
         setPetowner(state, petowners) {
             state.petowners = petowners;
         },
-
-
-
     },
     actions: {
-        // setStudent(context, id) {
-        //     axios({
-        //         url: "/students/" + id,
-        //         method: "get"
-        //     }).then(({ data }) => {
-
-        //         context.commit("setStudent", data)
-        //     })
-        // },
         setPetowners(context) {
-
             let { pagination, search } = context.state;
-            // console.log(pagination)
             axios({
                 url: "/petowners",
                 method: "get",
@@ -69,6 +51,6 @@ export default new Vuex.Store({
                 });
             });
         },
-   
+
     }
-})
+}

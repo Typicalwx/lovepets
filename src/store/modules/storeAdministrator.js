@@ -1,13 +1,11 @@
-
-import Vue from "vue";
-import Vuex from "vuex";
-Vue.use(Vuex);
+// import Vue from "vue";
+// import Vuex from "vuex";
 import axios from "axios";
-export default new Vuex.Store({
-    strict: true,
+export default ({
+    // strict: true,
+    namespaced: true,
     state: {
-        updateVisible: false,
-        petowners: [],
+        storeAdministrator: [],
         pagination: {},
         search: { type: "", value: "" },
     },
@@ -15,10 +13,9 @@ export default new Vuex.Store({
         setVisible(state, Visible) {
             state.updateVisible = Visible;
         },
-        setStudent(state, student) {
-            state.student = student;
+        setStoreAdmin(state, storeAdministrator) {
+            state.storeAdministrator = storeAdministrator;
         },
-
         setPagination(state, pagination) {
             state.pagination = pagination;
         },
@@ -27,31 +24,16 @@ export default new Vuex.Store({
         },
         setValue(state, value) {
             state.search.value = value;
-        },
-        // 宠主管理
-        setPetowner(state, petowners) {
-            state.petowners = petowners;
-        },
-
-
+        }
 
     },
     actions: {
-        // setStudent(context, id) {
-        //     axios({
-        //         url: "/students/" + id,
-        //         method: "get"
-        //     }).then(({ data }) => {
 
-        //         context.commit("setStudent", data)
-        //     })
-        // },
-        setPetowners(context) {
-
+        setStoreAdministrator(context) {
             let { pagination, search } = context.state;
             // console.log(pagination)
             axios({
-                url: "/petowners",
+                url: "/storeAdministrator/all",
                 method: "get",
                 params: {
                     page: pagination.curpage || 1,
@@ -61,7 +43,7 @@ export default new Vuex.Store({
                 }
             }).then(({ data }) => {
                 console.log(data)
-                context.commit("setPetowner", data.rows)
+                context.commit("setStoreAdmin", data.rows)
                 context.commit("setPagination", {
                     curpage: data.curpage,
                     maxpage: data.maxpage,
@@ -69,6 +51,5 @@ export default new Vuex.Store({
                 });
             });
         },
-   
     }
 })

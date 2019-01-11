@@ -9,7 +9,7 @@ import Store from "../components/page/store.vue";
 import Supplier from "../components/page/supplier.vue";
 import Users from "../components/page/users.vue";
 import Petowners from "../components/page/petowners/petowners.vue";
-import ManageStore from "../components/page/manageStore/manageStore.vue";
+import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator.vue";
 import PetPage from "../components/common/petowner/petPage.vue";
 export default new Router({
     routes: [
@@ -28,7 +28,7 @@ export default new Router({
                 },
                 {
                     path: '/store',
-                    component: ManageStore,
+                    component: StoreAdministrator,
                     meta: { title: '门店管理' }
                 },
                 {

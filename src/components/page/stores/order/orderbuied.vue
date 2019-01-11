@@ -2,58 +2,63 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 服务表格</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 已完成订单表格</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-                
                
-                <el-select v-model="select_cate" placeholder="筛选搜索项" class="handle-select mr10">
-                     <el-option key="1" label="全部" value=""></el-option>
-                    <el-option key="2" label="服务类型" value="servetype"></el-option>
-                    <el-option key="3" label="宠物类型" value="pets"></el-option>
+                <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
+                    <el-option key="1" label="广东省" value="广东省"></el-option>
+                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
                 </el-select>
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="search">搜索服务</el-button>
-                <Serveadd></Serveadd>
-                <Serveupdate></Serveupdate>
+                <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
-            <el-table :data="serveitem" border class="table"  @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column align="center" prop="servetype" label="服务类型" sortable width="110">
+              <el-table :data="orderitembuied"  border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+                <el-table-column align="center"  label="发货状态" width="100">
+                      <template slot-scope="scope">      
+                    <el-tag v-if="scope.row.statebuy" type="success">已发货</el-tag>
+                    <el-tag v-else type="danger">未发货</el-tag>
+                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="pets" label="宠物类型" width="120">
+                <el-table-column align="center"  label="购买状态" width="100">
+                      <template slot-scope="scope">      
+                    <el-tag v-if="scope.row.butornobuy" type="success">已付款</el-tag>
+                    <el-tag v-else type="danger">未付款</el-tag>
+                     </template>
                 </el-table-column>
-                <el-table-column align="center" prop="severname" label="服务名称">
+                <el-table-column align="center" prop="petmaster.name" label="买家"  width="130">
                 </el-table-column>
-                <el-table-column align="center" prop="guige" label="适用规格">
+                  <el-table-column align="center" prop="petmaster.phone" label="手机号"  width="130">
                 </el-table-column>
-                <el-table-column align="center" prop="servetime" label="预约时间">
+                 <el-table-column align="center" prop="petmaster.addr" label="买家地址"  >
                 </el-table-column>
-                <el-table-column align="center" prop="serveresource" label="服务规格">
+                <el-table-column align="center" prop="_id" label="订单编号"  width="260">
                 </el-table-column>
-                  <el-table-column align="center" prop="price" label="价格">
+                <el-table-column align="center" class="el-icon-time"   label="购买时间" width="250">
+                     <template slot-scope="scope">
+        <i class="el-icon-time"></i>
+        <span style="margin-left: 10px">{{ scope.row.buytime }}</span>
+      </template>
                 </el-table-column>
-                <el-table-column label="操作" width="180" align="center">
-                    <template slot-scope="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                    </template>
+                  <el-table-column align="center" prop="ordertotal1" label="总金额" >
+                </el-table-column>
+                  
+                  <el-table-column align="center" prop="orderarr[0].shangpingname" label="商品详情" >
                 </el-table-column>
             </el-table>
-            <div class="pagination">
+             <div class="pagination">
                  <el-pagination
         @prev-click="prevpage"
         @next-click="nextpage"
         @current-change="currentchange"
         background
-        :current-page="pagenation.curpage "
+        :current-page="pagenationed.curpage "
         layout="prev, pager, next,sizes,jumper"
         :page-sizes="[5,10]"
-        :total="pagenation.total"
-        :page-size="pagenation.eachpage"
+        :total="pagenationed.total"
+        :page-size="pagenationed.eachpage"
         @size-change="sizechange"
         >
     </el-pagination>
@@ -95,19 +100,17 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
-import Serveadd from "./Serveadd";
-import Serveupdate from "./Serveupdate";
 export default {
   name: "basetable",
   data() {
     return {
-      curpage: "",
-      tableData: [1, 2],
-      cur_page: 1,
-      multipleSelection: [],
+     
+  
+      
+  
       select_cate: "",
       select_word: "",
-      del_list: [],
+  
       is_search: false,
       editVisible: false,
       delVisible: false,
@@ -116,14 +119,11 @@ export default {
         date: "",
         address: ""
       },
-      idx: -1
+ 
     };
   },
-  created() {
-    this.show();
-  },
   computed: {
-    ...mapState(["serveitem", "pagenation"]),
+    ...mapState(["orderitembuied","pagenationed"]),
     data() {
       return this.tableData.filter(d => {
         let is_del = false;
@@ -145,35 +145,28 @@ export default {
       });
     }
   },
-  components: {
-    Serveadd,
-    Serveupdate
-  },
   methods: {
-    ...mapMutations(["setupdateeditVisible", "settype", "settext"]),
-    ...mapActions(["updatserve", "show"]),
-
+       ...mapActions(["showorder", "showorderbuied"]),
     // 分页导航
     prevpage(page) {
       console.log(page);
-      this.show({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage });
     },
     nextpage(page) {
-      this.show({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage });
     },
     currentchange(page) {
-      this.show({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage });
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.show({ page: this.pagenation.curpage, rows });
+      this.showorderbuied({ page: this.pagenationed.curpage, rows });
     },
-    // 获取 easy-mock 的模拟数据
+
+
     search() {
-      this.settype(this.select_cate);
-      this.settext(this.select_word);
-      this.show({ page: 1, rows: 5 });
+      this.is_search = true;
     },
     formatter(row, column) {
       return row.address;
@@ -182,45 +175,26 @@ export default {
       return row.tag === value;
     },
     handleEdit(index, row) {
-      this.updatserve(row._id);
-      this.setupdateeditVisible(true);
+      this.idx = index;
+      const item = this.tableData[index];
+      this.form = {
+        name: item.name,
+        date: item.date,
+        address: item.address
+      };
+      this.editVisible = true;
     },
     handleDelete(index, row) {
-      axios({
-        method: "delete",
-        url: "/servetime/" + row._id
-      }).then(res => {
-        axios({
-          method: "get",
-          url: "/servetime",
-          params: {
-            page: this.pagenation.curpage,
-            rows: this.pagenation.eachpage
-          }
-        }).then(res => {
-          console.log(res.data.rows)
-          if (res.data.rows.length == 0) {
-            this.show({
-              page: this.pagenation.curpage - 1,
-              rows: this.pagenation.eachpage
-            });
-          } else {
-            this.show({
-              page: this.pagenation.curpage,
-              rows: this.pagenation.eachpage
-            });
-          }
-        });
-      });
+      this.idx = index;
+      this.delVisible = true;
     },
     delAll() {
-      //待解决
-      const length = this.serveitem.length;
+      const length = this.multipleSelection.length;
       let str = "";
-      this.del_list = this.del_list.concat(this.serveitem);
-      // for (let i = 0; i < length; i++) {
-      //     str += this.serveitem[i].name + ' ';
-      // }
+      this.del_list = this.del_list.concat(this.multipleSelection);
+      for (let i = 0; i < length; i++) {
+        str += this.multipleSelection[i].name + " ";
+      }
       this.$message.error("删除了" + str);
       this.multipleSelection = [];
     },
@@ -246,7 +220,6 @@ export default {
 <style scoped>
 .handle-box {
   margin-bottom: 20px;
-  display: flex;
 }
 
 .handle-select {
@@ -272,4 +245,3 @@ export default {
   margin-right: 10px;
 }
 </style>
-

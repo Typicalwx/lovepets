@@ -4,23 +4,31 @@ var state ={
     serveitem:[],
     updateserveitem:[],
     pagenation:{},
+    pagenationbuy:{},
+    pagenationed:{},
     type:"",
     text:"",
     updateeditVisible:false,
     a:null,
     data1:"",
-    data2:""
+    data2:"",
+    orderitem:[],//存储未订单数组，
+    weigoummai:false,
+    orderitembuied:[],//存储已订单数组,
+    contactarr:[],
+    spanArr:[],
+    position:0
 }
 var getters={
 
 }
 var mutations ={
-    //修改
+    //修改服务
     setupdatserve(state,updateserveitem){
         state.updateserveitem = updateserveitem
 
     },
-    // //获取所有服务
+    //服务相关方法
     setserveitem(state,serveitem){
         state.serveitem=serveitem
     },
@@ -48,33 +56,85 @@ var mutations ={
     setdata2(state,data2){
         state.data2 = data2
     },
-
-
-
     setupdateeditVisible(state,updateeditVisible){
         state.updateeditVisible = updateeditVisible
+    },
+
+    //订单相关方法
+    setweigoummai(state,weigoummai){//开关
+        state.weigoummai=weigoummai
+    },
+    setorderitem(state,orderitem){//未完成订单
+        state.orderitem = orderitem
+    },
+    setpagenationbuy(state,pagenationbuy){
+        state.pagenationbuy = pagenationbuy   
+    },
+    setorderitembuied(state,orderitembuied){//已完成订单
+        state.orderitembuied = orderitembuied
+    },
+    setpagenationed(state,pagenationed){
+        state.pagenationed = pagenationed
+    },
+    setcontactarr(state,contactarr){
+        state.contactarr=contactarr
     }
+ 
 }
 var actions ={
 
-//订单
+//查询未完成订单
+showbyid({commit},id,){ 
+    axios({
+        method:"get",
+        url:"/orderbuy/"+ id
+    }).then((res)=>{
+        //如何渲染
+        let arr =[];
+        arr = [...res.data.ordergoodarr,...res.data.orderservearr];
+        console.log(arr)
+        commit("setcontactarr",arr);
+    })
+},
+//未完成订单
     showorder({state,commit},payload={page:1,rows:5}){
-        console.log(1)
         let type  = state.type;
         let text  = state.text;
             axios({
                 method: "get",
-                url: "/order",
+                url: "/orderbuy",
                 params:{
                     ...payload,
                     type,
                     text
                 }
             }).then(res=>{
-                commit("setserveitem",res.data.rows);
-                commit("setpagenation",res.data)
+                //根据不同商家的id区分订单，需要同商家id对应（未完成）
+                commit("setorderitem",res.data.rows);
+                commit("setpagenationbuy",res.data)
             })
     },
+//已完成订单
+showorderbuied({state,commit},payload={page:1,rows:5}){
+    console.log(1)
+    let type  = state.type;
+    let text  = state.text;
+        axios({
+            method: "get",
+            url:"/orderbuy/orderbuied",
+            params:{
+                ...payload,
+                type,
+                text
+            }
+        }).then(res=>{
+            //根据不同商家的id区分订单，需要同商家id对应（未完成）
+            console.log(res)
+            commit("setorderitembuied",res.data.rows);
+            commit("setpagenationed",res.data)
+        })
+},
+
 
 //服务
     show({state,commit},payload={page:1,rows:5}){
@@ -90,6 +150,7 @@ var actions ={
                     text
                 }
             }).then(res=>{
+                console.log(res.data.rows)
                 commit("setserveitem",res.data.rows);
                 commit("setpagenation",res.data)
             })

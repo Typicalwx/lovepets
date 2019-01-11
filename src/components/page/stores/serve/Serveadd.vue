@@ -125,6 +125,7 @@ export default {
                 serveresource,
                 price:this.form.price,
                 desc:this.form.desc,
+                goodState:2,
                 storeId:"11"
             }
         }).then((res)=>{

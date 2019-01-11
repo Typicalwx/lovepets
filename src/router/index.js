@@ -31,7 +31,7 @@ import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
 
 export default new Router({
-    mode:"history",
+    mode: "history",
     routes: [
         {
             path: '/suppliergoods',
@@ -91,7 +91,7 @@ export default new Router({
                 },
                 {
                     path: '/storestatistics',
-                    component:StoreStatistics,
+                    component: StoreStatistics,
                     meta: { title: '统计' }
                 },
 
@@ -123,7 +123,7 @@ export default new Router({
                 },
                 {
                     path: '/statisticsmoney',
-                    component:StatisticsMoney,
+                    component: StatisticsMoney,
                     meta: { title: '统计' }
                 },
 
@@ -148,8 +148,6 @@ export default new Router({
         {
             path: "/detailses",
             component: Detailses
-        }
-
         }
     ]
 })

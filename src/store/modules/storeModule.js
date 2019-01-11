@@ -123,20 +123,13 @@ export default {
                 });
                 let arr = []
                 for (let i = 0; i < (clerkPage.eachpage || 5); i++) {
-<<<<<<< HEAD
-=======
                    
->>>>>>> five
                     if (i < data.clerk.length) {
                         // console.log("qwefvfdsf")
                         arr.push(data.clerk[i]);
                     } else {
                         break;
                     }
-<<<<<<< HEAD
-
-=======
->>>>>>> five
                 }
                 context.commit("setClerkData", arr)
                 context.commit("setStoreInfoData", data)

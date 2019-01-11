@@ -75,11 +75,12 @@ export default {
     valuedataPhone(rule, value, callback){
       axios({
         method:"get",
-        url:"/users",
+        url:"/users/phone",
         params:{
           phone:value
         }
       }).then(({data})=>{
+        console.log(data)
         if(data.status==0){
           callback("手机号重复")
         }else{
@@ -130,15 +131,10 @@ export default {
   }
 </script>
 <style scoped>
-body{
-  /* background-image: url() */
-}
+
 .box-card{
 width: 500px;
 margin: auto;
-position: absolute;
-right: 400px;
-bottom: 400px;
 }
 .juese{
   width: 100%;

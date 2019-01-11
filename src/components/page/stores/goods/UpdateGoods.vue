@@ -118,181 +118,145 @@ export default {
     ...mapState(["storeUpdateVisible", "storeGood"]),
     updateDialogVisible: {
       get() {
-        console.log(this.storeUpdateVisible);
         return this.storeUpdateVisible;
       },
       set(storeUpdateVisible) {
-        console.log("updateSwitch", storeUpdateVisible);
         this.setStoreUpdateVisible(storeUpdateVisible);
       }
     },
     name: {
       get() {
-        console.log("name", this.storeGood.name);
         return this.storeGood.name || "";
       },
       set(value) {
-        console.log("headImssssgSrc", value);
         this.setStoreGood({ ...this.storeGood, name: value });
       }
     },
     title: {
       get() {
-        console.log("title", this.storeGood.title);
         return this.storeGood.title;
       },
       set(value) {
-        console.log("title", value);
         this.setStoreGood({ ...this.storeGood, title: value });
       }
     },
     type: {
       get() {
-        console.log("type", this.storeGood.type);
         return this.storeGood.type;
       },
       set(value) {
-        console.log("type", value);
         this.setStoreGood({ ...this.storeGood, type: value });
       }
     },
     method: {
       get() {
-        console.log("method", this.storeGood.method);
         return this.storeGood.method;
       },
       set(value) {
-        console.log("method", value);
         this.setStoreGood({ ...this.storeGood, method: value });
       }
     },
     applySfc: {
       get() {
-        console.log("applySfc", this.storeGood.applySfc);
         return this.storeGood.applySfc;
       },
       set(value) {
-        console.log("applySfc", value);
         this.setStoreGood({ ...this.storeGood, applySfc: value });
       }
     },
     exclusiveSfc: {
       get() {
-        console.log("exclusiveSfc", this.storeGood.exclusiveSfc);
         return this.storeGood.exclusiveSfc;
       },
       set(value) {
-        console.log("exclusiveSfc", value);
         this.setStoreGood({ ...this.storeGood, exclusiveSfc: value });
       }
     },
     packSfc: {
       get() {
-        console.log("packSfc", this.storeGood.packSfc);
         return this.storeGood.packSfc;
       },
       set(value) {
-        console.log("packSfc", value);
         this.setStoreGood({ ...this.storeGood, packSfc: value });
       }
     },
     flavor: {
       get() {
-        console.log("flavor", this.storeGood.flavor);
         return this.storeGood.flavor;
       },
       set(value) {
-        console.log("flavor", value);
         this.setStoreGood({ ...this.storeGood, flavor: value });
       }
     },
     specialFuc: {
       get() {
-        console.log("specialFuc", this.storeGood.specialFuc);
         return this.storeGood.specialFuc;
       },
       set(value) {
-        console.log("specialFuc", value);
         this.setStoreGood({ ...this.storeGood, specialFuc: value });
       }
     },
     placeOfOrigin: {
       get() {
-        console.log("placeOfOrigin", this.storeGood.placeOfOrigin);
         return this.storeGood.placeOfOrigin;
       },
       set(value) {
-        console.log("placeOfOrigin", value);
         this.setStoreGood({ ...this.storeGood, placeOfOrigin: value });
       }
     },
     date: {
       get() {
-        console.log("date", this.storeGood.date);
         return this.storeGood.date;
       },
       set(value) {
-        console.log("date", value);
         this.setStoreGood({ ...this.storeGood, date: value });
       }
     },
     features: {
       get() {
-        console.log("features", this.storeGood.features);
         return this.storeGood.features;
       },
       set(value) {
-        console.log("features", value);
         this.setStoreGood({ ...this.storeGood, features: value });
       }
     },
     shelfLife: {
       get() {
-        console.log("shelfLife", this.storeGood.shelfLife);
         return this.storeGood.shelfLife;
       },
       set(value) {
-        console.log("shelfLife", value);
         this.setStoreGood({ ...this.storeGood, shelfLife: value });
       }
     },
     total: {
       get() {
-        console.log("total", this.storeGood.total);
         return this.storeGood.total;
       },
       set(value) {
-        console.log("total", value);
         this.setStoreGood({ ...this.storeGood, total: value });
       }
     },
     newPrice: {
       get() {
-        console.log("newPrice", this.storeGood.newPrice);
         return this.storeGood.newPrice;
       },
       set(value) {
-        console.log("newPrice", value);
         this.setStoreGood({ ...this.storeGood, newPrice: value });
       }
     },
     price: {
       get() {
-        console.log("price", this.storeGood.price);
         return this.storeGood.price || "";
       },
       set(value) {
-        console.log("price", value);
         this.setStoreGood({ ...this.storeGood, price: value });
       }
     },
     images: {
       get() {
-        console.log("images", this.storeGood.images);
         return this.storeGood.images || [];
       },
       set(value) {
-        console.log("images", value);
         this.setStoreGood({ ...this.storeGood, images: value });
       }
     }

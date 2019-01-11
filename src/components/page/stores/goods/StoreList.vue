@@ -1,23 +1,18 @@
 <template>
   <div class="table">
-    <!-- <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-lx-cascades"></i> 
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>-->
     <div class="container">
       <div class="handle-box">
         <el-button @click="addStoreGood" class="handle-del mr10">新增商品</el-button>
         <el-button @click="addStoreGood" class="handle-del mr10">从供应商添加商品</el-button>
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
-          <el-option key="1" label="广东省" value="广东省"></el-option>
-          <el-option key="2" label="湖南省" value="湖南省"></el-option>
+        <el-select v-model="type" placeholder="搜索属性" class="handle-select mr10">
+          <el-option key="1" label="名字" value="name"></el-option>
+          <el-option key="2" label="类型" value="type"></el-option>
+           <el-option key="3" label="产地" value="placeOfOrigin"></el-option>
+            <el-option key="4" label="推广标题" value="title"></el-option>
         </el-select>
-        <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="search">搜索</el-button>
+        <el-input v-model="value" placeholder="筛选关键词" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="search" @click="searchGoods">搜索</el-button>
       </div>
       <el-table
         :data="storesData"
@@ -103,7 +98,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(["storesData", "pagination"]),
+    ...mapState(["storesData", "pagination", "search"]),
+    type: {
+      get() {
+        return this.search.type;
+      },
+      set(value) {
+        this.setSearch({ ...this.search, type: value });
+      }
+    },
+    value: {
+      get() {
+        return this.search.value;
+      },
+      set(value) {
+        console.log("搜索类型", value);
+        this.setSearch({ ...this.search, value: value });
+      }
+    }
   },
   methods: {
     // 分页导航
@@ -111,15 +123,18 @@ export default {
       "setStoreAddVisible",
       "setStoreGood",
       "setStoreUpdateVisible",
-      "setPagination"
+      "setPagination",
+      "setSearch"
     ]),
     ...mapActions(["setStoregoods", "setStoreGood"]),
     // 点击新增商品
     addStoreGood() {
       this.setStoreAddVisible(true);
     },
-    search() {
-      this.is_search = true;
+    searchGoods() {
+      console.log("123")
+      // this.is_search = true;
+      this.setStoregoods();
     },
     formatter(row, column) {
       return row.address;

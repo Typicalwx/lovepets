@@ -28,7 +28,7 @@ import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
 import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
-
+// import Petowners from "../components/page/"
 
 import PetLove from "../components/page/petowners/petowners"
 
@@ -57,13 +57,13 @@ export default new Router({
                     component: Supplier,
                     meta: { title: '供应商详情' }
                 },
-                {
-                    // PetPage
-                    // Petowners
-                    path: '/petowners',
-                    component: Petowners,
-                    meta: { title: '宠主管理' }
-                },
+                // {
+                //     // PetPage
+                //     // Petowners
+                //     path: '/petowners',
+                //     component: Petowners,
+                //     meta: { title: '宠主管理' }
+                // },
                 {
                     path: '/statistics',
                     component: Statistics,

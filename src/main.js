@@ -1,16 +1,11 @@
-
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
-// import store from './store/petowner/petowner';
-import store from './store';
-
+import store from "./store"
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import './assets/css/icon.css';
 import './components/common/directives';
-
 
 // Vue.config.productionTip = false
 Vue.use(ElementUI, {
@@ -19,7 +14,8 @@ Vue.use(ElementUI, {
 
 
 new Vue({
+    store,
     router,
-    store: store,
+    store,
     render: h => h(App)
 }).$mount('#app')

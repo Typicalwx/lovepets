@@ -75,11 +75,12 @@ export default {
     valuedataPhone(rule, value, callback){
       axios({
         method:"get",
-        url:"/users",
+        url:"/users/phone",
         params:{
           phone:value
         }
       }).then(({data})=>{
+        console.log(data)
         if(data.status==0){
           callback("手机号重复")
         }else{
@@ -118,11 +119,11 @@ export default {
             state :"0"
             }
           }).then(()=>{
-            alert("注册成功");
+            this.$alert("注册成功");
             this.$router.push("/login");
             })
         }else{
-          this.$alert("错误","失败")
+          this.$alert("有错误","注册失败")
         }
       })
     }
@@ -130,15 +131,10 @@ export default {
   }
 </script>
 <style scoped>
-body{
-  /* background-image: url() */
-}
+
 .box-card{
 width: 500px;
 margin: auto;
-position: absolute;
-right: 200px;
-bottom: 200px;
 }
 .juese{
   width: 100%;

@@ -7,6 +7,7 @@ export default {
         suppliergood: {},//单个商品
         addVisible: false, //增加面板开关
         updateVisible: false,//修改面板开关
+        pageNation: {}//分页信息
         // updateId: "",
     },
     getters: {},
@@ -23,10 +24,10 @@ export default {
         setUpdateVisible(state, updateVisible) {
             state.updateVisible = updateVisible
         },
-        //保存修改的id
-        // setUpdateId(state, updateId) {
-        //     state.updateId = updateId
-        // },
+        //分页的方法
+        setPageNation(state, pageNation) {
+            state.pageNation = pageNation
+        },
         //保存通过id 查取到的商品
         setSuppliergood(state, data) {
             state.suppliergood = data
@@ -35,13 +36,15 @@ export default {
     },
     actions: {
         //show
-        setSuppliergoods({ commit }) {
+        setSuppliergoods({ commit }, payload = { page: 1, rows: 5, supplierId: null }) {
             axios({
                 method: "get",
                 url: "/suppliergoods",
+                params: payload
             }).then(({ data }) => {
-                // console.log("data", data)
-                commit("setSuppliergoods", data)
+                console.log("123", data)
+                commit("setSuppliergoods", data.rows)
+                commit("setPageNation", data)
             })
         },
 

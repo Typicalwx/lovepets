@@ -11,13 +11,21 @@
       <div class="handle-box">
         <el-button class="el-icon-plus" type="primary" @click="addBtn">新增</el-button>
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+        <el-select class="search" v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
         <el-input
           v-model="select_word"
           placeholder="筛选关键词"
-          style="width:300px;margin-left:20px"
+          style="width:200px;margin-left:0"
           class="handle-input mr10"
         ></el-input>
-        <el-button type="primary" icon="search" @click="search">搜索</el-button>
+        <el-button type="primary" style="width:80px;margin-left:0" icon="search" @click="search">搜索</el-button>
       </div>
       <el-table
         :data="suppliergoods"
@@ -58,12 +66,15 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination">
+
+      <div class="block">
         <el-pagination
-          background
+          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="1000"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="pageNation.eachpage"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="pageNation.total"
         ></el-pagination>
       </div>
     </div>
@@ -82,11 +93,25 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
-  "supplierModules" // 模块名
+  "supplierModules" // 供应商品模块名
+);
+const { mapActions: setSupId, mapState: supId } = createNamespacedHelpers(
+  "supModules" // 供应商详情模块名
 );
 export default {
+  created() {
+    // axios({
+    //   method: "get",
+    //   url: "/supplier"
+    // }).then(({ data }) => {
+    //   console.log("供应商详情id", data[0]._id);
+    //   this.supId = data[0]._id;
+    // });
+    this.setSuppliers();
+  },
   computed: {
-    ...mapState(["suppliergoods"])
+    ...mapState(["suppliergoods", "pageNation"]),
+    ...supId(["supId"])
   },
 
   name: "basetable",
@@ -107,13 +132,26 @@ export default {
         date: "",
         address: ""
       },
-      idx: -1
+      idx: -1,
+      options: [
+        {
+          value: "name",
+          label: "商品名"
+        },
+        {
+          value: "type",
+          label: "商品类型"
+        }
+      ],
+      value: "name"
+      // supId: "" //供应商详情id
     };
   },
 
   methods: {
     ...mapActions(["setSuppliergoods", "setSuppliergood"]),
     ...mapMutations(["setAddVisible", "setUpdateVisible"]),
+    ...setSupId(["setSuppliers"]),
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
         return "warning-row";
@@ -135,7 +173,7 @@ export default {
       }).then(({ data }) => {
         this.$message.success("删除成功");
         this.delVisible = false;
-        this.setSuppliergoods(); //重新加载所有数据
+        this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId }); //重新加载所有数据
       });
     },
     //修改按钮
@@ -145,20 +183,43 @@ export default {
 
       this.setSuppliergood(studentData._id);
     },
-
     //新增按钮打开模板
     addBtn() {
       this.setAddVisible(true);
     },
     // ```````````````````````````````````````````````
     // 分页导航
-    handleCurrentChange(val) {
-      this.cur_page = val;
-      this.getData();
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.setSuppliergoods({ page: 1, rows: val, supplierId: this.supId });
     },
-
+    handleCurrentChange(val) {
+      console.log(this.pageNation.eachpage);
+      this.setSuppliergoods({
+        page: val,
+        rows: this.pageNation.eachpage,
+        supplierId: this.supId
+      });
+      console.log(`当前页: ${val}`);
+    },
+    //搜索
     search() {
       this.is_search = true;
+      console.log("选择", this.value);
+      console.log("李雷", this.select_word);
+      axios({
+        method: "get",
+        url: "/suppliergoods",
+        params: {
+          name: this.value,
+          value: this.select_word,
+          supplierId: this.supId
+        }
+      }).then(({ data }) => {
+        console.log("结果", data);
+        this.$store.commit("supplierModules/setSuppliergoods", data);
+      });
+      // this.setSuppliergoods(null,{ name: this.value, value: this.select_word });
     },
     formatter(row, column) {
       return row.address;
@@ -216,5 +277,9 @@ export default {
 }
 .red {
   color: #ff0000;
+}
+.search {
+  margin-left: 20px;
+  width: 89px;
 }
 </style>

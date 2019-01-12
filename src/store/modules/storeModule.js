@@ -130,6 +130,7 @@ export default {
                     } else {
                         break;
                     }
+
                 }
                 context.commit("setClerkData", arr)
                 context.commit("setStoreInfoData", data)

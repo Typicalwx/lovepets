@@ -1,5 +1,5 @@
 <template>
-    <el-input v-model="input" placeholder="请输入内容"></el-input>
+    <h1>用户管理</h1>
 </template>
 
 <script>

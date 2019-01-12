@@ -171,9 +171,9 @@ export default {
     },
     // 获取 easy-mock 的模拟数据
     search() {
-      this.settype(this.select_cate);
-      this.settext(this.select_word);
-      this.show({ page: 1, rows: 5 });
+        this.settype(this.select_cate);
+        this.settext(this.select_word);
+        this.show({ page: 1, rows: 5 });
     },
     formatter(row, column) {
       return row.address;

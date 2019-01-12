@@ -7,15 +7,16 @@
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="select_cate1" placeholder="筛选状态" class="handle-select mr10">
+                <el-select v-model="select_cate" placeholder="筛选状态" class="handle-select mr10">
                      <el-option  label="全部" value=""></el-option>
-                    <el-option  label="未完成" value="广东省"></el-option>
-                    <el-option  label="已完成" value="湖南省"></el-option>
+                     <el-option key="1" label="发货状态" value="statebuytwo"></el-option>
+                     <el-option key="2" label="付款状态" value="butornobuytwo"></el-option>
+                     <el-option key="3" label="订单编号" value="outTradeNo"></el-option>
                 </el-select>
-                <el-select v-model="select_cate" placeholder="关键词搜索" class="handle-select mr10">
+                <!-- <el-select v-model="select_cate1" placeholder="关键词搜索" class="handle-select mr10">
                     <el-option key="1" label="购买状态" value="广东省"></el-option>
                     <el-option key="2" label="湖南省" value="湖南省"></el-option>
-                </el-select>
+                </el-select> -->
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
             </div>
@@ -38,7 +39,7 @@
                 </el-table-column>
                  <el-table-column align="center" prop="petmaster.addr" label="买家地址"  >
                 </el-table-column>
-                <el-table-column align="center" prop="_id" label="订单编号"  width="260">
+                <el-table-column align="center" prop="outTradeNo" label="订单编号"  width="260">
                 </el-table-column>
                 <el-table-column align="center" class="el-icon-time"   label="购买时间" width="250">
                      <template slot-scope="scope">
@@ -88,6 +89,7 @@
 
         <Orderbuied></Orderbuied>
         <Ordershow :spanArr="spanArr" :position="position"></Ordershow>
+
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="50px">
@@ -124,6 +126,7 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 import Orderbuied from "./orderbuied";
 import Ordershow from "./ordershow"
+
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
 export default {
   name: "basetable",
@@ -132,7 +135,7 @@ export default {
   },
   data() {
     return {
-      select_cate1: "",
+      select_cate1:"",
       url: "./vuetable.json",
       tableData: [],
       cur_page: 1,
@@ -144,6 +147,7 @@ export default {
       editVisible: false,
       delVisible: false,
       spanArr:[],
+      spanArr1:[],
       position:0,
       form: {
         name: "",
@@ -165,41 +169,12 @@ export default {
   },
   methods: {
        ...mapActions(["showorder", "showorderbuied","showbyid"]),
-        ...mapMutations(["setweigoummai"]),
+        ...mapMutations(["setweigoummai","settypeone","settextone"]),
       xiangqing(index,rows){
           this.setweigoummai(true)
           this.showbyid(rows._id)
           // this.rowspan();
       },
-
-    rowspan(){
-        this.spanArr = [];//在data里面定义
-        this.position = 0; //在data里面定义
-        this.contactarr.forEach((item,index) => {
-          if( index === 0){
-            this.spanArr.push(1);
-            this.position = 0;
-            // item.sequence=index+1;//设置序号
-          }else{
-            if(this.contactarr[index].shangpingname === this.contactarr[index-1].shangpingname ){
-              this.spanArr[this.position] += 1;//连续有几行项目名名称相同
-              this.spanArr.push(0); // 名称相同后往数组里面加一项0
-              console.log(this.spanArr)
-              //当项目名称相同时，设置当前序号和前一个相同
-              // this.tableData1[index].sequence = this.tableData1[index-1].sequence;
-            }else{
-              this.spanArr.push(1);
-              this.position = index;
-              //当项目名称不同时，将当前序号设置为前一个序号+1
-              // this.tableData1[index].sequence = this.tableData1[index-1].sequence+1;
-            }
-          }
-        })
-      },
-
-
-
-
 
     prevpage(page) {
       this.showorder({ page, rows: this.curpage });
@@ -217,11 +192,13 @@ export default {
     },
     changeanniu(i) {
       let statebuy = i.statebuy ? false : true;
+      let statebuytwo = i.statebuytwo=="未发货"?"已发货":"未发货"
       axios({
         method: "put",
         url: "/orderbuy/" + i._id,
         data: {
-          statebuy
+          statebuy,
+          statebuytwo
         }
       }).then(res => {
         axios({
@@ -251,7 +228,10 @@ export default {
     // 分页导航
 
     search() {
-      this.is_search = true;
+         this.settypeone(this.select_cate);
+         this.settextone(this.select_word);
+         this.showorder({ page: 1, rows: 5 });
+      
     },
     formatter(row, column) {
       return row.address;

@@ -9,8 +9,8 @@
             <div class="handle-box">
                
                 <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
+                    <el-option key="1" label="全部" value=""></el-option>
+                     <el-option key="2" label="订单编号" value="outTradeNo"></el-option>
                 </el-select>
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="search">搜索</el-button>
@@ -34,7 +34,7 @@
                 </el-table-column>
                  <el-table-column align="center" prop="petmaster.addr" label="买家地址"  >
                 </el-table-column>
-                <el-table-column align="center" prop="_id" label="订单编号"  width="260">
+                <el-table-column align="center" prop="outTradeNo" label="订单编号"  width="260">
                 </el-table-column>
                 <el-table-column align="center" class="el-icon-time"   label="购买时间" width="250">
                      <template slot-scope="scope">
@@ -46,6 +46,9 @@
                 </el-table-column>
                   
                   <el-table-column align="center" prop="orderarr[0].shangpingname" label="商品详情" >
+                     <template slot-scope="scope">         
+                       <el-button type="warning" plain @click="xiangqing(scope.$index, scope.row)">详情</el-button>
+                        </template>
                 </el-table-column>
             </el-table>
              <div class="pagination">
@@ -64,7 +67,7 @@
     </el-pagination>
             </div>
         </div>
-
+              <Ordershowbuied></Ordershowbuied>
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="50px">
@@ -99,6 +102,7 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
+import  Ordershowbuied from "./ordershowbuied"
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
 export default {
   name: "basetable",
@@ -106,8 +110,8 @@ export default {
     return {
      
   
-      
-  
+     spanArr:[],
+      position:0,
       select_cate: "",
       select_word: "",
   
@@ -145,8 +149,17 @@ export default {
       });
     }
   },
+   components: {
+    Ordershowbuied
+  },
   methods: {
-       ...mapActions(["showorder", "showorderbuied"]),
+       ...mapMutations(["setgoummai","settypetwo","settexttwo"]),
+       ...mapActions(["showorder", "showorderbuied","showbyidtwo"]),
+       xiangqing(index,rows){
+         console.log(rows)
+         this.setgoummai(true)
+         this.showbyidtwo(rows._id)
+       },
     // 分页导航
     prevpage(page) {
       console.log(page);
@@ -166,7 +179,10 @@ export default {
 
 
     search() {
-      this.is_search = true;
+      // this.is_search = true;
+        this.settypetwo(this.select_cate);
+         this.settexttwo(this.select_word);
+         this.showorderbuied({ page: 1, rows: 5 });
     },
     formatter(row, column) {
       return row.address;

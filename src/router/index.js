@@ -58,13 +58,6 @@ export default new Router({
                     meta: { title: '供应商详情' }
                 },
                 {
-                    // PetPage
-                    // Petowners
-                    path: '/petowners',
-                    component: Petowners,
-                    meta: { title: '宠主管理' }
-                },
-                {
                     path: '/statistics',
                     component: Statistics,
                     meta: { title: '统计' }

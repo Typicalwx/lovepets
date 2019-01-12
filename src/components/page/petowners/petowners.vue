@@ -94,10 +94,6 @@
         </el-dialog>
       <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-              <el-alert
-              title="警告！！！！作为一名优秀的平台管理员，擅自修改用户信息将承担相应的法律责任，我劝你善良！！！"
-              type="error">
-              </el-alert>
           <el-form ref="form" :model="form" label-width="50px">
                 <el-form-item label="电话">
                 <el-input v-model="form.phone"></el-input>

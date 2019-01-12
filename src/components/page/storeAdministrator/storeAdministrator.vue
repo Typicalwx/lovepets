@@ -19,7 +19,7 @@
                 <el-input v-model="value" placeholder="筛选关键词" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="search" @click="searchUser">搜索</el-button>
             </div>
-            <el-table :data="storeAdministrator" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
+            <el-table :data="storeAdministrator" border class="table" ref="multipleTable">
                 <el-table-column type="selection" width="55" align="center">
                 </el-table-column>
                 <el-table-column prop="users.account" label="登录名" sortable width="150">
@@ -61,7 +61,7 @@
         </div>
  <!-- 详情弹出框 -->
         <el-dialog title="详情" :visible.sync="detailsVisible" width="30%">
-            <el-form ref="form" label-width="50px">
+            <el-form ref="form" label-width="80px">
                    <el-form-item label="登录账号">
                     <el-input v-model="form.account" :disabled="true"></el-input>
                 </el-form-item>
@@ -86,15 +86,9 @@
                 <el-form-item label="营业执照号码">
                     <el-input v-model="detail.number" :disabled="true"></el-input>
                 </el-form-item>
-                <el-form-item label="营业执照图片">
-                     <el-upload
-                 action="/upload"
-                 list-type="picture-card"
-                :file-list="detail.licenseImage">
-                 </el-upload>
-                 <el-dialog >
-                 <img width="100%" :src="detail.licenseImage" alt>
-               </el-dialog>
+                <el-form-item  label="营业执照图片">
+                  
+                  <img   width="60%" :src="detail.licenseImage" alt>
                 </el-form-item>
                 <el-form-item label="营业地址">
                     <el-input v-model="detail.addr" :disabled="true"></el-input>
@@ -102,9 +96,6 @@
                  <el-form-item label="所在城市">
                     <el-input v-model="detail.city" :disabled="true"></el-input>
                 </el-form-item>
-                <!-- <el-form-item label="定位">
-                    <el-input v-model="detail.location"></el-input>
-                </el-form-item> -->
                  <el-form-item label="法人">
                     <el-input v-model="detail.legal" :disabled="true"></el-input>
                 </el-form-item>
@@ -112,7 +103,7 @@
                     <el-input v-model="detail.phone" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="头图">
-                    <el-input v-model="detail.storeImage" :disabled="true"></el-input>
+                  <img   width="60%" :src="detail.storeImage" alt>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -130,18 +121,7 @@
                     <el-input v-model="detail.number"></el-input>
                 </el-form-item>
                 <el-form-item label="营业执照图片">
-                   <el-upload
-                 action="/upload"
-                 list-type="picture-card"
-                 :on-success="handleAvatarSuccess"
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
-                :file-list="detail.licenseImage">
-                <i class="el-icon-plus"></i>
-                 </el-upload>
-                 <el-dialog :visible.sync="dialogVisible">
-                 <img width="100%" :src="dialogImageUrl" alt>
-               </el-dialog>
+                   
                 </el-form-item>
                 <el-form-item label="营业地址">
                     <el-input v-model="detail.addr"></el-input>
@@ -167,8 +147,9 @@
                 <el-button type="primary" @click="saveEdit">确 定</el-button>
             </span>
         </el-dialog>
+        <AddStore></AddStore>
        <!-- 增加弹门店登录账号信息出框 -->
-        <el-dialog class="adduser" title="增加登录信息" :visible.sync="addVisible" width="25%">
+        <!-- <el-dialog class="adduser" title="增加登录信息" :visible.sync="addVisible" width="25%">
             <el-form  label-width="80px">
                  <el-form-item label="登录名">
                     <el-input v-model="form.account"></el-input>
@@ -187,9 +168,9 @@
                 <el-button @click="addVisible = false">取消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
             </span>
-        </el-dialog>
+        </el-dialog> -->
          <!-- 增加弹门店详细信息出框 -->
-        <el-dialog class="adduser" title="增加详细信息" :visible.sync="addDetaliVisible" width="25%">
+        <!-- <el-dialog class="adduser" title="增加详细信息" :visible.sync="addDetaliVisible" width="25%">
             <el-form  label-width="80px">
                 <el-form-item label="店名">
                     <el-input v-model="detail.name"></el-input>
@@ -198,20 +179,15 @@
                     <el-input v-model="detail.number"></el-input>
                 </el-form-item>
                 <el-form-item label="营业执照图片">
-
-                 <el-upload
-                 action="/upload"
-                 list-type="picture-card"
-                 :on-success="handleAvatarSuccess"
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
-                :file-list="detail.licenseImage">
-                <i class="el-icon-plus"></i>
-                 </el-upload>
-                 <el-dialog :visible.sync="dialogVisible">
-                 <img width="100%" :src="dialogImageUrl" alt>
-               </el-dialog>
-                    <el-input v-model="detail.licenseImage"></el-input>
+               <el-upload
+               class="avatar-uploader"
+               action="/upload"
+               :show-file-list="false"
+               :on-success="handleAvatar"
+               :before-upload="beforeAvatar">
+               <img v-if="licenseImage" :src="licenseImage" class="avatar">
+               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
                 </el-form-item>
                 <el-form-item label="营业地址">
                     <el-input v-model="detail.addr"></el-input>
@@ -229,18 +205,22 @@
                     <el-input v-model="detail.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="头图">
-                    <el-input v-model="detail.storeImage"></el-input>
+                <el-upload
+                 class="avatar-uploader"
+                 action="/upload"
+                 :show-file-list="false"
+                 :on-success="handleAvatarSuccess"
+                 :before-upload="beforeAvatarUpload">
+                 <img v-if="storeImage" :src="storeImage" class="avatar">
+                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
                 </el-form-item>
-                <!-- <el-form-item label="VIP等级">
-                    <el-input v-model="detail.area"></el-input>
-                </el-form-item> -->
-            
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addDetaliVisible = false">取消</el-button>
                 <el-button type="primary" @click="saveDetail">确 定</el-button>
             </span>
-        </el-dialog>
+        </el-dialog> -->
         <!-- 删除提示框 -->
         <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
             <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
@@ -253,20 +233,23 @@
 </template>
 <script>
 import axios from "axios";
+import AddStore from "./AddStore";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
   "storeAdministrator" // 模块名
 );
 export default {
   components: {
+    AddStore
     // Pet,
     // InputElement
   },
   name: "basetable",
   data() {
     return {
-      dialogImageUrl: [],
+      licenseImage: "",
       dialogVisible: false,
+      storeImage: "",
       addVisible: false,
       addDetaliVisible: false,
       detailsVisible: false,
@@ -294,9 +277,11 @@ export default {
         commission: "" //佣金
       },
       idx: -1,
-      id: ""
+      id: "",
+      usersId: ""
     };
   },
+
   created() {
     // console.log(this.storeAdministrator);
     this.setStoreAdministrator();
@@ -322,7 +307,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setType", "setValue", "setPagination"]),
+    //  ...mapMutations(["setAddDetaliVisible", "setAddVisible", "setPagination"]),
+    ...mapMutations(["setType", "setValue","setAddVisible", "setPagination"]),
     ...mapActions(["setStoreAdministrator"]),
     showById(id) {
       axios({
@@ -372,7 +358,7 @@ export default {
           addr: this.detail.addr,
           area: this.detail.area,
           location: JSON.stringify(this.detail.location),
-          storeImage: this.detail.storeImage
+          storeImage: this.storeImage
         }
       }).then(() => {
         // console.log(data);
@@ -382,69 +368,73 @@ export default {
     },
     // 增加
     add() {
-      (this.form = {
-        account: "",
-        name: "",
-        phone: "",
-        pwd: ""
-      }),
-        (this.form.pets = []);
-      this.addVisible = true;
+    //   (this.form = {
+    //     account: "",
+    //     name: "",
+    //     phone: "",
+    //     pwd: ""
+    //   }),
+    //     (this.form.pets = []);
+    //   this.addVisible = true;
+    this.setAddVisible(true)
     },
-    // 保存增加
-    saveAdd() {
-      this.addVisible = false;
-      // console.log(this.form);
-      axios({
-        method: "post",
-        url: "/users",
-        data: {
-          role: "门店管理员",
-          state: 1,
-          account: this.form.account,
-          phone: this.form.phone,
-          name: this.form.name,
-          pwd: this.form.pwd
-        }
-      }).then(({ data }) => {
-        console.log(data);
-        this.addDetaliVisible = true;
-        this.id = data._id;
-        // console.log(data);
-      });
-    },
+    // // 保存增加
+    // saveAdd() {
+    //   this.addVisible = false;
+    //   // console.log(this.form);
+    //   axios({
+    //     method: "post",
+    //     url: "/users",
+    //     data: {
+    //       role: "门店管理员",
+    //       state: 1,
+    //       account: this.form.account,
+    //       phone: this.form.phone,
+    //       name: this.form.name,
+    //       pwd: this.form.pwd
+    //     }
+    //   }).then(({ data }) => {
+    //     console.log(data);
+    //     this.addDetaliVisible = true;
+    //     this.id = data._id;
+    //     // console.log(data);
+    //   });
+    // },
 
-    // 增加门店详情
+    // // 增加门店详情
 
-    saveDetail() {
-      console.log(this.id);
-      axios({
-        method: "post",
-        url: "/stores",
-        data: {
-          userId: this.id,
-          name: this.detail.name,
-          number: this.detail.number,
-          licenseImage: this.detail.licenseImage,
-          addr: this.detail.addr,
-          city: this.detail.city,
-          legal: this.detail.legal,
-          location: JSON.stringify(this.detail.location),
-          phone: this.detail.phone,
-          storeImage: this.detail.storeImage,
-          clerk: JSON.stringify([]),
-          commission: 0.004
-        }
-      }).then(({ data }) => {
-        console.log(data);
-        this.addDetaliVisible = false;
-        this.setStoreAdministrator();
-      });
-    },
+    // saveDetail() {
+    //   console.log(this.id);
+    //   axios({
+    //     method: "post",
+    //     url: "/stores",
+    //     data: {
+    //       userId: this.id,
+    //       name: this.detail.name,
+    //       number: this.detail.number,
+    //       licenseImage: this.licenseImage,
+    //       addr: this.detail.addr,
+    //       city: this.detail.city,
+    //       legal: this.detail.legal,
+    //       location: JSON.stringify(this.detail.location),
+    //       phone: this.detail.phone,
+    //       storeImage: this.storeImage,
+    //       clerk: JSON.stringify([]),
+    //       commission: 0.004
+    //     }
+    //   }).then(({ data }) => {
+    //     console.log(data);
+    //     this.addDetaliVisible = false;
+    //     this.setStoreAdministrator();
+    //   });
+    // },
     // 删除
+
     handleDelete(index, row) {
+      console.log(row);
       this.idx = index;
       this.id = row._id;
+      this.usersId = row.users._id;
       this.delVisible = true;
     },
     delAll() {
@@ -464,39 +454,52 @@ export default {
     deleteRow() {
       axios({
         method: "delete",
+        url: "/users/" + this.usersId
+      });
+      axios({
+        method: "delete",
         url: "/storeAdministrator/" + this.id
       }).then(() => {
+        console.log(111);
         this.setStoreAdministrator();
       });
+
       this.$message.success("删除成功");
       this.delVisible = false;
     },
 
-    handleAvatarSuccess(res, file) {
-      this.detail.licenseImage = [
-        ...this.detail.licenseImage,
-        { name: file.name, url: "/upload/" + res }
-      ];
-      console.log(res, file);
+    // 上传营业执照图片
+    handleAvatar(res, file) {
+      this.licenseImage = "http://localhost:3001/upload/" + res;
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    beforeAvatar(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      let imgArr = this.detail.licenseImage;
-      for (let i in imgArr) {
-        if (imgArr[i].uid == file.uid) {
-          // console.log("ID", imgArr[i].uid);
-          // console.log(i, 11111);
-          imgArr.splice(i, 1);
-        }
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
       }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     },
-    handlePreview(file) {
-      console.log(file);
+    // 上传头像图片
+    handleAvatarSuccess(res, file) {
+      console.log(res);
+      this.storeImage = "http://localhost:3001/upload/" + res;
     },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     }
   }
 };

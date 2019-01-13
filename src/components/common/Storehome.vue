@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <v-head :headtitle="headtitle"></v-head>
+    <v-head :headtitle="headtitle" :usersession="usersession"></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags></v-tags>
+      <v-tags :storedashboard="storedashboard"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -20,9 +20,23 @@ import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
 import vTags from "./Tags.vue";
 import bus from "./bus";
+import axios from "axios"
+
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
+  "storeModule"
+);
+const { mapMutations:storeserve } = createNamespacedHelpers(
+  "store"
+);
+
+
 export default {
   data() {
     return {
+      storedashboard:"storedashboard",
+      usersession:"",
+      userId:"",
       tagsList: [],
       collapse: false,
       headtitle: "门店管理系统",
@@ -40,7 +54,7 @@ export default {
         {
           icon: "el-icon-goods",
           index: "storecomment",
-          title: "评论管理"
+          title: "评论管理(测试)"
         },
 
         {
@@ -50,7 +64,7 @@ export default {
         },
 
         {
-          icon: "el-icon-info",
+          icon: "el-icon-phone",
           index: "storeorder",
           title: "订单管理"
         },
@@ -62,6 +76,10 @@ export default {
       ]
     };
   },
+  methods:{
+     ...mapMutations(["setStoreId"]),
+     ...storeserve(["setserveStoreId"])
+  },
   components: {
     vHead,
     vSidebar,
@@ -71,6 +89,9 @@ export default {
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });
+
+
+
     // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
     bus.$on("tags", msg => {
       let arr = [];
@@ -79,10 +100,30 @@ export default {
       }
       this.tagsList = arr;
     });
+
+
+
     axios({
       url: "/getsession",
       method: "get"
-    }).then(({ data }) => {});
+    }).then(({ data }) => {
+        this.userId = data._id;
+        console.log("???",this.userId)
+        this.usersession = data.account
+        axios({
+          url:"/stores/zhaoid",
+          method:"get",
+          params:{
+            userId:this.userId
+          }
+        }).then(res=>{
+            // localStorage.setItem(key, res.data._id)
+            // console.log(localStorage.getItem(key),"11111111111111")
+            this.setStoreId(res.data._id)
+            this.setserveStoreId(res.data._id)
+        })
+
+    });
   }
 };
 </script>

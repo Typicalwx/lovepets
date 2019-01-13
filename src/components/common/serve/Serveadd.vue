@@ -83,9 +83,13 @@
 <script>
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
+const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
+  "store"
+);
 
-const { mapState: getstoreID } = createNamespacedHelpers("storeModule");
+const { mapState:getstoreID} = createNamespacedHelpers(
+  "storeModule"
+);
 export default {
   name: "baseform",
   data: function() {
@@ -101,71 +105,45 @@ export default {
         resource: "",
         desc: "",
         options: [],
-        pets: "猫",
-        guige: "",
-        price: "",
-        resource2: ""
+        pets:"猫",
+        guige:"",
+        price:"",
+        resource2:""
       }
     };
   },
-  computed: {
-    ...mapState(["pagenation"]),
-    ...getstoreID(["storeId"])
+  computed:{
+      ...getstoreID(["storeId"])
   },
-  methods: {
+  methods: {  
     ...mapActions(["show"]),
     onSubmit() {
-      let servetime = this.form.date1 + " " + this.form.date2;
-      let serveresource = this.a ? this.form.resource : this.form.resource2;
-      axios({
-        method: "post",
-        url: "/servetime",
-        data: {
-          servetype: this.form.servetype,
-          pets: this.form.pets,
-          severname: this.form.severname,
-          guige: this.form.guige,
-          servetime,
-          serveresource,
-          price: this.form.price,
-          desc: this.form.desc,
-          goodState: 2,
-          storeId: this.storeId
-        }
-      }).then(res => {
-          console.log("增加",this.pagenation.curpage)
+      let servetime = this.form.date1 + " " +this.form.date2;
+      let serveresource = this.a?this.form.resource:this.form.resource2
         axios({
-          method: "get",
-          url: "/servetime",
-          params: {
-            page: this.pagenation.curpage,
-            rows: 5,
-            storeId:this.storeId,
-          }
-        }).then(res => {
-            console.log(res.data);
-          if (res.data.maxpage>res.data.curpage) {
-            this.show({
-              page: this.pagenation.curpage+1,
-              rows: 5,
-              storeId: this.storeId
-            });
-            this.$message.success("提交成功！");
-            this.editVisible = false;
-          } else {
-            this.show({
-              page: this.pagenation.curpage,
-              rows: 5,
-              storeId: this.storeId
-            });
-            this.$message.success("提交成功！");
-            this.editVisible = false;
-          }
-        });
-      });
+            method:"post",
+            url:"/servetime",
+            data:{
+                servetype:this.form.servetype,
+                pets:this.form.pets,
+                severname:this.form.severname,
+                guige:this.form.guige,
+                servetime,
+                serveresource,
+                price:this.form.price,
+                desc:this.form.desc,
+                goodState:2,
+                storeId:this.storeId
+            }
+        }).then((res)=>{
+          console.log(res.data)
+          this.show();
+           this.$message.success("提交成功！");
+           this.editVisible = false
+        })
     },
-    change() {
-      this.a = this.a ? false : true;
+    change(){
+     this.a=this.a?false:true;
     }
   }
 };
@@ -175,12 +153,12 @@ export default {
   width: 200px;
 }
 .wawa {
-  display: flex;
+ display: flex;
 }
-.haha {
-  margin-left: 10px;
+.haha{
+margin-left: 10px;
 }
-.kg {
-  display: flex;
+.kg{
+    display: flex;
 }
 </style>

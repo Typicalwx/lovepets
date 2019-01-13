@@ -68,7 +68,7 @@
         <el-input v-model="regForm.commission" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item class="zc">
-        <el-button type="primary" @click="submitForm()">提交</el-button>
+        <el-button type="primary" @click="submitForm">提交</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -115,6 +115,14 @@ export default {
 
   methods: {
     selected() {},
+      open() {
+        this.$alert('申请门店成功,等待审核', {
+          confirmButtonText: '请登录',
+          callback: action => {
+              this.$router.push("/login");
+          }
+        });
+      },
     //上传图片
     handleAvatarSuccess(res, file) {
       console.log("file", file);
@@ -183,6 +191,22 @@ export default {
             } else {
               this.$router.push("/store");
             }
+            let xiangqingstate = 1
+              axios({
+                method:"put",
+                url:"/"+this.userId,
+                data:{
+                  xiangqingstate,
+                }
+              }).then(()=>{
+                 this.open();
+              })
+             
+            // if(this.state=="0"){
+            //  alert("详情填写完成等待审核");
+            // }else{
+            // this.$router.push("/store");
+            // }        
           });
         } else {
           this.$alert("错误", "失败");

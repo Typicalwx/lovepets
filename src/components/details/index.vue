@@ -1,5 +1,5 @@
 <template>
-  <el-card  class="box-card">
+  <el-card class="box-card">
     <h1>门店详情</h1>
     <el-form :model="regForm" status-icon ref="regForm" label-width="100px">
       <el-form-item label="门店名" prop="name">
@@ -26,10 +26,21 @@
       <el-form-item label="经度" prop="location.longitude">
         <el-input type="text" v-model="regForm.location.longitude" autocomplete="off"></el-input>
       </el-form-item>
+
       <el-form-item label="纬度" prop="location.latitude">
         <el-input type="text" v-model="regForm.location.latitude" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="所在城市" prop="city">
+      <el-form-item label="所在城市" prop>
+        <v-distpicker
+          v-show="addInp"
+          class="addr"
+          @selected="selected"
+          province="广东省"
+          city="广州市"
+          area="海珠区"
+        ></v-distpicker>
+      </el-form-item>
+      <el-form-item label="详细地址" prop="city">
         <el-input type="text" v-model="regForm.city" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="法人" prop="legal">
@@ -54,7 +65,7 @@
         <el-input type="text" v-model="regForm.feature" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="佣金比列" prop="commission">
-        <el-input type="text" value="百分之0.003" :disabled='true'></el-input>
+        <el-input v-model="regForm.commission" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item class="zc">
         <el-button type="primary" @click="submitForm()">提交</el-button>
@@ -65,16 +76,18 @@
 
 <script>
 import axios from "axios";
+import VDistpicker from "v-distpicker";
 export default {
-       created() {
+  components: { VDistpicker },
+  created() {
     axios({
       url: "/getsession",
       method: "get"
     }).then(({ data }) => {
-      console.log(data)
+      console.log(data);
       if (data.phone) {
         this.userId = data._id;
-        this.state=data.state
+        this.state = data.state;
       }
     });
   },
@@ -84,21 +97,24 @@ export default {
         city: "",
         phone: "",
         feature: "",
-        commission: "",
+        commission: "0.003%",
         number: "",
         addr: "",
         name: "",
-        legal:"",
+        legal: "",
         location: { longitude: "", latitude: "" }
       },
       imageUrl: "",
       image: "",
-      userId:"",
-      state:""
+      userId: "",
+      state: "",
+      addInp: true,
+      city: "请选择"
     };
   },
 
   methods: {
+    selected() {},
     //上传图片
     handleAvatarSuccess(res, file) {
       console.log("file", file);
@@ -156,18 +172,17 @@ export default {
               licenseImage: this.imageUrl,
               addr: this.regForm.addr,
               location: JSON.stringify(this.regForm.location),
-              userId:this.userId,
-              storeImage:this.image,
-              legal:this.regForm.legal,
-              clerk:JSON.stringify("")
+              userId: this.userId,
+              storeImage: this.image,
+              legal: this.regForm.legal,
+              clerk: JSON.stringify("")
             }
           }).then(() => {
-            if(this.state=="0"){
-             alert("详情填写完成等待审核");
-            }else{
-            this.$router.push("/store");
+            if (this.state == "0") {
+              alert("详情填写完成等待审核");
+            } else {
+              this.$router.push("/store");
             }
-            
           });
         } else {
           this.$alert("错误", "失败");
@@ -181,6 +196,7 @@ export default {
 .box-card {
   width: 600px;
   margin: auto;
+  font-size: 14px;
 }
 .juese {
   width: 100%;
@@ -204,5 +220,8 @@ export default {
 }
 label {
   width: 240px;
+}
+.addr {
+  width: 100px;
 }
 </style>

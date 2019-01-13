@@ -29,6 +29,7 @@ import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
 import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
+import Platformsupplier from "../components/page/platform/Suppliers/index.vue"
 
 export default new Router({
     mode: "history",
@@ -120,6 +121,11 @@ export default new Router({
                     path: '/users',
                     component: Users,
                     meta: { title: '平台用户管理' }
+                },
+                {
+                    path: '/platformsupplier',
+                    component: Platformsupplier,
+                    meta: { title: '供应商管理' }
                 },
                 {
                     path: '/statisticsmoney',

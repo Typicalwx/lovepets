@@ -7,6 +7,7 @@ import store from "./modules/store"
 import storeModule from "./modules/storeModule.js"
 // import studentsModule from "./modules/studentsModule";
 import platformModule from "./modules/platformModule"
+import platformsuppliers from "./modules/platformsuppliers"
 Vue.use(Vuex) //注册
 
 export default new Vuex.Store({
@@ -18,5 +19,6 @@ export default new Vuex.Store({
         storeModule: storeModule,
         // studentsModule: studentsModule, //模块化的student
         platformModule,
+        platformsuppliers
     }
 })

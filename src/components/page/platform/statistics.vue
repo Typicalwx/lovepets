@@ -38,6 +38,7 @@ export default {
           url: "/shops/counts",
           method: "get"
         }).then(res => {
+          console.log(res.data);
           this.shopsCountData = res.data;
           myChart.setOption(this.mapOptions, true);
         });

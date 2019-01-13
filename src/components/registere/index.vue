@@ -28,7 +28,7 @@
 </template>
 </div>
   <el-form-item class="zc">
-    <el-button type="primary" @click="submitForm()">注册</el-button>
+    <el-button type="primary" @click="submitForm">注册</el-button>
   </el-form-item>
 </el-form>
   </el-card>
@@ -72,6 +72,14 @@ export default {
   },
  
   methods: {
+       open() {
+        this.$alert('注册成功', {
+          confirmButtonText: '请登录',
+          callback: action => {
+              this.$router.push("/login");
+          }
+        });
+      },
     valuedataPhone(rule, value, callback){
       axios({
         method:"get",
@@ -116,11 +124,11 @@ export default {
             name:this.regForm.name,
             phone: this.regForm.phone,
             role:this.role,
-            state :"0"
+            state :"0",
+            xiangqingstate:0
             }
           }).then(()=>{
-            this.$alert("注册成功");
-            this.$router.push("/login");
+            this.open();
             })
         }else{
           this.$alert("有错误","注册失败")

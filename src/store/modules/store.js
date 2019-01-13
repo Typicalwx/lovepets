@@ -1,4 +1,8 @@
 import axios from "axios";
+
+
+
+
 var state ={
     editVisible:false,
     serveitem:[],
@@ -23,7 +27,8 @@ var state ={
     contactarr:[],
     contactarrtwo:[],
     spanArr:[],
-    position:0
+    position:0,
+    serveStoreId:""
 }
 var getters={
 
@@ -120,7 +125,10 @@ var mutations ={
     },
     setcontactarrtwo(state,contactarrtwo){
         state.contactarrtwo=contactarrtwo
-    }
+    },
+    setserveStoreId(state, storeId) {
+        state.storeId = storeId
+    },
  
 }
 var actions ={
@@ -198,8 +206,7 @@ showorderbuied({state,commit},payload={page:1,rows:5}){
 
 
 //服务
-    show({state,commit},payload={page:1,rows:5}){
-        console.log(1)
+    show({state,commit},payload={page:1,rows:5,storeId:state.null}){
         let type  = state.type;
         let text  = state.text;
             axios({
@@ -211,7 +218,6 @@ showorderbuied({state,commit},payload={page:1,rows:5}){
                     text
                 }
             }).then(res=>{
-                console.log(res.data.rows)
                 commit("setserveitem",res.data.rows);
                 commit("setpagenation",res.data)
             })

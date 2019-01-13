@@ -1,4 +1,11 @@
 import axios from "axios"
+
+
+
+function storeLocalStore (state) {
+    window.localStorage.setItem("storeId",state);
+}
+
 export default {
     //默认情况下 state命名空间是局部的，getters，mutations，actions命名空间是全局的，
     //想要全部的命名空间是局部的就加 namespaced: true, 
@@ -12,7 +19,7 @@ export default {
         storeUpdateVisible: false,
         clerkUpdateVisible: false,
         addClerkVisible: false,
-        storeId: "" || "5c358b2d100838196886b25c",
+        storeId: ""||localStorage.getItem("storeId"),
         storeInfoData: {},
         userId: "" || "5c358479100838196886b259",
         clerkInfor: {},
@@ -59,6 +66,7 @@ export default {
         },
         //存门店用户id
         setStoreId(state, storeId) {
+            storeLocalStore(storeId)
             state.storeId = storeId
         },
         //存用户id

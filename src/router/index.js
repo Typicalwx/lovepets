@@ -6,7 +6,7 @@ import SupplierHome from "../components/common/supplierHome.vue";
 import Dashboard from "../components/page/suppliergoods/Dashboard.vue";
 import Statistics from "../components/page/suppliergoods/statistics.vue";
 import Supplier from "../components/page/supplier/sup";
-
+import Ceshi from "../components/page/stores/supplier"
 
 import Suppliergoods from "../components/page/suppliergoods/supplier.vue"
 import Registere from "../components/registere/index"
@@ -88,7 +88,7 @@ export default new Router({
                 },
                 {
                     path: '/storecomment',
-                    component: Supplier,
+                    component: Ceshi,
                     meta: { title: '评论管理' }
                 },
                 {

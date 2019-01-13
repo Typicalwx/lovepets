@@ -95,9 +95,6 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
-const { mapState:gession} = createNamespacedHelpers(
-  "storeModule"
-);
 import Serveadd from "./Serveadd";
 import Serveupdate from "./Serveupdate";
 export default {
@@ -122,15 +119,11 @@ export default {
       idx: -1
     };
   },
-  mounted() {
-    
-    console.log("刷新",this.storeId)
-    //  console.log(localStorage.getItem(key) )
-    this.show({ page: 1, rows: 5,storeId:this.storeId});
+  created() {
+    this.show();
   },
   computed: {
     ...mapState(["serveitem", "pagenation"]),
-    ...gession(["storeId"]),
     data() {
       return this.tableData.filter(d => {
         let is_del = false;
@@ -162,26 +155,25 @@ export default {
 
     // 分页导航
     prevpage(page) {
-      // console.log(page);
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      console.log(page);
+      this.show({ page, rows: this.curpage });
     },
     nextpage(page) {
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      this.show({ page, rows: this.curpage });
     },
     currentchange(page) {
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      this.show({ page, rows: this.curpage });
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.show({ page: this.pagenation.curpage,rows ,storeId:this.storeId});
+      this.show({ page: this.pagenation.curpage, rows });
     },
     // 获取 easy-mock 的模拟数据
     search() {
-      // console.log("啊哈哈哈",this.storeId)
         this.settype(this.select_cate);
         this.settext(this.select_word);
-        this.show({ page: 1, rows: 5,storeId:this.storeId});
+        this.show({ page: 1, rows: 5 });
     },
     formatter(row, column) {
       return row.address;
@@ -200,7 +192,7 @@ export default {
       }).then(res => {
         axios({
           method: "get",
-          url: "/servetime/deleteserve",
+          url: "/servetime",
           params: {
             page: this.pagenation.curpage,
             rows: this.pagenation.eachpage
@@ -210,14 +202,12 @@ export default {
           if (res.data.rows.length == 0) {
             this.show({
               page: this.pagenation.curpage - 1,
-              rows: this.pagenation.eachpage,
-              storeId:this.storeId
+              rows: this.pagenation.eachpage
             });
           } else {
             this.show({
               page: this.pagenation.curpage,
-              rows: this.pagenation.eachpage,
-              storeId:this.storeId
+              rows: this.pagenation.eachpage
             });
           }
         });

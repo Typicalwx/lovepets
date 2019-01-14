@@ -55,6 +55,11 @@ export default {
   },
 
   methods: {
+     open() {
+        this.$alert('请等待审核', {
+          confirmButtonText: '取消',
+        });
+      },
     submitForm() {
       this.$refs.regForm.validate(valid => {
         if (valid) {
@@ -70,9 +75,13 @@ export default {
             if (data._id) {
               if (data.role == "门店管理员") {
                 if(data.state =="0" ){
-                    this.$router.push("/details");
+                    if(data.xiangqingstate==1){
+                        this.open();
+                    }else{
+                         this.$router.push("/details");
+                    }  
                 }else if (data.state == "1") {
-                  this.$router.push("/store");
+                  this.$router.push("/storedashboard");
                 }
               } else if (data.role == "供应商管理员") {
                 if(data.state =="0"){

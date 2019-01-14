@@ -7,6 +7,10 @@ import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
 import './assets/css/icon.css';
 import './components/common/directives';
 
+
+import Distpicker from 'v-distpicker'
+Vue.component('v-distpicker', Distpicker)
+
 // Vue.config.productionTip = false
 Vue.use(ElementUI, {
     size: 'small'
@@ -16,6 +20,5 @@ Vue.use(ElementUI, {
 new Vue({
     store,
     router,
-    store,
     render: h => h(App)
 }).$mount('#app')

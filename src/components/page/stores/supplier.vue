@@ -15,14 +15,15 @@ export default {
           click(){
               var myDate = new Date()
               console.log(myDate.toLocaleDateString()+" "+myDate.toLocaleTimeString())
-              let arr = [{'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371132bd089a29cce23fdc',goodState:"商品",shangpingname:"怡亲",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"小心心狗粮",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
-               {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371142bd089a29cce23fde',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
-              {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                  {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                    {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120}
+              let arr = [{
+                    'storeId':'5c3c3e04c01f8441d092e769','shangpingid':'5c371132bd089a29cce23fdc',goodState:"商品",shangpingname:"老李牌狗粮",num:3,price:100,total:120},
+            //   {'storeId':'5c3c3e04c01f8441d092e769','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"小心心狗粮",num:3,price:40,total:120},
+            //   {'storeId':'5c3c3e04c01f8441d092e769','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
+               {'storeId':'5c3c3e04c01f8441d092e769','shangpingid':'5c371142bd089a29cce23fde',goodState:"商品",shangpingname:"老李牌猪食",num:10,price:140,total:400},
+            //   {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
+            //     {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
+            //       {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
+            //         {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120}
               ]
                 axios({
                     method:"post",

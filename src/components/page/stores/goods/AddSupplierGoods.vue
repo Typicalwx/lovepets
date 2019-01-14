@@ -24,12 +24,12 @@
         <el-table-column prop="shelfLife" label="保质期" width="80" align="center"></el-table-column>
         <el-table-column prop="features" label="特色说明" width="150" align="center"></el-table-column>
         <el-table-column prop="price" label="批发价格" width="100" align="center"></el-table-column>
-        <el-table-column label="图片" width="150" align="center">
+        <!-- <el-table-column label="图片" width="150" align="center">
           <template slot-scope="scope">
             <img class="goodImages" :src="scope.row.images[0].url" alt>
             <img class="goodImages" :src="scope.row.images[1].url" alt>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addvisible = false">取 消</el-button>

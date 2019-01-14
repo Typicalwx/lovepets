@@ -17,7 +17,7 @@ import Detailses from "../components/detailses/index"
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-import StoreStatistics from "../components/page/stores/tongji/statistics.vue";
+import StoreStatistics from "../components/page/stores/tongji/statisticsMonth";
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"
@@ -32,10 +32,7 @@ import Users from "../components/page/platform/users/index.vue";
 
 import Statisticsmoneys from "../components/page/petowners/statisticsmoneys";
 import PetLove from "../components/page/petowners/petowners"
-<<<<<<< HEAD
 // import Statisticsmoneys from "../components/page/petowners/statisticsmoneys"
-=======
->>>>>>> zw
 
 import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
 

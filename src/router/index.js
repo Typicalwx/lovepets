@@ -14,6 +14,7 @@ import Registere from "../components/registere/index"
 import Login from "../components/login/index"
 import Details from "../components/details/index"
 import Detailses from "../components/detailses/index"
+import Statistical from "../components/statistical/index"
 
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
@@ -27,7 +28,7 @@ import PlatformHome from "../components/common/platformHome.vue";
 import DashboardMoney from "../components/page/platform/Dashboard.vue";
 import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
-import SupplierMoney from "../components/page/platform/supplier.vue";
+// import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
 
 export default new Router({
@@ -148,6 +149,10 @@ export default new Router({
         {
             path: "/detailses",
             component: Detailses
+        },
+        {
+            path: "/statistical",
+            component: Statistical
         }
     ]
 })

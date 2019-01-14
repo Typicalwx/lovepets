@@ -39,6 +39,18 @@
 <script>
 import axios from "axios";
 export default {
+    created() {
+    axios({
+      url: "/getsession",
+      method: "get"
+    }).then(({ data }) => {
+      console.log(data)
+      if (data.phone) {
+        this.userId = data._id;
+        this.state=data.state
+      }
+    });
+  },
   data() {
     return {
       regForm: {
@@ -116,7 +128,7 @@ export default {
               phone: this.regForm.phone,
               addr: this.regForm.addr,
               web: this.regForm.web,
-              licenseImage: this.regForm.licenseImage,
+              licenseImage: this.imageUrl,
               remark: this.regForm.remark,
               usersId:this.userId
             }

@@ -55,6 +55,7 @@ export default {
   },
 
   methods: {
+
     submitForm() {
       this.$refs.regForm.validate(valid => {
         if (valid) {
@@ -66,6 +67,9 @@ export default {
               pwd: this.regForm.pwd
             }
           }).then(({data} ) => {
+            console.log(this.regForm.account)
+            console.log(this.regForm.pwd)
+            console.log(data,3232323)
             if (data._id) {
               if (data.role == "门店管理员") {
                 if(data.state =="0" ){
@@ -93,7 +97,7 @@ export default {
             }
           });
         } else {
-          this.$alert("错误", "失败");
+          this.$alert("你得账号或密码不正确！");
         }
       });
     }

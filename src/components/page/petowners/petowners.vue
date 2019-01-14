@@ -22,23 +22,32 @@
             <el-table :data="petowners" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center">
                 </el-table-column>
-                <el-table-column prop="phone" label="电话" sortable width="150">
+                <el-table-column prop="phone" label="电话" sortable width="120" align="center">
                 </el-table-column>
             
-                <el-table-column prop="Nickname" label="昵称" width="150">
+                <el-table-column prop="Nickname" label="昵称" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名" width="120">
+                <el-table-column prop="name" label="姓名" width="120" align="center">
                 </el-table-column>
-                <el-table-column prop="addr" label="送货地址" >
+                <el-table-column prop="addr" label="送货地址" align="center">
                 </el-table-column>
-                <el-table-column prop="area" label="区域" >
+                <el-table-column prop="area" label="区域" align="center">
+                </el-table-column>
+                  <el-table-column   label="状态" width="80" align="center">
+                    <template slot-scope="scope" >
+                      <div v-if="scope.row.state=='正常'" class="green"><i class="el-icon-success"></i> {{scope.row.state}}</div>
+                              <div v-else class="red"><i class="el-icon-warning"></i> {{scope.row.state}}</div>
+                    </template>
                 </el-table-column>
                 <el-table-column label="操作" width="250" align="center">
                     <template slot-scope="scope">
                       <el-button type="text" icon="el-icon-tickets" @click="handleDetails(scope.$index, scope.row)">详情</el-button>
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <!-- <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
+                        <!-- <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-if="scope.row.state">封禁</el-button> -->
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-if="scope.row.state=='正常'">封禁</el-button>
+                         <el-button type="text" icon="el-icon-delete" class="green" @click="handleDelete(scope.$index, scope.row)" v-else>解除封禁</el-button>
                     </template>
+                     
                 </el-table-column>
             </el-table>
             <div class="pagination">
@@ -70,6 +79,10 @@
                <el-form-item label="区域">
                     <el-input v-model="form.area" :disabled="true"></el-input>
                 </el-form-item>
+               
+                 <el-form-item label="状态">
+                    <el-input v-model="form.state" :disabled="true"></el-input>
+                </el-form-item>
                 <el-form-item label="宠物">
                      <el-table :data="form.pets" >
                 <el-table-column  width="20" align="center">
@@ -92,55 +105,7 @@
                 <el-button type="primary" @click="detailsVisible = false">确 定</el-button>
             </span>
         </el-dialog>
-      <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-              <el-alert
-              title="警告！！！！作为一名优秀的平台管理员，擅自修改用户信息将承担相应的法律责任，我劝你善良！！！"
-              type="error">
-              </el-alert>
-          <el-form ref="form" :model="form" label-width="50px">
-                <el-form-item label="电话">
-                <el-input v-model="form.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="姓名">
-                <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="送货地址">
-                <el-input v-model="form.addr"></el-input>
-                </el-form-item>
-               <el-form-item label="区域">
-                <el-input v-model="form.area"></el-input>
-                </el-form-item>
-                <el-form-item label="宠物">
-                <div v-for="(item,index) in form.pets" :key="index" class="agent-vlist">
-<!-- 编辑宠物 -->
-                <el-form-item class="center">宠物{{index+1}} </el-form-item>
-                <el-form-item label="宠物名">
-                <el-input v-model="form.pets[index].name" ></el-input>
-                </el-form-item>
-                <el-form-item label="品类">
-                <el-input v-model="form.pets[index].variety" ></el-input>
-                </el-form-item>
-                <el-form-item label="种类">
-                <el-input v-model="form.pets[index].type" ></el-input>
-                </el-form-item>
-                <el-form-item label="颜色">
-                <el-input v-model="form.pets[index].color" ></el-input>
-                </el-form-item>
-                <el-form-item label="出生日期">
-                <el-input v-model="form.pets[index].birth" ></el-input>
-                </el-form-item>
-                <el-form-item label="性格">
-                <el-input v-model="form.pets[index].character" ></el-input>
-                </el-form-item>
-               </div>
-               </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-          </span>
-        </el-dialog>
+
        <!-- 增加弹出框 -->
         <el-dialog title="增加" :visible.sync="addVisible" width="25%">
        
@@ -177,7 +142,13 @@
                     <el-input v-model="form.pets[index].color" ></el-input>
                 </el-form-item>
                   <el-form-item label="出生日期">
-                    <el-input v-model="form.pets[index].birth" ></el-input>
+                     <el-date-picker
+                      v-model="form.pets[index].birth"
+                      type="date"
+                      value-format="yyyy-M-d"
+                      placeholder="选择日期">
+                   </el-date-picker>
+                    <!-- <el-input v-model="form.pets[index].birth" ></el-input> -->
                 </el-form-item>
                   <el-form-item label="性格">
                   <el-input v-model="form.pets[index].character" ></el-input>
@@ -195,7 +166,7 @@
         </el-dialog>
         <!-- 删除提示框 -->
         <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+            <div class="del-dialog-cnt">确认修改？</div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="delVisible = false">取 消</el-button>
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
@@ -213,11 +184,11 @@ const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
 );
 // import { mapState } from "vuex";
 // import Pet from "../common/Pet.vue";
-// import InputElement from "../common/InputElement.vue";
+
 export default {
   components: {
     // Pet,
-    // InputElement
+    // UpdatePetowners
   },
   name: "basetable",
   data() {
@@ -235,25 +206,24 @@ export default {
         phone: "",
         pwd: ""
       },
-      
+      state: "",
       idx: -1,
       id: ""
     };
   },
   created() {
     this.setPetowners();
-    console.log(this.petowners)
+    // console.log(this.petowners);
   },
   computed: {
-    ...mapState(["petowners", "search", "pagination"]),
+    ...mapState(["petowners", "search", "pagination", "updateVisible"]),
     type: {
       get() {
         return this.search.type;
       },
       set(value) {
-        
-        if(value=="all"){
-          value=null;
+        if (value == "all") {
+          value = null;
         }
         console.log(value);
         this.$store.commit("petowner/setType", value);
@@ -266,35 +236,33 @@ export default {
       set(value) {
         this.$store.commit("petowner/setValue", value);
       }
+    },
+    updatePetowners: {
+      get() {
+        return this.updatePetowners;
+      },
+      set(value) {
+        this.setUpdatePetowners(value);
+      }
     }
   },
   methods: {
-    ...mapMutations(["setType", "setValue", "setPagination"]),
+    ...mapMutations([
+      "setType",
+      "setValue",
+      "setPagination",
+      "setUpdateVisible",
+      "setPetowner",
+      "setUpdatePetowners"
+    ]),
     ...mapActions(["setPetowners"]),
-    show() {
-      axios({
-        method: "get",
-        url: "/petowners"
-      }).then(({ data }) => {
-        this.petowners = data;
-      });
-    },
-    showById(id) {
-      axios({
-        method: "get",
-        url: "/petowners/" + id
-      }).then(({ data }) => {
-        // console.log(this.petowners);
-      });
-    },
+
     // 分页导航
     handleCurrentChange(val) {
       this.setPagination({ ...this.pagination, curpage: val });
       this.setPetowners({ val, rows: this.pagination.eachpage });
     },
-    handleSizeChange(){
-
-    },
+    handleSizeChange() {},
     // 获取 easy-mock 的模拟数据
     getData() {
       // 开发环境使用 easy-mock 数据，正式环境使用 json 文件
@@ -322,9 +290,10 @@ export default {
     handleEdit(index, row) {
       this.idx = index;
       this.id = row._id;
-      console.log(row);
-      this.form = row;
-      this.editVisible = true;
+      this.form.pets = row.pets;
+      console.log(row.pets);
+      this.updatePetowners = row;
+      this.setUpdateVisible(true);
     },
     // 保存编辑
     saveEdit() {
@@ -376,18 +345,20 @@ export default {
           addr: this.form.addr,
           area: this.form.area,
           pets: JSON.stringify(this.form.pets),
-          pwd: this.form.pwd
+          pwd: this.form.pwd,
+          state: 1
         }
-      }).then(()=> {
+      }).then(() => {
         // this.$store.commit("setPetowner", value);
-         this.setPetowners();
+        this.setPetowners();
         // console.log(data);
       });
     },
-    // 删除
+    // 封禁
     handleDelete(index, row) {
       this.idx = index;
       this.id = row._id;
+      this.state = row.state;
       this.delVisible = true;
     },
     delAll() {
@@ -397,7 +368,7 @@ export default {
       for (let i = 0; i < length; i++) {
         str += this.multipleSelection[i].name + " ";
       }
-      this.$message.error("删除了" + str);
+      // this.$message.error("删除了" + str);
       this.multipleSelection = [];
     },
     handleSelectionChange(val) {
@@ -406,16 +377,36 @@ export default {
 
     // 确定删除
     deleteRow() {
-      axios({
-        method: "delete",
-        url: "/petowners/" + this.id
-      }).then(({ data }) => {
-        this.setPetowners();
-      });
+      this.delVisible = false;
+      console.log(this.state == "正常");
+      if (this.state == "正常") {
+        axios({
+          method: "put",
+          url: "/petowners/" + this.id,
+          data: {
+            state: 3
+          }
+        }).then(({ data }) => {
+          console.log(data);
+          this.$message.success("修改状态成功");
+          this.delVisible = false;
+          this.setPetowners();
+        });
+      } else {
+        axios({
+          method: "put",
+          url: "/petowners/" + this.id,
+          data: {
+            state: 1
+          }
+        }).then(({ data }) => {
+          this.$message.success("修改状态成功");
+          this.delVisible = false;
+          this.setPetowners();
+        });
+      }
 
       // this.tableData.splice(this.idx, 1);
-      this.$message.success("删除成功");
-      this.delVisible = false;
     },
 
     // 添加宠物之增加输入框
@@ -461,6 +452,9 @@ export default {
 }
 .red {
   color: #ff0000;
+}
+.green {
+  color: forestgreen;
 }
 .mr10 {
   margin-right: 10px;

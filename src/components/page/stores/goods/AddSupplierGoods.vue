@@ -24,12 +24,12 @@
         <el-table-column prop="shelfLife" label="保质期" width="80" align="center"></el-table-column>
         <el-table-column prop="features" label="特色说明" width="150" align="center"></el-table-column>
         <el-table-column prop="price" label="批发价格" width="100" align="center"></el-table-column>
-        <el-table-column label="图片" width="150" align="center">
+        <!-- <el-table-column label="图片" width="150" align="center">
           <template slot-scope="scope">
             <img class="goodImages" :src="scope.row.images[0].url" alt>
             <img class="goodImages" :src="scope.row.images[1].url" alt>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addvisible = false">取 消</el-button>
@@ -115,9 +115,8 @@ export default {
         this.$message("请选择一条数据，且只能选择一条");
       } else {
         this.addvisible = false;
-        let id = this.multipleSelection[0].supplier.id;
-        console.log(this.multipleSelection[0],id,"ud ID")
-        this.setSupplierId(id);
+        this.setSupplierId(this.multipleSelection[0].supplier._id);
+        // console.log(this.multipleSelection[0],"this.multipleSelection[0]")
         delete this.multipleSelection[0]._id;
         delete this.multipleSelection[0].total;
         this.setSupplierGood(this.multipleSelection[0]);

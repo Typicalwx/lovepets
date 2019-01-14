@@ -91,15 +91,19 @@ export default {
   },
 
   methods: {
-    open() {
-      this.$alert("注册成功", {
-        confirmButtonText: "请登录",
-        callback: action => {
-          this.$router.push("/login");
-        }
-      });
-    },
-    valuedataPhone(rule, value, callback) {
+
+       open() {
+        this.$alert('注册成功', {
+          confirmButtonText: '请登录',
+          callback: action => {
+              this.$router.push("/login");
+          }
+        });
+      },
+    valuedataPhone(rule, value, callback){
+
+
+
       axios({
         method: "get",
         url: "/users/phone",
@@ -134,25 +138,28 @@ export default {
       this.$refs.regForm.validate(valid => {
         if (valid) {
           axios({
-            method: "post",
-            url: "/users",
-            data: {
-              account: this.regForm.account,
-              pwd: this.regForm.pwd,
-              email: this.regForm.email,
-              name: this.regForm.name,
-              phone: this.regForm.phone,
-              role: this.role,
-              state: "0",
-              xiangqingstate: 0
+
+            method:"post",
+            url:"/users",
+            data:{
+            account:this.regForm.account,
+            pwd:this.regForm.pwd,
+            email:this.regForm.email,
+            name:this.regForm.name,
+            phone: this.regForm.phone,
+            role:this.role,
+            state :"0",
+            xiangqingstate:0
             }
           }).then(() => {
             this.open();
-          });
-        } else {
-          this.$alert("有错误", "注册失败");
+            })
+        }else{
+          this.$alert("有错误","注册失败")
         }
       });
+
+
     },
     loginSub() {
       this.$router.push("/login");
@@ -161,24 +168,9 @@ export default {
 };
 </script>
 <style scoped>
-h1 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-.login-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url(../../assets/img/login-bg.jpg);
-  background-size: 100%;
-}
 .box-card {
   width: 500px;
   margin: auto;
-  background: rgba(255, 255, 255, 0.3);
-  display: flex;
-  font-display: column;
-  align-items: center;
 }
 .juese {
   width: 100%;
@@ -186,11 +178,8 @@ h1 {
   display: flex;
   justify-content: center;
 }
-.zc{
-  display: flex;
-  justify-content: center;
-}
-.el-input{
-  width: 300px;
+.zc {
+  margin-left: 90px;
+  margin-top: 20px;
 }
 </style>

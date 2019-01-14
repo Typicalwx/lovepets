@@ -107,11 +107,11 @@ export default {
     //   console.log("供应商详情id", data[0]._id);
     //   this.supId = data[0]._id;
     // });
-    this.setSuppliers();
+    // this.setSuppliers("5c384dec1b3ba76f6f14f752");
   },
   computed: {
     ...mapState(["suppliergoods", "pageNation"]),
-    ...supId(["supId"])
+    ...supId(["supId", "usersId"])
   },
 
   name: "basetable",
@@ -164,6 +164,8 @@ export default {
     handleDelete: function(index, suppliergoods) {
       this.delVisible = true;
       this.suppliergoodsId = suppliergoods._id;
+      console.log("list id", this.usersId);
+      this.setSuppliers(this.usersId);
     },
     // 确定删除
     deleteRow(data) {
@@ -180,7 +182,8 @@ export default {
     handleEdit: function(index, studentData) {
       console.log("updateSwitch", studentData._id);
       this.setUpdateVisible(true); //打开修改面板
-
+      console.log("修改id", this.usersId);
+      this.setSuppliers(this.usersId);
       this.setSuppliergood(studentData._id);
     },
     //新增按钮打开模板

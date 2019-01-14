@@ -17,7 +17,7 @@
           <el-input v-model="regForm.account" placeholder="username"></el-input>
         </el-form-item>
         <el-form-item prop="pwd">
-          <el-input v-model="regForm.pwd" placeholder="password"></el-input>
+          <el-input type="password" v-model="regForm.pwd" placeholder="password"></el-input>
         </el-form-item>
         <div class="login-btn">
           <el-button type="primary" @click="submitForm">登录</el-button>

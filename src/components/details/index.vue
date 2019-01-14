@@ -16,7 +16,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="imageUrl" :src="'/upload/'+imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -47,7 +47,7 @@
           :on-success="handleAvatarSuccesses"
           :before-upload="beforeAvatarUploades"
         >
-          <img v-if="image" :src="image" class="avatar">
+          <img v-if="image" :src="'/upload/'+image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -124,7 +124,7 @@ export default {
     handleAvatarSuccess(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.imageUrl = "/upload/" + res;
+      this.imageUrl = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -144,7 +144,7 @@ export default {
     handleAvatarSuccesses(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.image = "/upload/" + res;
+      this.image = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },

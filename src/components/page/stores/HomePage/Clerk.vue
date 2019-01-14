@@ -2,7 +2,7 @@
   <div class="table">
     <div class="container">
       <div class="handle-box">
-        <el-button @click="addClerk" class="handle-del mr10">新增商品</el-button>
+        <el-button @click="addClerk" class="handle-del mr10">新增店员</el-button>
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
         <!-- <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
           <el-option key="1" label="姓名" value="name"></el-option>

@@ -4,7 +4,10 @@
       <el-col :span="8">
         <el-card shadow="hover" class="mgb20" style="height:252px;">
           <div class="user-info">
-            <img :src="storeInfoData.storeImage ||'../../../../assets/img/img.jpg'" class="user-avator" alt>
+            <div class="user-avator-father">
+              <img :src="'/upload/'+storeInfoData.storeImage" class="user-avator" alt>
+            </div>
+
             <div class="user-info-cont">
               <div class="user-info-name">{{storeInfoData.name}}</div>
               <div></div>
@@ -127,11 +130,17 @@ export default {
   border-bottom: 2px solid #ccc;
   margin-bottom: 20px;
 }
-
-.user-avator {
+.user-avator-father {
   width: 120px;
   height: 120px;
   border-radius: 50%;
+  overflow: hidden;
+  background-image: url("../../../../assets/img/img.jpg");
+}
+.user-avator {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 50%; */
 }
 
 .user-info-cont {

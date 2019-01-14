@@ -16,7 +16,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="imageUrl" :src="'/upload/'+imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -65,7 +65,7 @@ export default {
         ]
       },
       userId: "",
-      state:""
+      state: ""
     };
   },
   created() {
@@ -75,7 +75,7 @@ export default {
     }).then(({ data }) => {
       if (data.phone) {
         this.userId = data._id;
-        this.state=data.state
+        this.state = data.state;
       }
     });
   },
@@ -84,7 +84,7 @@ export default {
     handleAvatarSuccess(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.imageUrl = "http://localhost:3001/upload/" + res;
+      this.imageUrl = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -118,13 +118,13 @@ export default {
               web: this.regForm.web,
               licenseImage: this.regForm.licenseImage,
               remark: this.regForm.remark,
-              usersId:this.userId
+              usersId: this.userId
             }
           }).then(({ data }) => {
-            if(this.state=="0"){
+            if (this.state == "0") {
               alert("详情填写完成等待审核");
-            // this.$router.path("../login/index.vue");
-            }else{
+              // this.$router.path("../login/index.vue");
+            } else {
               this.$router.push("/suppliergoods");
             }
           });

@@ -117,8 +117,8 @@ export default {
           this.setserveStoreId(res.data._id);
         });
         this.setStoreInfoData();
-      }else{
-        // this.$router.push("/login");
+      } else {
+        this.$router.push("/login");
       }
     });
   }

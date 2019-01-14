@@ -15,14 +15,15 @@ export default {
           click(){
               var myDate = new Date()
               console.log(myDate.toLocaleDateString()+" "+myDate.toLocaleTimeString())
-              let arr = [{'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371132bd089a29cce23fdc',goodState:"商品",shangpingname:"怡亲",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"小心心狗粮",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371140bd089a29cce23fdd',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
-               {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371142bd089a29cce23fde',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
-              {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                  {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
-                    {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120}
+              let arr = [
+                //   {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371132bd089a29cce23fdc',goodState:"商品",shangpingname:"怡亲",num:3,price:40,total:120},
+              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3b3bd4722b1c0acca16ae7',goodState:"服务",shangpingname:"洗护",num:3,price:40,total:120},
+              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3c5a965d8d5a2ac894fc0e',goodState:"服务",shangpingname:"寄养",num:10,price:40,total:400},
+            //    {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3b3bd4722b1c0acca16ae7',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
+              {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c3c5a825d8d5a2ac894fc0d',goodState:"服务",shangpingname:"凯锐思",num:3,price:30,total:120},
+                // {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
+                //   {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
+                    // {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120}
               ]
                 axios({
                     method:"post",

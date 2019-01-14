@@ -17,7 +17,7 @@ import Detailses from "../components/detailses/index"
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-import StoreStatistics from "../components/page/stores/tongji/statisticsMonth.vue";
+import StoreStatistics from "../components/page/stores/tongji/statistics.vue";
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"

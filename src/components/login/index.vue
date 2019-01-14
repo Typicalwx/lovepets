@@ -61,14 +61,11 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
-=======
     open() {
       this.$alert("请等待审核", {
         confirmButtonText: "取消"
       });
     },
->>>>>>> five
     submitForm() {
       this.$refs.regForm.validate(valid => {
         if (valid) {
@@ -79,22 +76,7 @@ export default {
               account: this.regForm.account,
               pwd: this.regForm.pwd
             }
-<<<<<<< HEAD
           }).then(({ data }) => {
-            console.log(data);
-            if (data._id) {
-              if (data.role == "门店管理员") {
-                if (data.state == "0") {
-                  this.$router.push("/details");
-                } else if (data.state == "1") {
-                  this.$router.push("/store");
-=======
-<<<<<<< HEAD
-          }).then(({data} ) => {
-            console.log(data)
-=======
-          }).then(({ data }) => {
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
             if (data._id) {
               if (data.role == "门店管理员") {
                 if (data.state == "0") {
@@ -105,7 +87,6 @@ export default {
                   }
                 } else if (data.state == "1") {
                   this.$router.push("/storedashboard");
->>>>>>> five
                 }
               } else if (data.role == "供应商管理员") {
                 if (data.state == "0") {
@@ -168,12 +149,6 @@ export default {
   text-align: center;
 }
 .login-btn button {
-<<<<<<< HEAD
-  width: 100%;
-  height: 36px;
-  margin-bottom: 10px;
-}
-=======
   /* width: 30%; */
   padding: 5px 12px;
   height: 36px;
@@ -182,7 +157,6 @@ export default {
 .login-btn button:last-child {
   background-color: rgba(255, 255, 255, 0.5);
 }
->>>>>>> five
 .login-tips {
   font-size: 12px;
   line-height: 30px;

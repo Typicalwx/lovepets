@@ -91,11 +91,6 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> five
        open() {
         this.$alert('注册成功', {
           confirmButtonText: '请登录',
@@ -105,23 +100,6 @@ export default {
         });
       },
     valuedataPhone(rule, value, callback){
-<<<<<<< HEAD
-=======
-=======
-    valuedataPhone(rule, value, callback) {
->>>>>>> zw
-=======
-    open() {
-      this.$alert("注册成功", {
-        confirmButtonText: "请登录",
-        callback: action => {
-          this.$router.push("/login");
-        }
-      });
-    },
-    valuedataPhone(rule, value, callback) {
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
->>>>>>> five
       axios({
         method: "get",
         url: "/users/phone",
@@ -156,11 +134,7 @@ export default {
       this.$refs.regForm.validate(valid => {
         if (valid) {
           axios({
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> five
+
             method:"post",
             url:"/users",
             data:{
@@ -172,67 +146,25 @@ export default {
             role:this.role,
             state :"0",
             xiangqingstate:0
-=======
-            method: "post",
-            url: "/users",
-            data: {
-              account: this.regForm.account,
-              pwd: this.regForm.pwd,
-              email: this.regForm.email,
-              name: this.regForm.name,
-              phone: this.regForm.phone,
-              role: this.role,
-              state: "0",
-              xiangqingstate: 0
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
             }
           }).then(() => {
             this.open();
-<<<<<<< HEAD
             })
         }else{
           this.$alert("有错误","注册失败")
         }
       });
-=======
-          });
-        } else {
-          this.$alert("有错误", "注册失败");
-        }
-      });
     },
     loginSub() {
       this.$router.push("/login");
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
     }
   }
 };
 </script>
 <style scoped>
-<<<<<<< HEAD
 .box-card {
   width: 500px;
   margin: auto;
-=======
-h1 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-.login-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-image: url(../../assets/img/login-bg.jpg);
-  background-size: 100%;
-}
-.box-card {
-  width: 500px;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.3);
-  display: flex;
-  font-display: column;
-  align-items: center;
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
 }
 .juese {
   width: 100%;
@@ -240,17 +172,8 @@ h1 {
   display: flex;
   justify-content: center;
 }
-<<<<<<< HEAD
 .zc {
   margin-left: 90px;
   margin-top: 20px;
-=======
-.zc{
-  display: flex;
-  justify-content: center;
-}
-.el-input{
-  width: 300px;
->>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
 }
 </style>

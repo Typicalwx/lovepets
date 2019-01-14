@@ -35,43 +35,61 @@
 </template>
 
 <script>
-import login from "../login"
+import login from "../login";
 import axios from "axios";
 export default {
-
   data() {
     return {
-   regForm:{
-  account:"",
-   phone:"",
-   pwd:"",
-   email:"",
-   name:"",
-   role:""
+      regForm: {
+        account: "",
+        phone: "",
+        pwd: "",
+        email: "",
+        name: "",
+        role: ""
       },
-      rules:{
-      phone:[{ required:true,message: '请输入电话' },
-      { pattern:/^1\d{10}$/,message: '电话格式不正确' },
-      {validator:this.valuedataPhone}],
-      account:[{
-        required:true,message: '请输入登录号'},
-      { pattern:/^\w{6,16}$/,message: '登录号格式不正确' },
-      {validator:this.valuedataAccount}],
-      pwd:[{
-        required:true,message: '请输入密码'  },
-      { pattern:/^\w{6,16}$/,message: '密码格式不正确' }],
-      email:[{
-        required:true,message: '请输入邮箱' },
-      { pattern:/(\S)+[@]{1}(\S)+[.]{1}(\w)+/,message: '邮箱格式不正确' }],
-      name:[{
-        required:true,message: '请输入姓名' },
-      { pattern:/^[\u4e00-\u9fa5]{2,}$/,message: '姓名格式不正确' }],
+      rules: {
+        phone: [
+          { required: true, message: "请输入电话" },
+          { pattern: /^1\d{10}$/, message: "电话格式不正确" },
+          { validator: this.valuedataPhone }
+        ],
+        account: [
+          {
+            required: true,
+            message: "请输入登录号"
+          },
+          { pattern: /^\w{6,16}$/, message: "登录号格式不正确" },
+          { validator: this.valuedataAccount }
+        ],
+        pwd: [
+          {
+            required: true,
+            message: "请输入密码"
+          },
+          { pattern: /^\w{6,16}$/, message: "密码格式不正确" }
+        ],
+        email: [
+          {
+            required: true,
+            message: "请输入邮箱"
+          },
+          { pattern: /(\S)+[@]{1}(\S)+[.]{1}(\w)+/, message: "邮箱格式不正确" }
+        ],
+        name: [
+          {
+            required: true,
+            message: "请输入姓名"
+          },
+          { pattern: /^[\u4e00-\u9fa5]{2,}$/, message: "姓名格式不正确" }
+        ]
       },
-         role: '门店管理员',
+      role: "门店管理员"
     };
   },
- 
+
   methods: {
+<<<<<<< HEAD
        open() {
         this.$alert('注册成功', {
           confirmButtonText: '请登录',
@@ -81,40 +99,44 @@ export default {
         });
       },
     valuedataPhone(rule, value, callback){
+=======
+    valuedataPhone(rule, value, callback) {
+>>>>>>> zw
       axios({
-        method:"get",
-        url:"/users/phone",
-        params:{
-          phone:value
+        method: "get",
+        url: "/users/phone",
+        params: {
+          phone: value
         }
-      }).then(({data})=>{
-        console.log(data)
-        if(data.status==0){
-          callback("手机号重复")
-        }else{
-          callback()
+      }).then(({ data }) => {
+        console.log(data);
+        if (data.status == 0) {
+          callback("手机号重复");
+        } else {
+          callback();
         }
-      })
+      });
     },
-     valuedataAccount(rule, value, callback){
+    valuedataAccount(rule, value, callback) {
       axios({
-        method:"get",
-        url:"/users/account",
-        params:{
-          account:value
+        method: "get",
+        url: "/users/account",
+        params: {
+          account: value
         }
-      }).then(({data})=>{
-        if(data.status ==0){
-          callback("登录号重复")
-        }else{
-          callback()
+      }).then(({ data }) => {
+        if (data.status == 0) {
+          callback("登录号重复");
+        } else {
+          callback();
         }
-      })
+      });
     },
-    submitForm(){
-      this.$refs.regForm.validate((valid)=>{
-        if(valid){
+    submitForm() {
+      this.$refs.regForm.validate(valid => {
+        if (valid) {
           axios({
+<<<<<<< HEAD
             method:"post",
             url:"/users",
             data:{
@@ -132,26 +154,44 @@ export default {
             })
         }else{
           this.$alert("有错误","注册失败")
+=======
+            method: "post",
+            url: "/users",
+            data: {
+              account: this.regForm.account,
+              pwd: this.regForm.pwd,
+              email: this.regForm.email,
+              name: this.regForm.name,
+              phone: this.regForm.phone,
+              role: this.role,
+              state: "0"
+            }
+          }).then(() => {
+            this.$alert("注册成功");
+            this.$router.push("/login");
+          });
+        } else {
+          this.$alert("有错误", "注册失败");
+>>>>>>> zw
         }
-      })
+      });
     }
   }
-  }
+};
 </script>
 <style scoped>
-
-.box-card{
-width: 500px;
-margin: auto;
+.box-card {
+  width: 500px;
+  margin: auto;
 }
-.juese{
+.juese {
   width: 100%;
   height: 40px;
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-.zc{
-margin-left: 90px;
-margin-top: 20px;
+.zc {
+  margin-left: 90px;
+  margin-top: 20px;
 }
 </style>

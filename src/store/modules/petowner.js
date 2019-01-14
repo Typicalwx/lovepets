@@ -4,16 +4,24 @@ import Vuex from "vuex";
 import axios from "axios";
 export default {
     // strict: true,
-    namespaced:true,
+    namespaced: true,
     state: {
+        addVisible: false,
         updateVisible: false,
         petowners: [],
+        updatePetowners: [],
         pagination: {},
         search: { type: "", value: "" },
     },
     mutations: {
-        setVisible(state, Visible) {
+        setUpdateVisible(state, Visible) {
             state.updateVisible = Visible;
+        },
+        setAddVisible(state, Visible) {
+            state.addVisible = Visible;
+        },
+        setUpdatePetowners(state, value) {
+            state.updatePetowners = value;
         },
         setPagination(state, pagination) {
             state.pagination = pagination;
@@ -43,7 +51,19 @@ export default {
                 }
             }).then(({ data }) => {
                 console.log(data)
-                context.commit("setPetowner", data.rows)
+                var res = data.rows.map(function (item) {
+                    if (item.state) {
+                        if (item.state == 1) {
+                            item.state = "正常"
+                        } else if (item.state == 3) {
+                            item.state = "封禁"
+                        }
+                        return item
+                    }
+
+
+                })
+                context.commit("setPetowner", res)
                 context.commit("setPagination", {
                     curpage: data.curpage,
                     maxpage: data.maxpage,

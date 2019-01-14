@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <v-head></v-head>
+    <v-head :headtitle="headtitle" :usersession="usersession"></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags></v-tags>
+      <v-tags :dashboardmoney="dashboardmoney"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -20,11 +20,15 @@ import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
 import vTags from "./Tags.vue";
 import bus from "./bus";
+import axios from "axios";
 export default {
   data() {
     return {
+      dashboardmoney: "dashboardmoney",
+      usersession: "",
       tagsList: [],
       collapse: false,
+      headtitle: "平台管理系统",
       items: [
         {
           icon: "el-icon-setting",
@@ -50,7 +54,7 @@ export default {
         {
           icon: "el-icon-edit-outline",
           index: "platformsupplier",
-          title: "平台统计"
+          title: "供应商管理"
         },
         {
           icon: "el-icon-edit-outline",
@@ -71,6 +75,12 @@ export default {
     vTags
   },
   created() {
+    axios({
+      method: "get",
+      url: "/getsession"
+    }).then(({ data }) => {
+      this.usersession = data.account;
+    });
     bus.$on("collapse", msg => {
       this.collapse = msg;
     });

@@ -5,7 +5,7 @@
       <el-radio-button label="年龄分布统计"></el-radio-button>
       <el-radio-button label="地图分布"></el-radio-button>
     </el-radio-group>
-    <div class="total" id="myChart" ref="myChart"></div>
+    <div class="total" id="myChart" ref="myChart" @click="showInfo"></div>
   </div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
       type: "地图分布",
       shopsCountData: [],
       shopsData: [],
-      zoom: 0
+      zoom: 0,
+      coordinate: [104.072259, 30.663403]
     };
   },
   mounted() {
@@ -38,7 +39,7 @@ export default {
       let myChart = echarts.init(this.$refs.myChart);
       if (this.type == "地图分布") {
         axios({
-          url: "/shops/counts",
+          url: "/showstores/counts",
           method: "get"
         }).then(res => {
           console.log(res.data);
@@ -62,9 +63,15 @@ export default {
             this.zoom = bmap.getZoom();
             // 打印出当前缩放值
             if (zoom < bmap.getZoom() && bmap.getZoom() == 10) {
+              this.coordinate = [bmap.getCenter().lng, bmap.getCenter().lat];
+              console.log(this.coordinate);
               axios({
                 url: "/shops",
-                method: "get"
+                method: "get",
+                params: {
+                  lng: bmap.getCenter().lng,
+                  lat: bmap.getCenter().lat
+                }
               }).then(res => {
                 this.shopsData = res.data;
                 let options = this.mapOptions;
@@ -83,10 +90,13 @@ export default {
     showCount() {
       axios({
         method: "get",
-        url: "/stores"
+        url: "/showstores/counts"
       }).then(data => {
         console.log(data);
       });
+    },
+    showInfo(e) {
+      console.log(e);
     }
   },
   computed: {
@@ -103,23 +113,24 @@ export default {
           trigger: "item"
         },
         bmap: {
-          center: [104.072259, 30.663403],
+          center: this.coordinate,
           zoom: 5,
           roam: true,
           mapStyle: {
             styleJson: [
               {
-                featureType: "water",
-                elementType: "all",
+                featureType: "background",
+                elementType: "geometry",
                 stylers: {
-                  color: "#044161"
+                  visibility: "on",
+                  color: "#e6c9c9ff"
                 }
               },
               {
                 featureType: "land",
-                elementType: "all",
+                elementType: "geometry",
                 stylers: {
-                  color: "#004981"
+                  color: "#fff4f4ff"
                 }
               },
               {

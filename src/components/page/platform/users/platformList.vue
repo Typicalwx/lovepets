@@ -35,7 +35,7 @@
               :show-file-list="false"
               :disabled="true"
             >
-              <img v-if="licenseImage" :src="licenseImage" class="avatar" @click="big">
+              <img v-if="licenseImage" :src="`/upload/`+licenseImage" class="avatar" @click="big">
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               <el-dialog :visible.sync="dialogVisible">
                 <img width="60%" :src="licenseImage" alt>
@@ -122,6 +122,7 @@ export default {
         method: "get",
         url: "/users/" + id
       }).then(({ data }) => {
+        console.log(data);
         if (data.role == "门店管理员") {
           axios({
             method: "get",
@@ -130,8 +131,9 @@ export default {
               userId: id
             }
           }).then(({ data }) => {
-            this.supplier = { ...this.supplier, ...data[0] };
-            this.licenseImage = `upload/${data[0].licenseImage}`;
+            console.log(data);
+            this.supplier = { ...this.supplier, ...data };
+            this.licenseImage = data.licenseImage;
           });
         } else {
           axios({

@@ -294,6 +294,7 @@ export default {
           state: 1
         }
       }).then(({ data }) => {
+        console.log(data);
         axios({
           method: "post",
           url: "/supplier",
@@ -304,7 +305,7 @@ export default {
             web: this.suppliersadd.web,
             licenseImage: this.licenseImage,
             remark: this.suppliersadd.remark,
-            usersId: data.data._id
+            usersId: data._id
           }
         }).then(() => {
           this.setShowsuppliers();

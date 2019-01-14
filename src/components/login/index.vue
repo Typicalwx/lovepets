@@ -55,11 +55,6 @@ export default {
   },
 
   methods: {
-     open() {
-        this.$alert('请等待审核', {
-          confirmButtonText: '取消',
-        });
-      },
     submitForm() {
       this.$refs.regForm.validate(valid => {
         if (valid) {
@@ -70,36 +65,30 @@ export default {
               account: this.regForm.account,
               pwd: this.regForm.pwd
             }
-          }).then(({data} ) => {
-            console.log(data)
+          }).then(({ data }) => {
+            console.log(data);
             if (data._id) {
               if (data.role == "门店管理员") {
-                if(data.state =="0" ){
-                    if(data.xiangqingstate==1){
-                        this.open();
-                    }else{
-                         this.$router.push("/details");
-                    }  
-                }else if (data.state == "1") {
-                  this.$router.push("/storedashboard");
+                if (data.state == "0") {
+                  this.$router.push("/details");
+                } else if (data.state == "1") {
+                  this.$router.push("/store");
                 }
               } else if (data.role == "供应商管理员") {
-                if(data.state =="0"){
-                 this.$router.push("/detailses");
-                }else if(data.state =="1"){
-                   this.$router.push("/suppliergoods");
-                }else if(data.state =="2"){
-                   this.$alert("你得账号正在被检查，暂时禁封！");
+                if (data.state == "0") {
+                  this.$router.push("/detailses");
+                } else if (data.state == "1") {
+                  this.$router.push("/suppliergoods");
+                } else if (data.state == "2") {
+                  this.$alert("你得账号正在被检查，暂时禁封！");
                 }
               } else if (data.role == "平台管理") {
-               
-                   this.$router.push("/details");
-                }
+                this.$router.push("/details");
+              }
             } else {
-                this.$alert("你得账号或密码不正确！");
-                this.regForm.account="";
-                this.regForm.pwd="";
-
+              this.$alert("你得账号或密码不正确！");
+              this.regForm.account = "";
+              this.regForm.pwd = "";
             }
           });
         } else {
@@ -111,46 +100,45 @@ export default {
 };
 </script>
 <style scoped>
-    .login-wrap{
-        position: relative;
-        width:100%;
-        height:100%;
-        background-image: url(../../assets/img/login-bg.jpg);
-        background-size: 100%;
-    }
-    .ms-title{
-        width:100%;
-        line-height: 50px;
-        text-align: center;
-        font-size:20px;
-        color: black;
-        border-bottom: 1px solid #ddd;
-    }
-    .ms-login{
-        position: absolute;
-        left:50%;
-        top:50%;
-        width:350px;
-        margin:-190px 0 0 -175px;
-        border-radius: 5px;
-        background: rgba(255,255,255, 0.3);
-        overflow: hidden;
-    }
-    .ms-content{
-        padding: 30px 30px;
-    }
-    .login-btn{
-        text-align: center;
-    }
-    .login-btn button{
-        width:100%;
-        height:36px;
-        margin-bottom: 10px;
-    }
-    .login-tips{
-        font-size:12px;
-        line-height:30px;
-        color:#fff;
-    }
-    
+.login-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../assets/img/login-bg.jpg);
+  background-size: 100%;
+}
+.ms-title {
+  width: 100%;
+  line-height: 50px;
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  border-bottom: 1px solid #ddd;
+}
+.ms-login {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 350px;
+  margin: -190px 0 0 -175px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+.ms-content {
+  padding: 30px 30px;
+}
+.login-btn {
+  text-align: center;
+}
+.login-btn button {
+  width: 100%;
+  height: 36px;
+  margin-bottom: 10px;
+}
+.login-tips {
+  font-size: 12px;
+  line-height: 30px;
+  color: #fff;
+}
 </style>

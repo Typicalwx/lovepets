@@ -89,7 +89,6 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
        open() {
         this.$alert('注册成功', {
           confirmButtonText: '请登录',
@@ -99,9 +98,6 @@ export default {
         });
       },
     valuedataPhone(rule, value, callback){
-=======
-    valuedataPhone(rule, value, callback) {
->>>>>>> zw
       axios({
         method: "get",
         url: "/users/phone",
@@ -136,7 +132,6 @@ export default {
       this.$refs.regForm.validate(valid => {
         if (valid) {
           axios({
-<<<<<<< HEAD
             method:"post",
             url:"/users",
             data:{
@@ -154,25 +149,6 @@ export default {
             })
         }else{
           this.$alert("有错误","注册失败")
-=======
-            method: "post",
-            url: "/users",
-            data: {
-              account: this.regForm.account,
-              pwd: this.regForm.pwd,
-              email: this.regForm.email,
-              name: this.regForm.name,
-              phone: this.regForm.phone,
-              role: this.role,
-              state: "0"
-            }
-          }).then(() => {
-            this.$alert("注册成功");
-            this.$router.push("/login");
-          });
-        } else {
-          this.$alert("有错误", "注册失败");
->>>>>>> zw
         }
       });
     }

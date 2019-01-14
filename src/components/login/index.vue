@@ -1,31 +1,37 @@
 <template>
-    <div class="login-wrap">
-        <div class="ms-login">
-            <div class="ms-title">后台管理系统</div>
-    <el-form :model="regForm" status-icon :rules="rules" ref="regForm" label-width="0px" class="ms-content">
-      <!-- <el-form-item label="登录名" prop="account">
+  <div class="login-wrap">
+    <div class="ms-login">
+      <div class="ms-title">后台管理系统</div>
+      <el-form
+        :model="regForm"
+        status-icon
+        :rules="rules"
+        ref="regForm"
+        label-width="0px"
+        class="ms-content"
+      >
+        <!-- <el-form-item label="登录名" prop="account">
         <el-input type="text" v-model="regForm.account" autocomplete="off"></el-input>
-      </el-form-item> -->
-      <el-form-item prop="account">
-                    <el-input v-model="regForm.account" placeholder="username">
-                    </el-input>
-      </el-form-item>
-      <el-form-item prop="pwd">
-                    <el-input v-model="regForm.pwd" placeholder="password">
-                    </el-input>
-      </el-form-item>
-          <div class="login-btn">
-                    <el-button type="primary" @click="submitForm()">登录</el-button>
-                </div>
-      <!-- <el-form-item label="密码" prop="pwd">
-        <el-input type="password" v-model="regForm.pwd" autocomplete="off"></el-input>
-      </el-form-item> -->
-      <!-- <el-form-item class="dl">
-        <el-button type="primary" @click="submitForm()">登陆</el-button>
-      </el-form-item> -->
-    </el-form>
+        </el-form-item>-->
+        <el-form-item prop="account">
+          <el-input v-model="regForm.account" placeholder="username"></el-input>
+        </el-form-item>
+        <el-form-item prop="pwd">
+          <el-input v-model="regForm.pwd" placeholder="password"></el-input>
+        </el-form-item>
+        <div class="login-btn">
+          <el-button type="primary" @click="submitForm">登录</el-button>
+          <el-button @click="register">没有账号，去注册</el-button>
         </div>
+        <!-- <el-form-item label="密码" prop="pwd">
+        <el-input type="password" v-model="regForm.pwd" autocomplete="off"></el-input>
+        </el-form-item>-->
+        <!-- <el-form-item class="dl">
+        <el-button type="primary" @click="submitForm()">登陆</el-button>
+        </el-form-item>-->
+      </el-form>
     </div>
+  </div>
 </template>
 
 <script>
@@ -55,6 +61,14 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
+=======
+    open() {
+      this.$alert("请等待审核", {
+        confirmButtonText: "取消"
+      });
+    },
+>>>>>>> five
     submitForm() {
       this.$refs.regForm.validate(valid => {
         if (valid) {
@@ -65,6 +79,7 @@ export default {
               account: this.regForm.account,
               pwd: this.regForm.pwd
             }
+<<<<<<< HEAD
           }).then(({ data }) => {
             console.log(data);
             if (data._id) {
@@ -73,6 +88,24 @@ export default {
                   this.$router.push("/details");
                 } else if (data.state == "1") {
                   this.$router.push("/store");
+=======
+<<<<<<< HEAD
+          }).then(({data} ) => {
+            console.log(data)
+=======
+          }).then(({ data }) => {
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
+            if (data._id) {
+              if (data.role == "门店管理员") {
+                if (data.state == "0") {
+                  if (data.xiangqingstate == 1) {
+                    this.open();
+                  } else {
+                    this.$router.push("/details");
+                  }
+                } else if (data.state == "1") {
+                  this.$router.push("/storedashboard");
+>>>>>>> five
                 }
               } else if (data.role == "供应商管理员") {
                 if (data.state == "0") {
@@ -95,6 +128,9 @@ export default {
           this.$alert("错误", "失败");
         }
       });
+    },
+    register() {
+      this.$router.push("/register");
     }
   }
 };
@@ -132,10 +168,21 @@ export default {
   text-align: center;
 }
 .login-btn button {
+<<<<<<< HEAD
   width: 100%;
   height: 36px;
   margin-bottom: 10px;
 }
+=======
+  /* width: 30%; */
+  padding: 5px 12px;
+  height: 36px;
+  margin-bottom: 10px;
+}
+.login-btn button:last-child {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+>>>>>>> five
 .login-tips {
   font-size: 12px;
   line-height: 30px;

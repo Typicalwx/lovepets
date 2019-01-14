@@ -24,6 +24,7 @@ export default {
     AddSupplierGoods
   },
   created: function() {
+    console.log("门店商品")
     this.setStoregoods();
   },
   methods: {

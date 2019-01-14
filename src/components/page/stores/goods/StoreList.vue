@@ -133,7 +133,7 @@ export default {
       this.setStoreAddVisible(true);
     },
     addSupplierGood() {
-      console.log(this,78)
+      console.log(this, 78);
       this.setAddSupplierVisible(true);
     },
     searchGoods() {

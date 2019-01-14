@@ -4,19 +4,19 @@
       <el-col :span="8">
         <el-card shadow="hover" class="mgb20" style="height:252px;">
           <div class="user-info">
-            <img src="../../../../assets/img/img.jpg" class="user-avator" alt>
+            <img :src="storeInfoData.storeImage" class="user-avator" alt>
             <div class="user-info-cont">
-              <div class="user-info-name"></div>
+              <div class="user-info-name">{{storeInfoData.name}}</div>
               <div></div>
             </div>
           </div>
           <div class="user-info-list">
-            上次登录时间：
-            <span>2019-01-01</span>
+            所在城市：
+            <span>{{storeInfoData.city}}</span>
           </div>
           <div class="user-info-list">
-            上次登录地点：
-            <span>成都</span>
+            联系电话：
+            <span>{{storeInfoData.phone}}</span>
           </div>
         </el-card>
       </el-col>
@@ -32,7 +32,7 @@
 <script>
 import Clerk from "./Clerk.vue";
 import AddClerk from "./AddClerk";
-import UpdateClerk from "./UpdateClerk"
+import UpdateClerk from "./UpdateClerk";
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapMutations, mapState } = createNamespacedHelpers(
@@ -45,12 +45,15 @@ export default {
   },
   components: {
     Clerk,
-    AddClerk,UpdateClerk
+    AddClerk,
+    UpdateClerk
   },
-  computed: {},
+  computed: {
+    ...mapState(["storeInfoData"])
+  },
   created() {
-    this.setUserId("5c358479100838196886b259");
-    this.setStoreInfoData();
+    // this.setUserId("5c358479100838196886b259");
+    // this.setStoreInfoData();
   },
 
   methods: {
@@ -132,14 +135,14 @@ export default {
 }
 
 .user-info-cont {
-  padding-left: 50px;
+  padding-left: 25px;
   flex: 1;
   font-size: 14px;
   color: #999;
 }
 
 .user-info-cont div:first-child {
-  font-size: 30px;
+  font-size: 20px;
   color: #222;
 }
 

@@ -2,8 +2,8 @@ import axios from "axios"
 
 
 
-function storeLocalStore (state) {
-    window.localStorage.setItem("storeId",state);
+function storeLocalStore(state) {
+    window.localStorage.setItem("storeId", state);
 }
 
 export default {
@@ -19,19 +19,27 @@ export default {
         storeUpdateVisible: false,
         clerkUpdateVisible: false,
         addClerkVisible: false,
-        storeId: ""||localStorage.getItem("storeId"),
-        storeInfoData: {},
-        userId: "" || "5c358479100838196886b259",
+        storeId: "" || localStorage.getItem("storeId"),
+        storeInfoData: {},//门店详细信息
+        userId: "",
         clerkInfor: {},
         updateClerkIndex: -1,
         clerkPage: {},
         clerkData: [],//要渲染的店员的数组,
         addSupplierGoodsVisible: false,
         supplierGood: {},
-        supplierId: ""
+        supplierId: "",
+        headImg: "",
+        storeName: ""
     },
     getters: {},
     mutations: {
+        setHeadImg(state, value) {
+            state.headImg = value
+        },
+        setStoreName(state, value) {
+            state.storeName = value
+        },
         //从供应商增加商品
         setSupplierGood(state, value) {
             state.supplierGood = value
@@ -117,12 +125,12 @@ export default {
                 url: "/stores",
                 method: "get",
                 params: {
-                    userId: userId || "5c358479100838196886b259",
+                    userId: userId,
                     type: search.type,
                     value: search.value,
                 }
             }).then(({ data }) => {
-                console.log(data)
+                console.log(data,777)
                 context.commit("setClerkPage", {
                     curpage: clerkPage.curpage || 1,
                     maxpage: Math.ceil(data.clerk.length / 5),
@@ -131,7 +139,7 @@ export default {
                 });
                 let arr = []
                 for (let i = 0; i < (clerkPage.eachpage || 5); i++) {
-                   
+
                     if (i < data.clerk.length) {
                         // console.log("qwefvfdsf")
                         arr.push(data.clerk[i]);
@@ -142,7 +150,7 @@ export default {
                 }
                 context.commit("setClerkData", arr)
                 context.commit("setStoreInfoData", data)
-                context.commit("setStoreId", data._id || "5c358b2d100838196886b25c")
+                context.commit("setStoreId", data._id)
             })
         },
         // 修改店员
@@ -196,7 +204,7 @@ export default {
         setStoregoods(context) {
             let { pagination, storeId, search } = context.state;
             console.log("ddd")
-            console.log(search)
+            console.log(storeId)
             axios({
                 url: "/storegoods",
                 method: "get",
@@ -205,7 +213,7 @@ export default {
                     rows: pagination.eachpage || 5,
                     type: search.type,
                     value: search.value,
-                    storeId: storeId || "5c358b2d100838196886b25c"
+                    storeId: storeId 
                 }
             }).then(({ data }) => {
                 console.log(data, 789);

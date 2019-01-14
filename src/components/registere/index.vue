@@ -1,37 +1,39 @@
 <template>
-  <el-card class="box-card">
-     <h1>注册</h1>
-<el-form :model="regForm"
-          status-icon 
-          :rules="rules"
-           ref="regForm" 
-           label-width="100px" >
-   <el-form-item label="登录名" prop="account">
-    <el-input type="text" v-model="regForm.account" autocomplete="off"></el-input>
-  </el-form-item>
-  <el-form-item label="密码" prop="pwd">
-    <el-input type="password" v-model="regForm.pwd" autocomplete="off"></el-input>
-  </el-form-item>
-  <el-form-item label="电话" prop="phone">
-    <el-input type="text" v-model="regForm.phone" autocomplete="off"></el-input>
-  </el-form-item>
-  <el-form-item label="邮箱" prop="email">
-    <el-input type="text" v-model="regForm.email" autocomplete="off"></el-input>
-  </el-form-item>
-  <el-form-item label="姓名" prop="name">
-    <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
-  </el-form-item>
-  <div class="juese">
-  <template >
-  <el-radio prop="role" v-model="role" label="门店管理员">门店管理员</el-radio>
-  <el-radio prop="role" v-model="role" label="供应商管理员">供应商管理员</el-radio>
-</template>
-</div>
-  <el-form-item class="zc">
-    <el-button type="primary" @click="submitForm">注册</el-button>
-  </el-form-item>
-</el-form>
-  </el-card>
+  <div class="login-wrap">
+    <el-card class="box-card">
+      <h1>注册</h1>
+      <el-form :model="regForm" status-icon :rules="rules" ref="regForm" label-width="100px">
+        <el-form-item label="登录名" prop="account">
+          <el-input type="text" v-model="regForm.account" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="pwd">
+          <el-input type="password" v-model="regForm.pwd" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" prop="phone">
+          <el-input type="text" v-model="regForm.phone" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input type="text" v-model="regForm.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <div class="juese">
+          <template>
+            <el-radio prop="role" v-model="role" label="门店管理员">门店管理员</el-radio>
+            <el-radio prop="role" v-model="role" label="供应商管理员">供应商管理员</el-radio>
+          </template>
+        </div>
+        <el-form-item class="zc">
+          <el-button type="primary" @click="submitForm">注册</el-button>
+          <el-button
+            style=" background-color: rgba(255, 255, 255, 0.5);"
+            @click="loginSub"
+          >已有账号，直接登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -90,6 +92,7 @@ export default {
 
   methods: {
 <<<<<<< HEAD
+<<<<<<< HEAD
        open() {
         this.$alert('注册成功', {
           confirmButtonText: '请登录',
@@ -102,6 +105,17 @@ export default {
 =======
     valuedataPhone(rule, value, callback) {
 >>>>>>> zw
+=======
+    open() {
+      this.$alert("注册成功", {
+        confirmButtonText: "请登录",
+        callback: action => {
+          this.$router.push("/login");
+        }
+      });
+    },
+    valuedataPhone(rule, value, callback) {
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
       axios({
         method: "get",
         url: "/users/phone",
@@ -137,6 +151,7 @@ export default {
         if (valid) {
           axios({
 <<<<<<< HEAD
+<<<<<<< HEAD
             method:"post",
             url:"/users",
             data:{
@@ -148,9 +163,23 @@ export default {
             role:this.role,
             state :"0",
             xiangqingstate:0
+=======
+            method: "post",
+            url: "/users",
+            data: {
+              account: this.regForm.account,
+              pwd: this.regForm.pwd,
+              email: this.regForm.email,
+              name: this.regForm.name,
+              phone: this.regForm.phone,
+              role: this.role,
+              state: "0",
+              xiangqingstate: 0
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
             }
-          }).then(()=>{
+          }).then(() => {
             this.open();
+<<<<<<< HEAD
             })
         }else{
           this.$alert("有错误","注册失败")
@@ -175,14 +204,45 @@ export default {
 >>>>>>> zw
         }
       });
+=======
+          });
+        } else {
+          this.$alert("有错误", "注册失败");
+        }
+      });
+    },
+    loginSub() {
+      this.$router.push("/login");
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
     }
   }
 };
 </script>
 <style scoped>
+<<<<<<< HEAD
 .box-card {
   width: 500px;
   margin: auto;
+=======
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.login-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../assets/img/login-bg.jpg);
+  background-size: 100%;
+}
+.box-card {
+  width: 500px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  font-display: column;
+  align-items: center;
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
 }
 .juese {
   width: 100%;
@@ -190,8 +250,17 @@ export default {
   display: flex;
   justify-content: center;
 }
+<<<<<<< HEAD
 .zc {
   margin-left: 90px;
   margin-top: 20px;
+=======
+.zc{
+  display: flex;
+  justify-content: center;
+}
+.el-input{
+  width: 300px;
+>>>>>>> 919160f34a9eb475bef78e48e875418fdd94b2c7
 }
 </style>

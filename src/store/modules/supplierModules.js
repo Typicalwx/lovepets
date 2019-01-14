@@ -43,8 +43,13 @@ export default {
                 params: payload
             }).then(({ data }) => {
                 console.log("123", data)
-                commit("setSuppliergoods", data.rows)
-                commit("setPageNation", data)
+                if (data.rows) {
+                    commit("setSuppliergoods", data.rows)
+                    commit("setPageNation", data)
+                } else {
+                    commit("setSuppliergoods", data)
+                }
+
             })
         },
 

@@ -89,7 +89,7 @@ export default {
           url: "/storeAdministrator/orderbuied",
           method: "get"
         }).then(res => {
-          // console.log(res.data);
+          console.log(res.data);
           let dataArry = [];
           let servesArry = [];
           for (let i = 0; i < res.data.length; i++) {

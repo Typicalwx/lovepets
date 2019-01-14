@@ -33,12 +33,12 @@ export default {
       let myChart = echarts.init(this.$refs.myChart);
       if (this.type == "班级人数统计") {
         axios({
-          url: "/storeAdministrator/ceshi",
+          url: "/storeAdministrator/orderbuied",
           method: "get"
         }).then(res => {
           console.log(res);
-          this.classAxisData = res.data.axisData;
-          this.classSeriesData = res.data.seriesData;
+          // this.classAxisData = res.data.axisData;
+          // this.classSeriesData = res.data.seriesData;
           myChart.setOption(this.classesOptions, true);
         });
       }

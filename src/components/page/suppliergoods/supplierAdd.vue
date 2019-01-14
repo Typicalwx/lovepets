@@ -145,7 +145,7 @@ export default {
         this.addVisible = false;
         console.log("增加成功");
         this.addForm.images = [];
-        this.$refs["addForm"].resetFields();
+        // this.$refs["addForm"].resetFields();
         console.log("qwer", this.supId);
         this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId });
       });

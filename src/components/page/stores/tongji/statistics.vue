@@ -25,6 +25,7 @@
         
 
         <div class="total" id="myChartmonth" ref="myChartmonth"></div>
+        <h1 class="h1">{{this.value5}}季度销售量统计</h1>
          <div class="total2" id="myChartthress" ref="myChartthress"></div>
         <div class="total3" id="myChartyear" ref="myChartyear"></div>
         
@@ -172,7 +173,10 @@ export default {
     ServerOptions() {
       return {
         title: {
-          text: `${this.value5}月销售量统计`
+          text: `${this.value5}月销售量统计`,
+          textStyle:{
+            fontSize:30
+          }
         },
         tooltip: {
           trigger: "axis"
@@ -219,11 +223,12 @@ export default {
     yearOpitons() {
       return {
         title: {
-          text: `${this.year}年销售量统计`,
+          text: `${this.value5}年销售量统计`,
           left: "center",
           top: 20,
           textStyle: {
-            color: "#ccc"
+            color: "black",
+            fontSize:30
           }
         },
 
@@ -334,6 +339,9 @@ export default {
 }
 .block{
   display: flex;
+}
+.h1{
+  margin-top: 40px;
 }
 </style>
 

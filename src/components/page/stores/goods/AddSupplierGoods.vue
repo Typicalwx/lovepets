@@ -115,7 +115,8 @@ export default {
         this.$message("请选择一条数据，且只能选择一条");
       } else {
         this.addvisible = false;
-        this.setSupplierId(this.multipleSelection[0]._id);
+        let id = this.multipleSelection[0]._id;
+        this.setSupplierId(id);
         delete this.multipleSelection[0]._id;
         delete this.multipleSelection[0].total;
         this.setSupplierGood(this.multipleSelection[0]);

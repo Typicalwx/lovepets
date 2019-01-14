@@ -1,7 +1,15 @@
 <template>
   <!-- <el-input v-model="input" placeholder="请输入内容"></el-input> -->
   <div>
-    <div class="total" id="myChart" ref="myChart"></div>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-select v-model="type" placeholder="搜索属性" class="handle-select mr10">
+          <el-option v-for="item in  storesData" :key="item._id" :label="item.name" :value="item.name"></el-option>
+        </el-select>
+        <div class="total" id="myChart" ref="myChart"></div>
+      </el-col>
+      <el-col :span="12"></el-col>
+    </el-row>
   </div>
 </template>
 
@@ -17,7 +25,11 @@ import "echarts/lib/component/title";
 import "echarts/lib/component/legend";
 import "echarts/extension/bmap/bmap";
 import axios from "axios";
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+
+import { createNamespacedHelpers } from "vuex";
+const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
+  "storeModule"
+);
 export default {
   data() {
     return {
@@ -40,7 +52,8 @@ export default {
     showChart() {
       console.log("chart");
       let myChart = echarts.init(this.$refs.myChart);
-      //   myChart.setOption(this.classesOptions, false);
+      //
+      // console.log()
       axios({
         url: "/stgoodssta/salesvolume",
         method: "get",
@@ -49,21 +62,34 @@ export default {
         }
       }).then(({ data }) => {
         console.log(data);
+        data.reverse();
+        let xarr = [];
+        let yarr = [];
+        let obj = {};
+        for (let i = 0; i < data.length; i++) {
+          console.log(data[i]);
+          xarr.push(data[i].date);
+          yarr.push((obj.total = data[i].total));
+        }
+        this.goodsAxisData = xarr;
+        this.goodsSeriesData = yarr;
+        myChart.setOption(this.classesOptions, false);
       });
     }
   },
   computed: {
+    ...mapState(["storesData"]),
     classesOptions() {
       return {
         title: {
-          text: "及尼恩"
+          text: "商品近六个月销量"
         },
         tooltip: {},
         legend: {
-          data: this.goodsAxisData
+          data: this.goodsSeriesData
         },
         xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+          data: this.goodsAxisData
         },
         yAxis: {},
         series: [
@@ -82,7 +108,7 @@ export default {
 <style scoped>
 .total {
   width: 100%;
-  height: 500px;
+  height: 300px;
 }
 </style>
 

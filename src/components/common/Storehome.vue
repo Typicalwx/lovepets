@@ -118,7 +118,7 @@ export default {
         });
         this.setStoreInfoData();
       }else{
-        this.$router.push("/login");
+        // this.$router.push("/login");
       }
     });
   }

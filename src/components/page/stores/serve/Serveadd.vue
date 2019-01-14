@@ -129,7 +129,7 @@ export default {
           serveresource,
           price: this.form.price,
           desc: this.form.desc,
-          goodState: 2,
+          goodState: "服务",
           storeId: this.storeId
         }
       }).then(res => {

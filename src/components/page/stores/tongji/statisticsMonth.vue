@@ -27,6 +27,7 @@ const { mapState:gession} = createNamespacedHelpers(
 export default {
   data() {
     return {
+      year:"2019",
       series:[], 
       Servename: [],
       serveyears:[]
@@ -48,7 +49,7 @@ export default {
             url:"/storeservetongji",
              params:{
                 storeId:this.storeId,
-                year:"2019"
+                year:this.year
            }
         }).then(res=>{
            this.Servename = res.data[0]
@@ -85,7 +86,7 @@ export default {
     ServerOptions() {
       return {
         title: {
-          text: "月统计"
+          text: `${this.year}月统计`
         },
         tooltip: {
           trigger: "axis"
@@ -120,7 +121,7 @@ export default {
        return {
            
     title: {
-        text: '年统计销量',
+        text: `${this.year}年统计销量`,
         left: 'center',
         top: 20,
         textStyle: {
@@ -193,7 +194,7 @@ export default {
 <style scoped>
 .total {
   width: 100%;
-  height: 200px;
+  height: 300px;
 }
 </style>
 

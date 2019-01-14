@@ -13,15 +13,6 @@
             <i class="el-icon-rank"></i>
           </el-tooltip>
         </div>
-        <!-- 消息中心 -->
-        <div class="btn-bell">
-          <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
-            <router-link to="/tabs">
-              <i class="el-icon-bell"></i>
-            </router-link>
-          </el-tooltip>
-          <span class="btn-bell-badge" v-if="message"></span>
-        </div>
         <!-- 用户头像 -->
         <div class="user-avator">
           <img src="../../assets/img/img.jpg">
@@ -29,7 +20,7 @@
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{username}}
+            {{usersession}}
             <i class="el-icon-caret-bottom"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -41,69 +32,74 @@
   </div>
 </template>
 <script>
-    import bus from '../common/bus';
-    export default {
-        props:["headtitle"],
-        data() {
-            return {
-                collapse: false,
-                fullscreen: false,
-                name: '朱炜',
-                message: 2
-            }
-        },
-        computed:{
-            username(){
-                let username = localStorage.getItem('ms_username');
-                return username ? username : this.name;
-            }
-        },
-        methods:{
-            // 用户名下拉菜单选择事件
-            handleCommand(command) {
-                if(command == 'loginout'){
-                    localStorage.removeItem('ms_username')
-                    this.$router.push('/login');
-                }
-            },
-            // 侧边栏折叠
-            collapseChage(){
-                this.collapse = !this.collapse;
-                bus.$emit('collapse', this.collapse);
-            },
-            // 全屏事件
-            handleFullScreen(){
-                let element = document.documentElement;
-                if (this.fullscreen) {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitCancelFullScreen) {
-                        document.webkitCancelFullScreen();
-                    } else if (document.mozCancelFullScreen) {
-                        document.mozCancelFullScreen();
-                    } else if (document.msExitFullscreen) {
-                        document.msExitFullscreen();
-                    }
-                } else {
-                    if (element.requestFullscreen) {
-                        element.requestFullscreen();
-                    } else if (element.webkitRequestFullScreen) {
-                        element.webkitRequestFullScreen();
-                    } else if (element.mozRequestFullScreen) {
-                        element.mozRequestFullScreen();
-                    } else if (element.msRequestFullscreen) {
-                        // IE11
-                        element.msRequestFullscreen();
-                    }
-                }
-                this.fullscreen = !this.fullscreen;
-            }
-        },
-        mounted(){
-            if(document.body.clientWidth < 1500){
-                this.collapseChage(); 
+import bus from "../common/bus";
+import axios from "axios";
+export default {
+  props: ["headtitle", "usersession"],
+  data() {
+    return {
+      collapse: false,
+      fullscreen: false,
+    
+      message: 2
+    };
+  },
+  computed: {
+    username() {
+      let username = localStorage.getItem("ms_username");
+      return username ? username : this.name;
+    }
+  },
+  methods: {
+    // 用户名下拉菜单选择事件
+    handleCommand(command) {
+      if (command == "loginout") {
+        axios({
+          methods: "get",
+          url: "/remove"
+        }).then(res => {
+          this.$router.push("/login");
+        });
+      }
+    },
+    // 侧边栏折叠
+    collapseChage() {
+      this.collapse = !this.collapse;
+      bus.$emit("collapse", this.collapse);
+    },
+    // 全屏事件
+    handleFullScreen() {
+      let element = document.documentElement;
+      if (this.fullscreen) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
         }
-      } 
+      } else {
+        if (element.requestFullscreen) {
+          element.requestFullscreen();
+        } else if (element.webkitRequestFullScreen) {
+          element.webkitRequestFullScreen();
+        } else if (element.mozRequestFullScreen) {
+          element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          // IE11
+          element.msRequestFullscreen();
+        }
+      }
+      this.fullscreen = !this.fullscreen;
+    }
+  },
+  mounted() {
+    if (document.body.clientWidth < 1500) {
+      this.collapseChage();
+    }
+  }
 };
 </script>
 <style scoped>

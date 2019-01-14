@@ -16,7 +16,7 @@
                     <el-option key="3" label="宠物类型" value="pets"></el-option>
                 </el-select>
                 <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="search" @click="search">搜索服务</el-button>
+                <el-button type="primary" icon="el-icon-search" @click="search">搜索服务</el-button>
                 <Serveadd></Serveadd>
                 <Serveupdate></Serveupdate>
             </div>
@@ -95,6 +95,9 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
+const { mapState:gession} = createNamespacedHelpers(
+  "storeModule"
+);
 import Serveadd from "./Serveadd";
 import Serveupdate from "./Serveupdate";
 export default {
@@ -119,11 +122,15 @@ export default {
       idx: -1
     };
   },
-  created() {
-    this.show();
+  mounted() {
+    
+    console.log("刷新",this.storeId)
+    //  console.log(localStorage.getItem(key) )
+    this.show({ page: 1, rows: 5,storeId:this.storeId});
   },
   computed: {
     ...mapState(["serveitem", "pagenation"]),
+    ...gession(["storeId"]),
     data() {
       return this.tableData.filter(d => {
         let is_del = false;
@@ -155,25 +162,26 @@ export default {
 
     // 分页导航
     prevpage(page) {
-      console.log(page);
-      this.show({ page, rows: this.curpage });
+      // console.log(page);
+      this.show({ page, rows: this.curpage,storeId:this.storeId });
     },
     nextpage(page) {
-      this.show({ page, rows: this.curpage });
+      this.show({ page, rows: this.curpage,storeId:this.storeId });
     },
     currentchange(page) {
-      this.show({ page, rows: this.curpage });
+      this.show({ page, rows: this.curpage,storeId:this.storeId });
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.show({ page: this.pagenation.curpage, rows });
+      this.show({ page: this.pagenation.curpage,rows ,storeId:this.storeId});
     },
     // 获取 easy-mock 的模拟数据
     search() {
-      this.settype(this.select_cate);
-      this.settext(this.select_word);
-      this.show({ page: 1, rows: 5 });
+      // console.log("啊哈哈哈",this.storeId)
+        this.settype(this.select_cate);
+        this.settext(this.select_word);
+        this.show({ page: 1, rows: 5,storeId:this.storeId});
     },
     formatter(row, column) {
       return row.address;
@@ -192,7 +200,7 @@ export default {
       }).then(res => {
         axios({
           method: "get",
-          url: "/servetime",
+          url: "/servetime/deleteserve",
           params: {
             page: this.pagenation.curpage,
             rows: this.pagenation.eachpage
@@ -202,12 +210,14 @@ export default {
           if (res.data.rows.length == 0) {
             this.show({
               page: this.pagenation.curpage - 1,
-              rows: this.pagenation.eachpage
+              rows: this.pagenation.eachpage,
+              storeId:this.storeId
             });
           } else {
             this.show({
               page: this.pagenation.curpage,
-              rows: this.pagenation.eachpage
+              rows: this.pagenation.eachpage,
+              storeId:this.storeId
             });
           }
         });

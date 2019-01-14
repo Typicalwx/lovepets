@@ -2124,7 +2124,16 @@ copy-webpack-plugin@^4.6.0:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
+<<<<<<< HEAD
+core-js@^2.4.0:
+  version "2.6.2"
+  resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.6.2.tgz#267988d7268323b349e20b4588211655f0e83944"
+  integrity sha1-JnmI1yaDI7NJ4gtFiCEWVfDoOUQ=
+
+core-js@^2.5.7, core-js@^2.6.1:
+=======
 core-js@^2.4.0, core-js@^2.5.7, core-js@^2.6.1:
+>>>>>>> five
   version "2.6.1"
   resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.6.1.tgz#87416ae817de957a3f249b3b5ca475d4aaed6042"
   integrity sha1-h0Fq6BfelXo/JJs7XKR11KrtYEI=
@@ -5052,6 +5061,11 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+node-fetch@^2.1.1:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/node-fetch/download/node-fetch-2.3.0.tgz#1a1d940bbfb916a1d3e0219f037e89e71f8c5fa5"
+  integrity sha1-Gh2UC7+5FqHT4CGfA36J5x+MX6U=
+
 node-forge@0.7.5:
   version "0.7.5"
   resolved "http://registry.npm.taobao.org/node-forge/download/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
@@ -7912,6 +7926,13 @@ yargs@12.0.2:
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
     yargs-parser "^10.1.0"
+
+ykt-http-client@^1.1.1:
+  version "1.1.1"
+  resolved "http://registry.npm.taobao.org/ykt-http-client/download/ykt-http-client-1.1.1.tgz#80753f474ce441ac97de8117fb399c91dc0c8b06"
+  integrity sha1-gHU/R0zkQayX3oEX+zmckdwMiwY=
+  dependencies:
+    node-fetch "^2.1.1"
 
 yorkie@^2.0.0:
   version "2.0.0"

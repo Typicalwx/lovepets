@@ -1,5 +1,5 @@
 <template>
-    <h1>统计</h1>
+    <el-input v-model="input" placeholder="请输入内容"></el-input>
 </template>
 
 <script>

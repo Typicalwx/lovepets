@@ -6,7 +6,7 @@ import SupplierHome from "../components/common/supplierHome.vue";
 import Dashboard from "../components/page/suppliergoods/Dashboard.vue";
 import Statistics from "../components/page/suppliergoods/statistics.vue";
 import Supplier from "../components/page/supplier/sup";
-
+import Ceshi from "../components/page/stores/supplier"
 
 import Suppliergoods from "../components/page/suppliergoods/supplier.vue"
 import Registere from "../components/registere/index"
@@ -28,6 +28,12 @@ import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
 import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
+// import Petowners from "../components/page/"
+
+import PetLove from "../components/page/petowners/petowners"
+
+import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
+
 
 export default new Router({
     mode: "history",
@@ -51,6 +57,13 @@ export default new Router({
                     component: Supplier,
                     meta: { title: '供应商详情' }
                 },
+                // {
+                //     // PetPage
+                //     // Petowners
+                //     path: '/petowners',
+                //     component: Petowners,
+                //     meta: { title: '宠主管理' }
+                // },
                 {
                     path: '/statistics',
                     component: Statistics,
@@ -75,7 +88,7 @@ export default new Router({
                 },
                 {
                     path: '/storecomment',
-                    component: Supplier,
+                    component: Ceshi,
                     meta: { title: '评论管理' }
                 },
                 {
@@ -107,12 +120,12 @@ export default new Router({
                 },
                 {
                     path: '/storemoney',
-                    component: StoreMoney,
+                    component: StoreAdministrator,
                     meta: { title: '平台门店管理' }
                 },
                 {
                     path: '/suppliermoney',
-                    component: Serve,
+                    component: PetLove,
                     meta: { title: '平台宠管理' }
                 },
                 {

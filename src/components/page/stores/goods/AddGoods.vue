@@ -109,7 +109,7 @@ export default {
 
         images: []
       },
-      total:0,
+      total: 0,
       goodState: "商品",
       formLabelWidth: "120px",
       dialogImageUrl: "",
@@ -299,9 +299,9 @@ export default {
               images: JSON.stringify(this.images),
               storeId: this.storeId,
               goodState: this.goodState,
-              supplierId: this.supplierId,
+              supplierId: this.supplierId || "",
               sales: 0,
-              total:this.total
+              total: this.total
             }
           }).then(({ data }) => {
             this.setStoregoods();

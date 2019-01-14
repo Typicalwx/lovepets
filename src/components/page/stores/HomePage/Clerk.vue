@@ -4,12 +4,12 @@
       <div class="handle-box">
         <el-button @click="addClerk" class="handle-del mr10">新增商品</el-button>
         <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-        <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
+        <!-- <el-select v-model="select_cate" placeholder="筛选省份" class="handle-select mr10">
           <el-option key="1" label="姓名" value="name"></el-option>
           <el-option key="2" label="职级" value="grade"></el-option>
         </el-select>
         <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-        <el-button type="primary" icon="search" @click="searchClerk">搜索</el-button>
+        <el-button type="primary" icon="search" @click="searchClerk">搜索</el-button> -->
       </div>
       <el-table
         :data="clerkData"

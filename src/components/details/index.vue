@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <h1>门店详情</h1>
+    <h1 style="text-align: center;margin-bottom: 10px;">门店详情</h1>
     <el-form :model="regForm" status-icon ref="regForm" label-width="100px">
       <el-form-item label="门店名" prop="name">
         <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
@@ -16,7 +16,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="imageUrl" :src="'/upload/'+imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -47,7 +47,7 @@
           :on-success="handleAvatarSuccesses"
           :before-upload="beforeAvatarUploades"
         >
-          <img v-if="image" :src="image" class="avatar">
+          <img v-if="image" :src="'/upload/'+image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -124,7 +124,7 @@ export default {
     handleAvatarSuccess(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.imageUrl = "/upload/" + res;
+      this.imageUrl = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -144,7 +144,7 @@ export default {
     handleAvatarSuccesses(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.image = "/upload/" + res;
+      this.image = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -247,5 +247,9 @@ label {
 .addr {
   width: 100px;
   margin-bottom: 10px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 </style>

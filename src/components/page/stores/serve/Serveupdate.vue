@@ -82,6 +82,9 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
+const { mapState:gession} = createNamespacedHelpers(
+  "storeModule"
+);
 export default {
   name: "baseform",
   data: function() {
@@ -91,6 +94,7 @@ export default {
   },
   computed: {
     ...mapState(["updateserveitem", "pagenation", "updateeditVisible","a","data1","data2"]),
+     ...gession(["storeId"]),
     updateeditVisible: {
       get() {
         return this.$store.state.store.updateeditVisible;
@@ -233,7 +237,7 @@ export default {
                 desc:this.updateserveitem.desc,
             }
         }).then((res)=>{
-           this.show();
+           this.show({ page: 1, rows: 5,storeId:this.storeId});
            this.$message.success("修改成功!");
            this.setupdateeditVisible(false);
         })

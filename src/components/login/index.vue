@@ -17,7 +17,7 @@
           <el-input v-model="regForm.account" placeholder="username"></el-input>
         </el-form-item>
         <el-form-item prop="pwd">
-          <el-input v-model="regForm.pwd" placeholder="password"></el-input>
+          <el-input type="password" v-model="regForm.pwd" placeholder="password"></el-input>
         </el-form-item>
         <div class="login-btn">
           <el-button type="primary" @click="submitForm">登录</el-button>
@@ -90,7 +90,11 @@ export default {
                 }
               } else if (data.role == "供应商管理员") {
                 if (data.state == "0") {
-                  this.$router.push("/detailses");
+                  if (data.xiangqingstate == 1) {
+                    this.open();
+                  } else {
+                    this.$router.push("/detailses");
+                  }
                 } else if (data.state == "1") {
                   this.$router.push("/suppliergoods");
                 } else if (data.state == "2") {

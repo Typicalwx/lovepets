@@ -117,7 +117,7 @@ export default {
           this.setserveStoreId(res.data._id);
         });
         this.setStoreInfoData();
-      }else{
+      } else {
         this.$router.push("/login");
       }
     });

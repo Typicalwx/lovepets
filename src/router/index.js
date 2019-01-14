@@ -17,7 +17,7 @@ import Detailses from "../components/detailses/index"
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-import StoreStatistics from "../components/page/stores/statistics.vue";
+import StoreStatistics from "../components/page/stores/tongji/statistics.vue";
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"
@@ -36,6 +36,7 @@ import PetLove from "../components/page/petowners/petowners"
 
 import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
 
+import Platformsupplier from "../components/page/platform/Suppliers/index.vue"
 
 export default new Router({
     mode: "history",
@@ -127,6 +128,11 @@ export default new Router({
                     path: '/users',
                     component: Users,
                     meta: { title: '平台用户管理' }
+                },
+                {
+                    path: '/platformsupplier',
+                    component: Platformsupplier,
+                    meta: { title: '供应商管理' }
                 },
                 {
                     path: '/statisticsmoney',

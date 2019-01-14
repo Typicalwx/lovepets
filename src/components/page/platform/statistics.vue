@@ -17,6 +17,9 @@ import "echarts/lib/component/legend";
 import "echarts/extension/bmap/bmap";
 import axios from "axios";
 export default {
+  created() {
+    this.showCount();
+  },
   data() {
     return {
       type: "地图分布",
@@ -38,6 +41,7 @@ export default {
           url: "/shops/counts",
           method: "get"
         }).then(res => {
+          console.log(res.data);
           this.shopsCountData = res.data;
           myChart.setOption(this.mapOptions, true);
         });
@@ -75,6 +79,14 @@ export default {
           });
         });
       }
+    },
+    showCount() {
+      axios({
+        method: "get",
+        url: "/stores"
+      }).then(data => {
+        console.log(data);
+      });
     }
   },
   computed: {

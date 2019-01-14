@@ -34,6 +34,7 @@ import PetLove from "../components/page/petowners/petowners"
 
 import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
 
+import Platformsupplier from "../components/page/platform/Suppliers/index.vue"
 
 export default new Router({
     mode: "history",
@@ -132,6 +133,11 @@ export default new Router({
                     path: '/users',
                     component: Users,
                     meta: { title: '平台用户管理' }
+                },
+                {
+                    path: '/platformsupplier',
+                    component: Platformsupplier,
+                    meta: { title: '供应商管理' }
                 },
                 {
                     path: '/statisticsmoney',

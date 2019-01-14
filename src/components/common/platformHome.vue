@@ -49,6 +49,11 @@ export default {
         },
         {
           icon: "el-icon-edit-outline",
+          index: "platformsupplier",
+          title: "平台统计"
+        },
+        {
+          icon: "el-icon-edit-outline",
           index: "statisticsmoney",
           title: "平台统计"
         }

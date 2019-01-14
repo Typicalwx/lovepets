@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <h1>供应商详情</h1>
+    <h1 style="text-align: center;margin-bottom: 10px;">供应商详情</h1>
     <el-form :model="regForm" status-icon :rules="rules" ref="regForm" label-width="100px">
       <el-form-item label="供应商名称" prop="name">
         <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
@@ -122,8 +122,10 @@ export default {
             }
           }).then(({ data }) => {
             if (this.state == "0") {
-              alert("详情填写完成等待审核");
-              // this.$router.path("../login/index.vue");
+              this.$alert("请等待审核", {
+                confirmButtonText: "取消"
+              });
+              this.$router.push("/login");
             } else {
               this.$router.push("/suppliergoods");
             }
@@ -167,5 +169,9 @@ label {
 .avatar {
   width: 160px;
   height: 160px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 </style>

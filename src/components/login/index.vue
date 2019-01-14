@@ -90,7 +90,11 @@ export default {
                 }
               } else if (data.role == "供应商管理员") {
                 if (data.state == "0") {
-                  this.$router.push("/detailses");
+                  if (data.xiangqingstate == 1) {
+                    this.open();
+                  } else {
+                    this.$router.push("/detailses");
+                  }
                 } else if (data.state == "1") {
                   this.$router.push("/suppliergoods");
                 } else if (data.state == "2") {

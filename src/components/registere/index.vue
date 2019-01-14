@@ -138,7 +138,6 @@ export default {
       this.$refs.regForm.validate(valid => {
         if (valid) {
           axios({
-
             method:"post",
             url:"/users",
             data:{
@@ -171,6 +170,7 @@ export default {
 .box-card {
   width: 500px;
   margin: auto;
+   background-color: rgba(255, 255, 255, 0.5);
 }
 .juese {
   width: 100%;
@@ -181,5 +181,12 @@ export default {
 .zc {
   margin-left: 90px;
   margin-top: 20px;
+}
+.login-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../assets/img/login-bg.jpg);
+  background-size: 100%;
 }
 </style>

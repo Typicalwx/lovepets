@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <h1>门店详情</h1>
+    <h1 style="text-align: center;margin-bottom: 10px;">门店详情</h1>
     <el-form :model="regForm" status-icon ref="regForm" label-width="100px">
       <el-form-item label="门店名" prop="name">
         <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
@@ -247,5 +247,9 @@ label {
 .addr {
   width: 100px;
   margin-bottom: 10px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 </style>

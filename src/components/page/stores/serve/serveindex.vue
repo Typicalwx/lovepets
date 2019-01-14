@@ -124,7 +124,6 @@ export default {
   },
   mounted() {
     
-    console.log("刷新",this.storeId)
     //  console.log(localStorage.getItem(key) )
     this.show({ page: 1, rows: 5,storeId:this.storeId});
   },

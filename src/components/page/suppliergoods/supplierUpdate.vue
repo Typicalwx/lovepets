@@ -95,7 +95,7 @@ export default {
     //   console.log("供应商详情id", data[0]._id);
     //   this.supId = data[0]._id;
     // });
-    this.setSuppliers();
+    // this.setSuppliers("5c384dec1b3ba76f6f14f752");
   },
   updated: function() {
     console.log("dsadsa", this.suppliergood);
@@ -107,13 +107,13 @@ export default {
       },
       dialogImageUrl: "",
       upDialogVisible: false,
-      allImgs: [],
+      allImgs: []
       // supId: "" //供应商详情的ID
     };
   },
   computed: {
     ...mapState(["updateVisible", "suppliergood"]),
-    ...supId(["supId"]),
+    ...supId(["supId", "usersId"]),
     updateVisible: {
       get() {
         return this.$store.state.supplierModules.updateVisible;
@@ -308,6 +308,7 @@ export default {
     ...setSupId(["setSuppliers"]),
     //确认修改
     confirmUpdate() {
+      // console.log("xiugai id", this.usersId);
       let images = JSON.stringify([
         // ...this.allImgs,
         ...this.updateForm.images,

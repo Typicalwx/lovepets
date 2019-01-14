@@ -1,7 +1,13 @@
 <template>
   <div>
     <el-dialog title="增加商品" :visible.sync="addStoreDiolog" width="50%">
-      <el-form :model="supplierGood" ref="form" label-width="50px" :rules="rules">
+      <el-form
+        :model="supplierGood"
+        ref="form"
+        label-width="50px"
+        :rules="rules"
+        style="width:580px;"
+      >
         <el-form-item label="商品名" :label-width="formLabelWidth" prop="name">
           <el-input v-model="name" autocomplete="off"></el-input>
         </el-form-item>
@@ -9,7 +15,12 @@
           <el-input v-model="title" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="类型" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="type" autocomplete="off"></el-input>
+          <!-- <el-input v-model="type" autocomplete="off"></el-input> -->
+          <el-select v-model="type" placeholder="类型" class="handle-select mr10">
+            <el-option key="1" label="狗粮" value="狗粮"></el-option>
+            <el-option key="2" label="猫粮" value="猫粮"></el-option>
+            <el-option key="3" label="其他" value="其他"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="用料" :label-width="formLabelWidth" prop="name">
           <el-input v-model="method" autocomplete="off"></el-input>
@@ -58,22 +69,24 @@
           <el-input v-model="newPrice" autocomplete="off"></el-input>
         </el-form-item>
         <!-- 上传图片 -->
-        <el-upload
-          action="/upload"
-          list-type="picture-card"
-          :on-success="handleAvatarSuccess"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          :file-list="images||[]"
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl">
-        </el-dialog>
+        <el-form-item label="图片" :label-width="formLabelWidth">
+          <el-upload
+            action="/upload"
+            list-type="picture-card"
+            :on-success="handleAvatarSuccess"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :file-list="images||[]"
+          >
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl">
+          </el-dialog>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addStoreDiolog = false">取 消</el-button>
+        <el-button @click="cancelDialog">取 消</el-button>
         <el-button type="primary" @click="addStoreGood('form')">确 定</el-button>
       </div>
     </el-dialog>
@@ -109,7 +122,7 @@ export default {
 
         images: []
       },
-      total:0,
+      total: "",
       goodState: "商品",
       formLabelWidth: "120px",
       dialogImageUrl: "",
@@ -288,6 +301,8 @@ export default {
     addStoreGood() {
       this.$refs["form"].validate(valid => {
         console.log(valid, "valid");
+        var myDate = new Date();
+        let date = myDate.toLocaleDateString();
         if (valid) {
           this.addStoreDiolog = false;
           console.log(this.$refs, "uuu");
@@ -299,9 +314,10 @@ export default {
               images: JSON.stringify(this.images),
               storeId: this.storeId,
               goodState: this.goodState,
-              supplierId: this.supplierId,
+              supplierId: this.supplierId || "",
               sales: 0,
-              total:this.total
+              total: this.total,
+              time: date
             }
           }).then(({ data }) => {
             this.setStoregoods();
@@ -318,6 +334,12 @@ export default {
       });
       console.log({ ...this.form, images: JSON.stringify(this.form.images) });
       // this.form.images = JSON.stringify(this.form.images);
+    },
+    cancelDialog() {
+       this.$refs["form"].clearValidate();
+      this.addStoreDiolog = false;
+      this.setSupplierId("");
+      this.setSupplierGood({});
     },
     handleAvatarSuccess(res, file) {
       this.images = [

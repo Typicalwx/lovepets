@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <h1>门店详情</h1>
+    <h1 style="text-align: center;margin-bottom: 10px;">门店详情</h1>
     <el-form :model="regForm" status-icon ref="regForm" label-width="100px">
       <el-form-item label="门店名" prop="name">
         <el-input type="text" v-model="regForm.name" autocomplete="off"></el-input>
@@ -16,32 +16,22 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="imageUrl" :src="'/upload/'+imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="地址" prop="addr">
-        <el-input type="text" v-model="regForm.addr" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="经度" prop="location.longitude">
-        <el-input type="text" v-model="regForm.location.longitude" autocomplete="off"></el-input>
-      </el-form-item>
-
-      <el-form-item label="纬度" prop="location.latitude">
-        <el-input type="text" v-model="regForm.location.latitude" autocomplete="off"></el-input>
-      </el-form-item>
       <el-form-item label="所在城市" prop>
-        <v-distpicker
-          v-show="addInp"
-          class="addr"
-          @selected="selected"
-          province="广东省"
-          city="广州市"
-          area="海珠区"
-        ></v-distpicker>
+        <v-distpicker v-show="addInp" class="addr" @selected="selected"></v-distpicker>
+        <el-input
+          type="text"
+          :disabled="true"
+          v-show="regForm.city"
+          v-model="regForm.city"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="详细地址" prop="city">
-        <el-input type="text" v-model="regForm.city" autocomplete="off"></el-input>
+        <el-input type="text" v-model="detail " autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="法人" prop="legal">
         <el-input type="text" v-model="regForm.legal" autocomplete="off"></el-input>
@@ -57,7 +47,7 @@
           :on-success="handleAvatarSuccesses"
           :before-upload="beforeAvatarUploades"
         >
-          <img v-if="image" :src="image" class="avatar">
+          <img v-if="image" :src="'/upload/'+image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -88,6 +78,8 @@ export default {
       if (data.phone) {
         this.userId = data._id;
         this.state = data.state;
+      } else {
+        this.$router.push("/login");
       }
     });
   },
@@ -99,7 +91,6 @@ export default {
         feature: "",
         commission: "0.003%",
         number: "",
-        addr: "",
         name: "",
         legal: "",
         location: { longitude: "", latitude: "" }
@@ -109,25 +100,31 @@ export default {
       userId: "",
       state: "",
       addInp: true,
-      city: "请选择"
+      detail: "",
+      city: ""
     };
   },
 
   methods: {
-    selected() {},
-      open() {
-        this.$alert('申请门店成功,等待审核', {
-          confirmButtonText: '请登录',
-          callback: action => {
-              this.$router.push("/login");
-          }
-        });
-      },
+    selected(data) {
+      console.log(data);
+      this.regForm.city =
+        data.province.value + data.city.value + data.area.value;
+      this.city = data.city.value;
+    },
+    open() {
+      this.$alert("申请门店成功,等待审核", {
+        confirmButtonText: "请登录",
+        callback: action => {
+          this.$router.push("/login");
+        }
+      });
+    },
     //上传图片
     handleAvatarSuccess(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.imageUrl = "http://localhost:3001/upload/" + res;
+      this.imageUrl = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -147,7 +144,7 @@ export default {
     handleAvatarSuccesses(res, file) {
       console.log("file", file);
       console.log("res", res);
-      this.image = "http://localhost:3001/upload/" + res;
+      this.image = res;
       //   this.img = res;
       console.log("url", URL.createObjectURL(file.raw));
     },
@@ -165,20 +162,21 @@ export default {
     },
 
     submitForm() {
+      console.log(this.regForm.city + this.detail, "dfjsdofsd");
       this.$refs.regForm.validate(valid => {
         if (valid) {
           axios({
             method: "post",
             url: "/stores",
             data: {
-              city: this.regForm.city,
+              city: this.city,
               name: this.regForm.name,
               phone: this.regForm.phone,
               feature: this.regForm.feature,
               number: this.regForm.number,
               commission: "0.003",
               licenseImage: this.imageUrl,
-              addr: this.regForm.addr,
+              addr: this.regForm.city + this.detail,
               location: JSON.stringify(this.regForm.location),
               userId: this.userId,
               storeImage: this.image,
@@ -187,26 +185,27 @@ export default {
             }
           }).then(() => {
             if (this.state == "0") {
-              alert("详情填写完成等待审核");
+              // alert("详情填写完成等待审核");
+              this.open();
             } else {
               this.$router.push("/store");
             }
-            let xiangqingstate = 1
-              axios({
-                method:"put",
-                url:"/"+this.userId,
-                data:{
-                  xiangqingstate,
-                }
-              }).then(()=>{
-                 this.open();
-              })
-             
+            // let xiangqingstate = 1;
+            // axios({
+            //   method: "put",
+            //   url: "/" + this.userId,
+            //   data: {
+            //     xiangqingstate
+            //   }
+            // }).then(() => {
+            //   this.open();
+            // });
+
             // if(this.state=="0"){
             //  alert("详情填写完成等待审核");
             // }else{
             // this.$router.push("/store");
-            // }        
+            // }
           });
         } else {
           this.$alert("错误", "失败");
@@ -247,5 +246,10 @@ label {
 }
 .addr {
   width: 100px;
+  margin-bottom: 10px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
 }
 </style>

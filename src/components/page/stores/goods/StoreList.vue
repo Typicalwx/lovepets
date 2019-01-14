@@ -29,7 +29,7 @@
         <el-table-column prop="method" label="制作材料" align="center"></el-table-column>
         <el-table-column prop="placeOfOrigin" label="产地" align="center"></el-table-column>
         <el-table-column prop="shelfLife" label="保质期" align="center"></el-table-column>
-        <el-table-column prop="newPrice" label="地址" align="center"></el-table-column>
+        <el-table-column prop="newPrice" label="售价" align="center"></el-table-column>
         <el-table-column prop="sales" label="销量" align="center"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
@@ -133,7 +133,7 @@ export default {
       this.setStoreAddVisible(true);
     },
     addSupplierGood() {
-      console.log(this,78)
+      console.log(this, 78);
       this.setAddSupplierVisible(true);
     },
     searchGoods() {

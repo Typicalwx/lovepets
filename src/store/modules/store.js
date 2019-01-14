@@ -165,7 +165,7 @@ showbyidtwo({commit},id,){
 
 
 //未完成订单
-    showorder({state,commit},payload={page:1,rows:5}){
+    showorder({state,commit},payload={page:1,rows:5,storeId:null}){
         let type  = state.typeone;
         let text  = state.textone;
         console.log(typeof text)
@@ -184,7 +184,7 @@ showbyidtwo({commit},id,){
             })
     },
 //已完成订单
-showorderbuied({state,commit},payload={page:1,rows:5}){
+showorderbuied({state,commit},payload={page:1,rows:5,storeId:null}){
     console.log(1)
     let type  = state.typetwo;
     let text  = state.texttwo;
@@ -198,7 +198,6 @@ showorderbuied({state,commit},payload={page:1,rows:5}){
             }
         }).then(res=>{
             //根据不同商家的id区分订单，需要同商家id对应（未完成）
-            console.log("111111111",res)
             commit("setorderitembuied",res.data.rows);
             commit("setpagenationed",res.data)
         })
@@ -206,7 +205,7 @@ showorderbuied({state,commit},payload={page:1,rows:5}){
 
 
 //服务
-    show({state,commit},payload={page:1,rows:5,storeId:state.null}){
+    show({state,commit},payload={page:1,rows:5,storeId:null}){
         let type  = state.type;
         let text  = state.text;
             axios({

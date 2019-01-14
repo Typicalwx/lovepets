@@ -56,6 +56,11 @@ export default {
           icon: "el-icon-edit-outline",
           index: "statisticsmoney",
           title: "平台统计"
+        },
+               {
+          icon: "el-icon-edit-outline",
+          index: "statisticsmoneys",
+          title: "统计测试"
         }
       ]
     };

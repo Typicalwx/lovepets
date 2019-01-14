@@ -88,8 +88,10 @@ const { mapActions: setSupId, mapState: supId } = createNamespacedHelpers(
   "supModules" // 供应商详情模块名
 );
 export default {
-  created() {
-    this.setSuppliers();
+  updated() {
+    console.log("add用户id", this.usersId);
+    // this.setSuppliers("5c384dec1b3ba76f6f14f752");
+    this.setSuppliers(this.usersId);
   },
   data() {
     return {
@@ -109,7 +111,7 @@ export default {
         shelfLife: "",
         features: "",
         price: "",
-        images: [],
+        images: []
       },
       dialogImageUrl: "",
       dialogVisible: false
@@ -117,7 +119,7 @@ export default {
   },
   computed: {
     ...mapState(["addVisible"]),
-    ...supId(["supId"]),
+    ...supId(["supId", "usersId"]),
     addVisible: {
       get() {
         return this.$store.state.supplierModules.addVisible;
@@ -143,7 +145,7 @@ export default {
         this.addVisible = false;
         console.log("增加成功");
         this.addForm.images = [];
-        this.$refs["addForm"].resetFields();
+        // this.$refs["addForm"].resetFields();
         console.log("qwer", this.supId);
         this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId });
       });

@@ -104,6 +104,9 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 import  Ordershowbuied from "./ordershowbuied"
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
+const { mapState:gession} = createNamespacedHelpers(
+  "storeModule"
+);
 export default {
   name: "basetable",
   data() {
@@ -128,6 +131,7 @@ export default {
   },
   computed: {
     ...mapState(["orderitembuied","pagenationed"]),
+     ...gession(["storeId"]),
     data() {
       return this.tableData.filter(d => {
         let is_del = false;
@@ -163,18 +167,18 @@ export default {
     // 分页导航
     prevpage(page) {
       console.log(page);
-      this.showorderbuied({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage,storeId:this.storeId });
     },
     nextpage(page) {
-      this.showorderbuied({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage,storeId:this.storeId });
     },
     currentchange(page) {
-      this.showorderbuied({ page, rows: this.curpage });
+      this.showorderbuied({ page, rows: this.curpage,storeId:this.storeId });
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.showorderbuied({ page: this.pagenationed.curpage, rows });
+      this.showorderbuied({ page: this.pagenationed.curpage, rows,storeId:this.storeId});
     },
 
 
@@ -182,7 +186,7 @@ export default {
       // this.is_search = true;
         this.settypetwo(this.select_cate);
          this.settexttwo(this.select_word);
-         this.showorderbuied({ page: 1, rows: 5 });
+         this.showorderbuied({ page: 1, rows: 5,storeId:this.storeId });
     },
     formatter(row, column) {
       return row.address;

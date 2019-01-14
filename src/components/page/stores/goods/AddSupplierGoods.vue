@@ -67,7 +67,6 @@ export default {
   },
   created() {
     this.setSuppliergoods();
-    console.log(this.suppliergoods, 999);
   },
   name: "basetable",
   data() {

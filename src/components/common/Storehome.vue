@@ -20,23 +20,20 @@ import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
 import vTags from "./Tags.vue";
 import bus from "./bus";
-import axios from "axios"
+import axios from "axios";
 
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers(
   "storeModule"
 );
-const { mapMutations:storeserve } = createNamespacedHelpers(
-  "store"
-);
-
+const { mapMutations: storeserve } = createNamespacedHelpers("store");
 
 export default {
   data() {
     return {
-      storedashboard:"storedashboard",
-      usersession:"",
-      userId:"",
+      storedashboard: "storedashboard",
+      usersession: "",
+      userId: "",
       tagsList: [],
       collapse: false,
       headtitle: "门店管理系统",
@@ -73,12 +70,14 @@ export default {
           index: "storestatistics",
           title: "统计"
         }
-      ]
+      ],
+      headImg: ""
     };
   },
-  methods:{
-     ...mapMutations(["setStoreId"]),
-     ...storeserve(["setserveStoreId"])
+  methods: {
+    ...mapMutations(["setStoreId", "setUserId"]),
+    ...mapActions(["setStoreInfoData"]),
+    ...storeserve(["setserveStoreId"])
   },
   components: {
     vHead,
@@ -90,8 +89,6 @@ export default {
       this.collapse = msg;
     });
 
-
-
     // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
     bus.$on("tags", msg => {
       let arr = [];
@@ -101,28 +98,28 @@ export default {
       this.tagsList = arr;
     });
 
-
-
     axios({
       url: "/getsession",
       method: "get"
     }).then(({ data }) => {
+      if (data._id) {
         this.userId = data._id;
-        console.log("???",this.userId)
-        this.usersession = data.account
+        console.log("???", this.userId);
+        this.usersession = data.account;
+        this.setUserId(data._id);
         axios({
-          url:"/stores/zhaoid",
-          method:"get",
-          params:{
-            userId:this.userId
+          url: "/stores/zhaoid",
+          method: "get",
+          params: {
+            userId: this.userId
           }
-        }).then(res=>{
-            // localStorage.setItem(key, res.data._id)
-            // console.log(localStorage.getItem(key),"11111111111111")
-            this.setStoreId(res.data._id)
-            this.setserveStoreId(res.data._id)
-        })
-
+        }).then(res => {
+          this.setserveStoreId(res.data._id);
+        });
+        this.setStoreInfoData();
+      }else{
+        this.$router.push("/login");
+      }
     });
   }
 };

@@ -2,7 +2,7 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 基础表格</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 门店列表</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
@@ -28,8 +28,6 @@
                 </el-table-column>
                 <el-table-column prop="users.name" label="姓名" >
                 </el-table-column>
-                  <el-table-column prop="users.state" label="状态" >
-                </el-table-column>
                    <el-table-column prop="name" label="门店名" >
                 </el-table-column>
                    <el-table-column prop="number" label="营业执照号码" >
@@ -40,190 +38,42 @@
                 </el-table-column>
                    <el-table-column prop="phone" label="联系电话" >
                 </el-table-column>
+                  <el-table-column   label="状态" width="80" align="center">
+                    <template slot-scope="scope" >
+                      <div  v-if="scope.row.users.state=='可用'" class="green"> <i class="el-icon-success"></i> {{scope.row.users.state}}</div>
+                              <div v-else class="red"> <i class="el-icon-warning"></i>{{ scope.row.users.state}}</div>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" width="250" align="center">
                     <template slot-scope="scope">
                       <el-button type="text" icon="el-icon-tickets" @click="handleDetails(scope.$index, scope.row)">详情</el-button>
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)" v-if="scope.row.users.state=='可用'">封禁</el-button>
+                         <el-button type="text" icon="el-icon-delete" class="green" @click="handleDelete(scope.$index, scope.row)" v-else>解除封禁</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <div class="pagination">
              <el-pagination
                background
-      @current-change="handleCurrentChange"
-      :page-sizes="[5, 10, 20, 30]"
-      :page-size="5" 
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total">
-    </el-pagination>
+                @current-change="handleCurrentChange"
+                :page-sizes="[5, 10, 20, 30]"
+                :page-size="5" 
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="pagination.total">
+                 </el-pagination>
+              </div>
             </div>
-        </div>
- <!-- 详情弹出框 -->
-        <el-dialog title="详情" :visible.sync="detailsVisible" width="30%">
-            <el-form ref="form" label-width="80px">
-                   <el-form-item label="登录账号">
-                    <el-input v-model="form.account" :disabled="true"></el-input>
-                </el-form-item>
-                    <el-form-item label="登录密码">
-                    <el-input v-model="form.apwd" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="电话">
-                    <el-input v-model="form.phone" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="姓名">
-                    <el-input v-model="form.name" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-input v-model="form.role" :disabled="true"></el-input>
-                </el-form-item>
-               <el-form-item label="状态">
-                    <el-input v-model="form.state" :disabled="true"></el-input>
-                </el-form-item>
-              <el-form-item label="店名">
-                    <el-input v-model="detail.name" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="营业执照号码">
-                    <el-input v-model="detail.number" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item  label="营业执照图片">
-                  
-                  <img   width="60%" :src="detail.licenseImage" alt>
-                </el-form-item>
-                <el-form-item label="营业地址">
-                    <el-input v-model="detail.addr" :disabled="true"></el-input>
-                </el-form-item>
-                 <el-form-item label="所在城市">
-                    <el-input v-model="detail.city" :disabled="true"></el-input>
-                </el-form-item>
-                 <el-form-item label="法人">
-                    <el-input v-model="detail.legal" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="detail.phone" :disabled="true"></el-input>
-                </el-form-item>
-                <el-form-item label="头图">
-                  <img   width="60%" :src="detail.storeImage" alt>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
+       <!-- 详情弹出框 -->
+            <Detail :form="form" :detail="detail"></Detail>
 
-                <el-button type="primary" @click="detailsVisible = false">确 定</el-button>
-            </span>
-        </el-dialog>
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="50px">
-                <el-form-item label="店名">
-                    <el-input v-model="detail.name"></el-input>
-                </el-form-item>
-                <el-form-item label="营业执照号码">
-                    <el-input v-model="detail.number"></el-input>
-                </el-form-item>
-                <el-form-item label="营业执照图片">
-                   
-                </el-form-item>
-                <el-form-item label="营业地址">
-                    <el-input v-model="detail.addr"></el-input>
-                </el-form-item>
-                 <el-form-item label="所在城市">
-                    <el-input v-model="detail.city"></el-input>
-                </el-form-item>
-                <el-form-item label="定位">
-                    <el-input v-model="detail.location"></el-input>
-                </el-form-item>
-                 <el-form-item label="法人">
-                    <el-input v-model="detail.legal"></el-input>
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="detail.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="头图">
-                    <el-input v-model="detail.storeImage"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
-        </el-dialog>
-        <AddStore></AddStore>
-       <!-- 增加弹门店登录账号信息出框 -->
-        <!-- <el-dialog class="adduser" title="增加登录信息" :visible.sync="addVisible" width="25%">
-            <el-form  label-width="80px">
-                 <el-form-item label="登录名">
-                    <el-input v-model="form.account"></el-input>
-                 </el-form-item>
-                  <el-form-item label="登录密码">
-                    <el-input v-model="form.pwd"></el-input>
-                 </el-form-item>
-                  <el-form-item label="手机号">
-                    <el-input v-model="form.phone"></el-input>
-                </el-form-item>
-                   <el-form-item label="真实姓名">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveAdd">确 定</el-button>
-            </span>
-        </el-dialog> -->
-         <!-- 增加弹门店详细信息出框 -->
-        <!-- <el-dialog class="adduser" title="增加详细信息" :visible.sync="addDetaliVisible" width="25%">
-            <el-form  label-width="80px">
-                <el-form-item label="店名">
-                    <el-input v-model="detail.name"></el-input>
-                </el-form-item>
-                <el-form-item label="营业执照号码">
-                    <el-input v-model="detail.number"></el-input>
-                </el-form-item>
-                <el-form-item label="营业执照图片">
-               <el-upload
-               class="avatar-uploader"
-               action="/upload"
-               :show-file-list="false"
-               :on-success="handleAvatar"
-               :before-upload="beforeAvatar">
-               <img v-if="licenseImage" :src="licenseImage" class="avatar">
-               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-                </el-form-item>
-                <el-form-item label="营业地址">
-                    <el-input v-model="detail.addr"></el-input>
-                </el-form-item>
-                 <el-form-item label="所在城市">
-                    <el-input v-model="detail.city"></el-input>
-                </el-form-item>
-                <el-form-item label="定位">
-                    <el-input v-model="detail.location"></el-input>
-                </el-form-item>
-                 <el-form-item label="法人">
-                    <el-input v-model="detail.legal"></el-input>
-                </el-form-item>
-                <el-form-item label="联系电话">
-                    <el-input v-model="detail.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="头图">
-                <el-upload
-                 class="avatar-uploader"
-                 action="/upload"
-                 :show-file-list="false"
-                 :on-success="handleAvatarSuccess"
-                 :before-upload="beforeAvatarUpload">
-                 <img v-if="storeImage" :src="storeImage" class="avatar">
-                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addDetaliVisible = false">取消</el-button>
-                <el-button type="primary" @click="saveDetail">确 定</el-button>
-            </span>
-        </el-dialog> -->
-        <!-- 删除提示框 -->
+            <Update></Update>
+<!-- 增加 -->
+           <AddStore :detail="detail"></AddStore>
+        <!--提示框 -->
         <el-dialog title="提示" :visible.sync="delVisible" width="300px" center>
-            <div class="del-dialog-cnt">删除不可恢复，是否确定删除？</div>
+            <div class="del-dialog-cnt">确定？</div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="delVisible = false">取 消</el-button>
                 <el-button type="primary" @click="deleteRow">确 定</el-button>
@@ -234,19 +84,24 @@
 <script>
 import axios from "axios";
 import AddStore from "./AddStore";
+import Detail from "./Detail";
+import Update from "./Update";
 import { createNamespacedHelpers } from "vuex";
 const { mapActions, mapState, mapMutations } = createNamespacedHelpers(
   "storeAdministrator" // 模块名
 );
 export default {
   components: {
-    AddStore
-    // Pet,
-    // InputElement
+    AddStore,
+    Detail,
+    Update
   },
   name: "basetable",
   data() {
     return {
+      red: "red",
+      green: "green",
+
       licenseImage: "",
       dialogVisible: false,
       storeImage: "",
@@ -261,7 +116,8 @@ export default {
         addr: "",
         area: "",
         phone: "",
-        pwd: ""
+        pwd: "",
+        state: ""
       },
       detail: {
         name: "", //点名name
@@ -281,14 +137,18 @@ export default {
       usersId: ""
     };
   },
-
   created() {
-    // console.log(this.storeAdministrator);
     this.setStoreAdministrator();
   },
 
   computed: {
-    ...mapState(["storeAdministrator", "search", "pagination"]),
+    ...mapState([
+      "storeAdministrator",
+      "search",
+      "pagination",
+      "updateStore",
+      "storeId"
+    ]),
     type: {
       get() {
         return this.search.type;
@@ -307,15 +167,18 @@ export default {
     }
   },
   methods: {
-    //  ...mapMutations(["setAddDetaliVisible", "setAddVisible", "setPagination"]),
-    ...mapMutations(["setType", "setValue","setAddVisible", "setPagination"]),
+    ...mapMutations([
+      "setType",
+      "setValue",
+      "setAddVisible",
+      "setDetailsVisible",
+      "setPagination",
+      "setUpdateVisible",
+      "setUpdateStore",
+      "setStoreId"
+    ]),
     ...mapActions(["setStoreAdministrator"]),
-    showById(id) {
-      axios({
-        method: "get",
-        url: "/petowners/" + id
-      }).then(() => {});
-    },
+
     // 分页导航
     handleCurrentChange(val) {
       this.setPagination({ ...this.pagination, curpage: val });
@@ -327,18 +190,20 @@ export default {
     },
     // 详情
     handleDetails(index, row) {
-      this.detailsVisible = true;
+      this.setDetailsVisible(true);
       this.form = row.users;
       this.detail = row;
-      console.log(row);
+      // console.log(this.form);
     },
     // 编辑
     handleEdit(index, row) {
       this.idx = index;
       this.id = row._id;
-      // console.log(row);
-      this.detail = row;
-      this.editVisible = true;
+      console.log(row);
+      // this.detail = row;
+      this.setStoreId(row._id);
+      this.setUpdateStore(row);
+      this.setUpdateVisible(true);
     },
     // 保存编辑
 
@@ -368,66 +233,9 @@ export default {
     },
     // 增加
     add() {
-    //   (this.form = {
-    //     account: "",
-    //     name: "",
-    //     phone: "",
-    //     pwd: ""
-    //   }),
-    //     (this.form.pets = []);
-    //   this.addVisible = true;
-    this.setAddVisible(true)
+      this.setAddVisible(true);
     },
-    // // 保存增加
-    // saveAdd() {
-    //   this.addVisible = false;
-    //   // console.log(this.form);
-    //   axios({
-    //     method: "post",
-    //     url: "/users",
-    //     data: {
-    //       role: "门店管理员",
-    //       state: 1,
-    //       account: this.form.account,
-    //       phone: this.form.phone,
-    //       name: this.form.name,
-    //       pwd: this.form.pwd
-    //     }
-    //   }).then(({ data }) => {
-    //     console.log(data);
-    //     this.addDetaliVisible = true;
-    //     this.id = data._id;
-    //     // console.log(data);
-    //   });
-    // },
 
-    // // 增加门店详情
-
-    // saveDetail() {
-    //   console.log(this.id);
-    //   axios({
-    //     method: "post",
-    //     url: "/stores",
-    //     data: {
-    //       userId: this.id,
-    //       name: this.detail.name,
-    //       number: this.detail.number,
-    //       licenseImage: this.licenseImage,
-    //       addr: this.detail.addr,
-    //       city: this.detail.city,
-    //       legal: this.detail.legal,
-    //       location: JSON.stringify(this.detail.location),
-    //       phone: this.detail.phone,
-    //       storeImage: this.storeImage,
-    //       clerk: JSON.stringify([]),
-    //       commission: 0.004
-    //     }
-    //   }).then(({ data }) => {
-    //     console.log(data);
-    //     this.addDetaliVisible = false;
-    //     this.setStoreAdministrator();
-    //   });
-    // },
     // 删除
 
     handleDelete(index, row) {
@@ -435,6 +243,7 @@ export default {
       this.idx = index;
       this.id = row._id;
       this.usersId = row.users._id;
+      this.form.sate = row.users.state;
       this.delVisible = true;
     },
     delAll() {
@@ -444,62 +253,47 @@ export default {
       for (let i = 0; i < length; i++) {
         str += this.multipleSelection[i].name + " ";
       }
-      this.$message.error("删除了" + str);
+      // this.$message.error("删除了" + str);
       this.multipleSelection = [];
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    // 确定删除
+    // 确定封禁
     deleteRow() {
-      axios({
-        method: "delete",
-        url: "/users/" + this.usersId
-      });
-      axios({
-        method: "delete",
-        url: "/storeAdministrator/" + this.id
-      }).then(() => {
-        console.log(111);
-        this.setStoreAdministrator();
-      });
-
-      this.$message.success("删除成功");
-      this.delVisible = false;
-    },
-
-    // 上传营业执照图片
-    handleAvatar(res, file) {
-      this.licenseImage = "http://localhost:3001/upload/" + res;
-    },
-    beforeAvatar(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+      console.log("id", this.usersId);
+      console.log("state", this.form.sate == "可用");
+      if (this.form.sate == "可用") {
+        axios({
+          method: "put",
+          url: "/users/" + this.usersId,
+          data: {
+            state: 3
+          }
+        }).then(() => {
+          this.$message({
+            message: "店铺状态为不可用",
+            type: "warning"
+          });
+          this.setStoreAdministrator();
+          this.delVisible = false;
+        });
+      } else {
+        axios({
+          method: "put",
+          url: "/users/" + this.usersId,
+          data: {
+            state: 1
+          }
+        }).then(() => {
+          this.$message({
+            message: "店铺状态为可用",
+            type: "success"
+          });
+          this.setStoreAdministrator();
+          this.delVisible = false;
+        });
       }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
-    // 上传头像图片
-    handleAvatarSuccess(res, file) {
-      console.log(res);
-      this.storeImage = "http://localhost:3001/upload/" + res;
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
     }
   }
 };
@@ -528,6 +322,9 @@ export default {
 }
 .red {
   color: #ff0000;
+}
+.green {
+  color: forestgreen;
 }
 .mr10 {
   margin-right: 10px;

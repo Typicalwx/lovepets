@@ -314,6 +314,9 @@ export default {
         ...this.updateForm.images,
         ...this.image
       ]);
+     
+      // let date = this.date && this.date.toLocaleDateString();
+      
       axios({
         method: "put",
         url: "/suppliergoods/" + this.suppliergood._id,

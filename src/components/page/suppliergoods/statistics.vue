@@ -1,11 +1,7 @@
 <template>
   <div>
     <h1>统计</h1>
-    <el-radio-group
-      style="display: flex;justify-content: space-around;"
-      v-model="type"
-      @change="showChart"
-    >
+    <el-radio-group style="display: flex;justify-content: space-around;" @change="showChart">
       <span class="total" id="suppliergoods" ref="suppliergoods"></span>
       <span class="total" id="suppliers" ref="suppliers"></span>
     </el-radio-group>
@@ -39,15 +35,38 @@ export default {
           params: { usersId: data._id }
         }).then(({ data }) => {
           axios({
-            url: "/suppliergoods",
+            url: "/suppliergoods/buytongji",
             method: "get",
             params: { supplierId: data[0]._id }
           }).then(({ data }) => {
-            console.log("统计商品", data);
-            for (let i of data) {
-              this.suppliergoodsBuy.push(i.name);
-              this.showChart();
+            console.log("数据", data);
+            //处理名字一样的商品。将value整合
+            function parseArr(arr) {
+              var nameArr = [];
+              var result = [];
+              arr.forEach(function(item) {
+                var i;
+                if ((i = nameArr.indexOf(item.name)) > -1) {
+                  result[i].value =
+                    Number(result[i].value) + Number(item.value);
+                } else {
+                  nameArr.push(item.name);
+                  result.push({
+                    name: item.name,
+                    value: item.value
+                  });
+                }
+              });
+              return result;
             }
+            // ``````````````````````````````````````````````````````
+            // console.log("11111111", parseArr(data.seriesData));
+            this.suppliergoodsBuyShow = parseArr(data.seriesData);
+            for (let i of parseArr(data.seriesData)) {
+              this.suppliergoodsBuy.push(i.name);
+              console.log("数组", data.seriesData);
+            }
+            this.showChart();
           });
         });
       }
@@ -61,8 +80,9 @@ export default {
   },
   data() {
     return {
-      type: "班级人数统计",
-      suppliergoodsBuy: []
+      //   type: "班级人数统计",
+      suppliergoodsBuy: [],
+      suppliergoodsBuyShow: []
     };
   },
   methods: {
@@ -76,24 +96,24 @@ export default {
   },
   computed: {
     classesOptions() {
-      console.log("fdsgdsfds", this.suppliergoodsBuy);
+      //   console.log("fdsgdsfds", this.suppliergoodsBuy);
       return {
         title: {
           text: "货品采购量的统计图"
         },
         tooltip: {},
+        legend: {
+          data: ["采购量"]
+        },
         xAxis: {
           data: this.suppliergoodsBuy
         },
         yAxis: {},
         series: [
           {
-            name: "人数",
+            name: "采购量",
             type: "bar",
-            data: [
-              { name: "飞鱼粮食", value: 5 },
-              { name: "飞鱼粮食2", value: 20 }
-            ]
+            data: this.suppliergoodsBuyShow
           }
         ]
       };

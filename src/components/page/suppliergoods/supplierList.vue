@@ -49,7 +49,7 @@
         <el-table-column prop="shelfLife" label="保质期" width="80" align="center"></el-table-column>
         <el-table-column prop="features" label="特色说明" width="150" align="center"></el-table-column>
         <el-table-column prop="price" label="批发价格" width="100" align="center"></el-table-column>
-        <el-table-column prop="images" label="图片" width="100" align="center"></el-table-column>
+        <!-- <el-table-column prop="images" label="图片" width="100" align="center"></el-table-column> -->
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
@@ -100,14 +100,16 @@ const { mapActions: setSupId, mapState: supId } = createNamespacedHelpers(
 );
 export default {
   created() {
-    // axios({
-    //   method: "get",
-    //   url: "/supplier"
-    // }).then(({ data }) => {
-    //   console.log("供应商详情id", data[0]._id);
-    //   this.supId = data[0]._id;
-    // });
-    // this.setSuppliers("5c384dec1b3ba76f6f14f752");
+    console.log("老朱", this.supId);
+    axios({
+      url: "/getsession",
+      method: "get"
+    }).then(({ data }) => {
+      if (data.phone) {
+        this.$store.commit("supModules/setUsersId", data._id);
+        this.setSuppliers(data._id);
+      }
+    });
   },
   computed: {
     ...mapState(["suppliergoods", "pageNation"]),
@@ -194,9 +196,11 @@ export default {
     // 分页导航
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
+      console.log("我的id", this.supId);
       this.setSuppliergoods({ page: 1, rows: val, supplierId: this.supId });
     },
     handleCurrentChange(val) {
+      console.log("你的id", this.supId);
       console.log(this.pageNation.eachpage);
       this.setSuppliergoods({
         page: val,

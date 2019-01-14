@@ -126,7 +126,9 @@ import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 import Orderbuied from "./orderbuied";
 import Ordershow from "./ordershow"
-
+const { mapState:gession} = createNamespacedHelpers(
+  "storeModule"
+);
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
 export default {
   name: "basetable",
@@ -160,12 +162,12 @@ export default {
     };
   },
   created() {
-    this.showorder();
-    this.showorderbuied();
+    this.showorder({ page: 1, rows: 5,storeId:this.storeId});
+    this.showorderbuied({ page: 1, rows: 5,storeId:this.storeId});
   },
   computed: {
     ...mapState(["orderitem", "pagenationbuy","contactarr"]),
-   
+    ...gession(["storeId"]),
   },
   methods: {
        ...mapActions(["showorder", "showorderbuied","showbyid"]),
@@ -177,18 +179,18 @@ export default {
       },
 
     prevpage(page) {
-      this.showorder({ page, rows: this.curpage });
+      this.showorder({ page, rows: this.curpage,storeId:this.storeId });
     },
     nextpage(page) {
-      this.showorder({ page, rows: this.curpage });
+      this.showorder({ page, rows: this.curpage,storeId:this.storeId });
     },
     currentchange(page) {
-      this.showorder({ page, rows: this.curpage });
+      this.showorder({ page, rows: this.curpage ,storeId:this.storeId});
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.showorder({ page: this.pagenationbuy.curpage, rows });
+      this.showorder({ page: this.pagenationbuy.curpage, rows,storeId:this.storeId });
     },
     changeanniu(i) {
       let statebuy = i.statebuy ? false : true;
@@ -206,21 +208,24 @@ export default {
           url: "/orderbuy",
           params: {
             page: this.pagenationbuy.curpage,
-            rows: this.pagenationbuy.eachpage
+            rows: this.pagenationbuy.eachpage,
+            storeId:this.storeId
           }
         }).then(res => {
           if (res.data.rows.length == 0) {
             this.showorder({
               page: this.pagenationbuy.curpage - 1,
-              rows: this.pagenationbuy.eachpage
+              rows: this.pagenationbuy.eachpage,
+              storeId:this.storeId
             });
-            this.showorderbuied();
+            this.showorderbuied({ page: 1, rows: 5,storeId:this.storeId});
           } else {
             this.showorder({
               page: this.pagenationbuy.curpage,
-              rows: this.pagenationbuy.eachpage
+              rows: this.pagenationbuy.eachpage,
+              storeId:this.storeId
             });
-            this.showorderbuied();
+            this.showorderbuied({ page: 1, rows: 5,storeId:this.storeId});
           }
         });
       });
@@ -230,7 +235,7 @@ export default {
     search() {
          this.settypeone(this.select_cate);
          this.settextone(this.select_word);
-         this.showorder({ page: 1, rows: 5 });
+         this.showorder({ page: 1, rows: 5,storeId:this.storeId });
       
     },
     formatter(row, column) {

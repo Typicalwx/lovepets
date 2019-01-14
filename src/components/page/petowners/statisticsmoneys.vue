@@ -1,9 +1,7 @@
 <template>
   <div>
     <el-radio-group v-model="type" @change="showChart">
-      <el-radio-button label="班级人数统计"></el-radio-button>
       <el-radio-button label="年龄分布统计"></el-radio-button>
-      <el-radio-button label="地图分布"></el-radio-button>
     </el-radio-group>
     <div class="total" id="myChart" ref="myChart"></div>
   </div>
@@ -50,7 +48,7 @@ export default {
     classesOptions() {
       return {
         title: {
-          text: "某站点用户访问来源",
+          text: "广场舞年龄分布统计",
           subtext: "纯属虚构",
           x: "center"
         },
@@ -61,7 +59,7 @@ export default {
         legend: {
           orient: "vertical",
           left: "left",
-          data: this.classAxisData
+          // data: this.classAxisData
         },
         series: [
           {
@@ -80,21 +78,6 @@ export default {
           }
         ],
 
-        // title: {
-        //   text: "班级人数的统计图"
-        // },
-        // tooltip: {},
-        // xAxis: {
-        //   data: this.classAxisData
-        // },
-        // yAxis: {},
-        // series: [
-        //   {
-        //     name: "人数",
-        //     type: "bar",
-        //     data: this.classSeriesData
-        //   }
-        // ]
       };
     }
   }

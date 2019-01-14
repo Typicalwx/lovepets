@@ -13,11 +13,12 @@ import Registere from "../components/registere/index"
 import Login from "../components/login/index"
 import Details from "../components/details/index"
 import Detailses from "../components/detailses/index"
+import Statistical from "../components/statistical/index"
 
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-import StoreStatistics from "../components/page/stores/tongji/statistics.vue";
+import StoreStatistics from "../components/page/stores/tongji/statisticsMonth";
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"
@@ -26,16 +27,13 @@ import PlatformHome from "../components/common/platformHome.vue";
 import DashboardMoney from "../components/page/platform/Dashboard.vue";
 import StatisticsMoney from "../components/page/platform/statistics.vue";
 import StoreMoney from "../components/page/platform/store.vue";
-import SupplierMoney from "../components/page/platform/supplier.vue";
+// import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
 // import Petowners from "../components/page/"
 
 import Statisticsmoneys from "../components/page/petowners/statisticsmoneys";
 import PetLove from "../components/page/petowners/petowners"
-<<<<<<< HEAD
 // import Statisticsmoneys from "../components/page/petowners/statisticsmoneys"
-=======
->>>>>>> zw
 
 import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
 
@@ -169,6 +167,10 @@ export default new Router({
         {
             path: "/detailses",
             component: Detailses
+        },
+        {
+            path: "/statistical",
+            component: Statistical
         }
     ]
 })

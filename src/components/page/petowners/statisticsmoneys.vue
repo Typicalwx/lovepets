@@ -1,9 +1,7 @@
 <template>
   <div>
     <el-radio-group v-model="type" @change="showChart">
-      <el-radio-button label="班级人数统计"></el-radio-button>
-      <el-radio-button label="年龄分布统计"></el-radio-button>
-      <el-radio-button label="地图分布"></el-radio-button>
+      <el-radio-button label="商品销售额统计"></el-radio-button>
     </el-radio-group>
     <div class="total" id="myChart" ref="myChart"></div>
   </div>
@@ -33,15 +31,15 @@ export default {
   methods: {
     showChart() {
       let myChart = echarts.init(this.$refs.myChart);
-      if (this.type == "班级人数统计") {
+      if (this.type == "商品销售额统计") {
         axios({
-          url: "/storeAdministrator/ceshi",
+          url: "/orderbuy/orderbuied",
           method: "get"
         }).then(res => {
           console.log(res);
-          this.classAxisData = res.data.axisData;
-          this.classSeriesData = res.data.seriesData;
-          myChart.setOption(this.classesOptions, true);
+          // this.classAxisData = res.data.axisData;
+          // this.classSeriesData = res.data.seriesData;
+          // myChart.setOption(this.classesOptions, true);
         });
       }
     }

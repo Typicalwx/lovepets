@@ -30,6 +30,7 @@ import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
 // import Petowners from "../components/page/"
 import PetLove from "../components/page/petowners/petowners"
+import Statisticsmoneys from "../components/page/petowners/statisticsmoneys"
 
 import StoreAdministrator from "../components/page/storeAdministrator/storeAdministrator"
 
@@ -130,11 +131,11 @@ export default new Router({
                     component: StatisticsMoney,
                     meta: { title: '统计' }
                 },
-                // {
-                //     path: '/statisticsmoneys',
-                //     component: Statisticsmoneys,
-                //     meta: { title: '统计测试' }
-                // },
+                {
+                    path: '/statisticsmoneys',
+                    component: Statisticsmoneys,
+                    meta: { title: '统计测试' }
+                },
 
             ]
         },

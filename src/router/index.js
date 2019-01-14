@@ -29,6 +29,8 @@ import StoreMoney from "../components/page/platform/store.vue";
 import SupplierMoney from "../components/page/platform/supplier.vue";
 import Users from "../components/page/platform/users/index.vue";
 // import Petowners from "../components/page/"
+
+import Statisticsmoneys from "../components/page/petowners/statisticsmoneys";
 import PetLove from "../components/page/petowners/petowners"
 import Statisticsmoneys from "../components/page/petowners/statisticsmoneys"
 

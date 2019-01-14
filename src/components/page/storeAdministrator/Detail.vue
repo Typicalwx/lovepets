@@ -6,7 +6,7 @@
                     <el-input :value="form.account" :disabled="true"></el-input>
                 </el-form-item>
                     <el-form-item label="登录密码">
-                    <el-input :value="form.apwd" :disabled="true"></el-input>
+                    <el-input :value="form.pwd" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="电话">
                     <el-input :value="form.phone" :disabled="true"></el-input>

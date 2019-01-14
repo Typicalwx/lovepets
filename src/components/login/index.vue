@@ -76,8 +76,7 @@ export default {
               account: this.regForm.account,
               pwd: this.regForm.pwd
             }
-          }).then(({data} ) => {
-            console.log(data)
+          }).then(({ data }) => {
             if (data._id) {
               if (data.role == "门店管理员") {
                 if (data.state == "0") {

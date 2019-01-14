@@ -33,13 +33,13 @@ export default {
       let myChart = echarts.init(this.$refs.myChart);
       if (this.type == "商品销售额统计") {
         axios({
-          url: "/orderbuy/orderbuied",
+          url: "/storeAdministrator/orderbuied",
           method: "get"
         }).then(res => {
           console.log(res);
           // this.classAxisData = res.data.axisData;
           // this.classSeriesData = res.data.seriesData;
-          // myChart.setOption(this.classesOptions, true);
+          myChart.setOption(this.classesOptions, true);
         });
       }
     }
@@ -48,7 +48,7 @@ export default {
     classesOptions() {
       return {
         title: {
-          text: "某站点用户访问来源",
+          text: "广场舞年龄分布统计",
           subtext: "纯属虚构",
           x: "center"
         },
@@ -59,7 +59,7 @@ export default {
         legend: {
           orient: "vertical",
           left: "left",
-          data: this.classAxisData
+          // data: this.classAxisData
         },
         series: [
           {
@@ -78,21 +78,6 @@ export default {
           }
         ],
 
-        // title: {
-        //   text: "班级人数的统计图"
-        // },
-        // tooltip: {},
-        // xAxis: {
-        //   data: this.classAxisData
-        // },
-        // yAxis: {},
-        // series: [
-        //   {
-        //     name: "人数",
-        //     type: "bar",
-        //     data: this.classSeriesData
-        //   }
-        // ]
       };
     }
   }

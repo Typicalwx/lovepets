@@ -49,14 +49,19 @@
                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
                 </el-form-item>
-                <el-form-item label="营业地址">
+              
+               <el-form-item label="所在城市" prop>
+        <v-distpicker v-show="addInp" class="addr" @selected="selected"></v-distpicker>
+        <el-input
+          type="text"
+          :disabled="true"
+          v-show="detail.city"
+          v-model="detail.city"
+          autocomplete="off"
+        ></el-input>
+      </el-form-item>
+                  <el-form-item label="营业地址">
                     <el-input v-model="detail.addr"></el-input>
-                </el-form-item>
-                 <el-form-item label="所在城市">
-                    <el-input v-model="detail.city"></el-input>
-                </el-form-item>
-                <el-form-item label="定位">
-                    <el-input v-model="detail.location"></el-input>
                 </el-form-item>
                  <el-form-item label="法人">
                     <el-input v-model="detail.legal"></el-input>
@@ -154,7 +159,7 @@ export default {
         callback(new Error("手机号码有误!"));
       } else {
         // typeof
-        console.log( typeof(value));
+        console.log(typeof value);
         axios({
           method: "get",
           url: "/users/phone",
@@ -171,6 +176,8 @@ export default {
       }
     };
     return {
+      city:"",
+      addInp: true,
       licenseImage: "",
       dialogVisible: false,
       storeImage: "",
@@ -192,7 +199,7 @@ export default {
         addr: "",
         city: "",
         legal: "", //法人
-        location: "",
+        location: { longitude: "", latitude: "" },
         phone: "",
         storeImage: "",
         phone: "",
@@ -243,6 +250,7 @@ export default {
     ...mapMutations(["setAddDetailVisible", "setAddVisible", "setPagination"]),
     ...mapActions(["setStoreAdministrator"]),
     // 验证账号信息
+
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -299,6 +307,12 @@ export default {
     //   });
     // },
     // 增加门店详情
+    selected(data) {
+      console.log(data);
+      this.detail.city =
+        data.province.value + data.city.value + data.area.value;
+      this.city = data.city.value;
+    },
     saveDetail() {
       console.log(this.id);
       axios({
@@ -309,15 +323,14 @@ export default {
           name: this.detail.name,
           number: this.detail.number,
           licenseImage: this.licenseImage,
-          addr: this.detail.addr,
-          city: this.detail.city,
+          city: this.city,
+          addr: this.detail.city + this.detail.addr,
           legal: this.detail.legal,
-             location: JSON.stringify([]),
-          // location: JSON.stringify(this.detail.location),
+          location: JSON.stringify(this.detail.location),
           phone: this.detail.phone,
           storeImage: this.storeImage,
           clerk: JSON.stringify([]),
-          commission: 0.004
+          commission: "0.003"
         }
       }).then(({ data }) => {
         console.log(data);

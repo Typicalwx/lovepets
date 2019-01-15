@@ -314,13 +314,17 @@ export default {
         ...this.updateForm.images,
         ...this.image
       ]);
-     
+
       // let date = this.date && this.date.toLocaleDateString();
-      
+      console.log("事", this.date);
       axios({
         method: "put",
         url: "/suppliergoods/" + this.suppliergood._id,
-        data: { ...this.suppliergood, images }
+        data: {
+          ...this.suppliergood,
+          images,
+          // date: this.date ? this.date.toLocaleDateString() : this.date
+        }
       }).then(({ data }) => {
         console.log("000000000000", data);
         this.updateVisible = false;

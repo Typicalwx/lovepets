@@ -289,4 +289,7 @@ export default {
   margin-left: 20px;
   width: 89px;
 }
+.container{
+  padding: 0
+}
 </style>

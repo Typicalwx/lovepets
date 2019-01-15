@@ -3,7 +3,7 @@
     <v-head :headtitle="headtitle" :usersession="usersession"></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags :storedashboard="storedashboard"></v-tags>
+      <v-tags :dashboard="storedashboard"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -67,8 +67,17 @@ export default {
         },
         {
           icon: "el-icon-edit-outline",
-          index: "storestatistics",
-          title: "统计"
+          title: "统计",
+          subs: [
+            {
+              index: "storestatistics",
+              title: "销量统计"
+            },
+            {
+              index: "markdown",
+              title: "销售额统计"
+            }
+          ]
         }
       ],
       headImg: ""

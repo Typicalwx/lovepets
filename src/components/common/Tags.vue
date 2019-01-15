@@ -25,7 +25,7 @@
 <script>
     import bus from './bus';
     export default {
-        props:["storedashboard","dashboardmoney"],
+        props:["storedashboard","dashboardmoney","dashboard"],
         data() {
             return {
                 tagsList: []
@@ -48,7 +48,7 @@
             // 关闭全部标签
             closeAll(){
                 this.tagsList = [];
-                this.$router.push(`/${this.dashboardmoney}`);
+                this.$router.push(`/${this.dashboard}`);
             },
             // 关闭其他标签
             closeOther(){

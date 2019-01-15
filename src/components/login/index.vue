@@ -100,8 +100,8 @@ export default {
                 } else if (data.state == "2") {
                   this.$alert("你得账号正在被检查，暂时禁封！");
                 }
-              } else if (data.role == "平台管理") {
-                this.$router.push("/details");
+              } else if (data.role == "平台管理员") {
+                this.$router.push("/dashboardmoney");
               }
             } else {
               this.$alert("你得账号或密码不正确！");
@@ -110,7 +110,7 @@ export default {
             }
           });
         } else {
-          this.$alert("错误", "失败");
+          this.$alert("你得账号或密码不正确！");
         }
       });
     },

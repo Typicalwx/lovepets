@@ -258,7 +258,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* .el-table .warning-row {
   background: oldlace;
 }
@@ -288,5 +288,8 @@ export default {
 .search {
   margin-left: 20px;
   width: 89px;
+}
+.container{
+  padding: 0
 }
 </style>

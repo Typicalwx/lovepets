@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1>统计</h1>
-    <el-radio-group style="display: flex;justify-content: space-around;" @change="showChart">
+    <el-radio-group
+      style="display: flex;justify-content: space-around;"
+      @change="showChart"
+    >
       <span class="total" id="suppliergoods" ref="suppliergoods"></span>
       <span class="total" id="suppliers" ref="suppliers"></span>
     </el-radio-group>
@@ -39,7 +42,6 @@ export default {
             method: "get",
             params: { supplierId: data[0]._id }
           }).then(({ data }) => {
-            console.log("数据", data);
             //处理名字一样的商品。将value整合
             function parseArr(arr) {
               var nameArr = [];
@@ -61,11 +63,7 @@ export default {
             }
             // ``````````````````````````````````````````````````````
             // console.log("11111111", parseArr(data.seriesData));
-            //商品采购量
             this.suppliergoodsBuyShow = parseArr(data.seriesData);
-            //商品销售量
-            this.suppliergoodsBuiedShow = parseArr(data.buiedSeriesData);
-
             for (let i of parseArr(data.seriesData)) {
               this.suppliergoodsBuy.push(i.name);
               console.log("数组", data.seriesData);
@@ -84,10 +82,9 @@ export default {
   },
   data() {
     return {
-      //   type: "班级人数统计",
+    //   type: "班级人数统计",
       suppliergoodsBuy: [],
-      suppliergoodsBuyShow: [],
-      suppliergoodsBuiedShow: []
+      suppliergoodsBuyShow: []
     };
   },
   methods: {
@@ -107,9 +104,6 @@ export default {
           text: "货品采购量的统计图"
         },
         tooltip: {},
-        legend: {
-          data: ["采购量"]
-        },
         xAxis: {
           data: this.suppliergoodsBuy
         },
@@ -126,21 +120,31 @@ export default {
     stuOptions() {
       return {
         title: {
-          text: "货品销售量的统计图"
+          text: "月销售额的统计图"
         },
         tooltip: {},
-         legend: {
-          data: ["销售量"]
-        },
         xAxis: {
-          data: this.suppliergoodsBuy
+          data: ["1月", "2月", "3月", "4月", "5月", "6月","7月","8月","9月","10月","11月","12月"]
         },
         yAxis: {},
         series: [
           {
-            name: "销售量",
+            name: "月销售额",
             type: "bar",
-            data: this.suppliergoodsBuiedShow
+            data: [
+              { name: "1月", value: 5 },
+              { name: "2月", value: 10 },
+              { name: "3月", value: 3 },
+              { name: "4月", value: 6 },
+              { name: "5月", value: 5 },
+              { name: "6月", value: 8 },
+              { name: "7月", value: 3 },
+              { name: "8月", value: 4 },
+              { name: "9月", value: 8 },
+              { name: "10月", value: 3 },
+              { name: "11月", value: 1 },
+              { name: "12月", value: 3.2 },
+            ]
           }
         ]
       };

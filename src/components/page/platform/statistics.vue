@@ -1,8 +1,6 @@
 <template>
   <div>
     <el-radio-group v-model="type" @change="showChart">
-      <el-radio-button label="班级人数统计"></el-radio-button>
-      <el-radio-button label="年龄分布统计"></el-radio-button>
       <el-radio-button label="地图分布"></el-radio-button>
     </el-radio-group>
     <div class="total" id="myChart" ref="myChart" @click="showInfo"></div>
@@ -106,7 +104,7 @@ export default {
           text: "全国门店统计",
           left: "center",
           textStyle: {
-            color: "#fff"
+            color: "black"
           }
         },
         tooltip: {
@@ -122,8 +120,8 @@ export default {
                 featureType: "background",
                 elementType: "geometry",
                 stylers: {
-                  visibility: "on",
-                  color: "#e6c9c9ff"
+                  // visibility: "on",
+                  color: "#f8e2e2ff"
                 }
               },
               {
@@ -173,7 +171,7 @@ export default {
                 featureType: "arterial",
                 elementType: "geometry",
                 stylers: {
-                  color: "#004981"
+                  color: "#ec1111ff"
                 }
               },
               {
@@ -322,6 +320,9 @@ export default {
 <style>
 .total {
   width: 100%;
+  height: 500px;
+}
+.BMap_mask{
   height: 500px;
 }
 </style>

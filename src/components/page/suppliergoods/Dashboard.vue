@@ -1,31 +1,51 @@
 <template>
-    <div>
-        <el-row :gutter="20">
-            <el-col :span="8">
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
-                    <div class="user-info">
-                        <img src="../../../assets/img/img.jpg" class="user-avator" alt="">
-                        <div class="user-info-cont">
-                            <div class="user-info-name"></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="user-info-list">上次登录时间：<span>2019-01-01</span></div>
-                    <div class="user-info-list">上次登录地点：<span>成都</span></div>
-                </el-card>
-               
-            </el-col>
-           
-        </el-row>
-      
-    </div>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-card shadow="hover" class="mgb20" style="height:252px;">
+          <div class="user-info">
+            <img src="../../../assets/img/img.jpg" class="user-avator" alt>
+            <div class="user-info-cont">
+              <div class="user-info-name">{{post}}:</div>
+              <div>{{userName}}</div>
+              <div></div>
+            </div>
+          </div>
+          <div class="user-info-list">
+            上次登录时间：
+            <span>2019-01-01</span>
+          </div>
+          <div class="user-info-list">
+            上次登录地点：
+            <span>成都</span>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  created() {
+    axios({
+      url: "/getsession",
+      method: "get"
+    }).then(({ data }) => {
+      if (data.phone) {
+        console.log("data", data);
+        this.userName = data.name;
+        this.post = data.role;
+      }
+    });
+  },
   name: "dashboard",
   data() {
-    return {};
+    return {
+      userName: "",
+      post: ""
+    };
   },
   components: {},
   computed: {},
@@ -108,8 +128,10 @@ export default {
 .user-info-cont {
   padding-left: 50px;
   flex: 1;
-  font-size: 14px;
+  font-size: 22px;
+  display: flex;
   color: #999;
+  align-items: baseline;
 }
 
 .user-info-cont div:first-child {

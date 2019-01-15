@@ -61,7 +61,11 @@ export default {
             }
             // ``````````````````````````````````````````````````````
             // console.log("11111111", parseArr(data.seriesData));
+            //商品采购量
             this.suppliergoodsBuyShow = parseArr(data.seriesData);
+            //商品销售量
+            this.suppliergoodsBuiedShow = parseArr(data.buiedSeriesData);
+
             for (let i of parseArr(data.seriesData)) {
               this.suppliergoodsBuy.push(i.name);
               console.log("数组", data.seriesData);
@@ -82,7 +86,8 @@ export default {
     return {
       //   type: "班级人数统计",
       suppliergoodsBuy: [],
-      suppliergoodsBuyShow: []
+      suppliergoodsBuyShow: [],
+      suppliergoodsBuiedShow: []
     };
   },
   methods: {
@@ -124,22 +129,18 @@ export default {
           text: "货品销售量的统计图"
         },
         tooltip: {},
+         legend: {
+          data: ["销售量"]
+        },
         xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+          data: this.suppliergoodsBuy
         },
         yAxis: {},
         series: [
           {
-            name: "人数",
+            name: "销售量",
             type: "bar",
-            data: [
-              { name: "衬衫", value: 5 },
-              { name: "羊毛衫", value: 10 },
-              { name: "雪纺衫", value: 3 },
-              { name: "裤子", value: 6 },
-              { name: "高跟鞋", value: 5 },
-              { name: "袜子", value: 5 }
-            ]
+            data: this.suppliergoodsBuiedShow
           }
         ]
       };

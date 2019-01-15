@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <v-head :header="headTitle"></v-head>
+    <v-head :header="headTitle" ></v-head>
     <v-sidebar :items="item"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags></v-tags>
+      <v-tags :dashboard="dashboard"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       tagsList: [],
+      dashboard:"dashboard",
       collapse: false,
       headTitle: "供应商管理系统",
       item: [

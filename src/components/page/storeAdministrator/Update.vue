@@ -14,7 +14,7 @@
                  :show-file-list="false"
                  :on-success="handleAvatarSuccess"
                  :before-upload="beforeAvatarUpload">
-                 <img v-if="licenseImage" :src="licenseImage" class="avatar">
+                 <img v-if="licenseImage" :src="'/upload/'+licenseImage" class="avatar">
                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
                 </el-form-item>
@@ -40,7 +40,7 @@
                  :show-file-list="false"
                  :on-success="handleSuccess"
                  :before-upload="beforeAvatarUpload">
-                 <img v-if="storeImage" :src="storeImage" class="avatar">
+                 <img v-if="storeImage" :src="'/upload/'+storeImage" class="avatar">
                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
                 </el-form-item>
@@ -205,7 +205,7 @@ export default {
     },
   
     success() {
-        console.log(this.updateStore._id)
+        // console.log(this.updateStore._id)
       axios({
         url: "/stores/"+this.updateStore._id,
         method: "put",
@@ -232,11 +232,11 @@ export default {
     },
     handleAvatarSuccess(res, file) {
 
-      this.licenseImage = "http://localhost:3001/upload/" + res;
+      this.licenseImage = res;
     },
     handleSuccess(res, file) {
 
-      this.storeImage = "http://localhost:3001/upload/" + res;
+      this.storeImage = res;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";

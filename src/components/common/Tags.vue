@@ -25,7 +25,7 @@
 <script>
     import bus from './bus';
     export default {
-        props:["storedashboard","dashboardmoney"],
+        props:["dashboardmoney"],
         data() {
             return {
                 tagsList: []

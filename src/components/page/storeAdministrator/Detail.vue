@@ -28,7 +28,7 @@
                 </el-form-item>
                 <el-form-item  label="营业执照图片">
                   
-                  <img   width="60%" :src="detail.licenseImage" alt>
+                  <img   width="60%" :src="'/upload/'+detail.licenseImage" alt>
                 </el-form-item>
                 <el-form-item label="营业地址">
                     <el-input :value="detail.addr" :disabled="true"></el-input>
@@ -43,7 +43,7 @@
                     <el-input :value="detail.phone" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="头图">
-                  <img   width="60%" :src="detail.storeImage" alt>
+                  <img   width="60%" :src="'/upload/'+detail.storeImage" alt>
                 </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">

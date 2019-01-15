@@ -2,13 +2,13 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i> 基础表格</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-cascades"></i>宠主</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-add " @click="add">增加宠主</el-button>
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+                <!-- <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button> -->
                 <el-select v-model="type" placeholder="筛选" class="handle-select mr10">
                    <el-option key="0" label="全部" value="all"></el-option>
                 <el-option key="1" label="姓名" value="name"></el-option>
@@ -20,8 +20,8 @@
                 <el-button type="primary" icon="search" @click="searchUser">搜索</el-button>
             </div>
             <el-table :data="petowners" border class="table" ref="multipleTable" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="55" align="center">
-                </el-table-column>
+                <!-- <el-table-column type="selection" width="55" align="center">
+                </el-table-column> -->
                 <el-table-column prop="phone" label="电话" sortable width="120" align="center">
                 </el-table-column>
             
@@ -225,7 +225,7 @@ export default {
         if (value == "all") {
           value = null;
         }
-        console.log(value);
+        // console.log(value);
         this.$store.commit("petowner/setType", value);
       }
     },
@@ -291,7 +291,7 @@ export default {
       this.idx = index;
       this.id = row._id;
       this.form.pets = row.pets;
-      console.log(row.pets);
+      // console.log(row.pets);
       this.updatePetowners = row;
       this.setUpdateVisible(true);
     },
@@ -311,7 +311,7 @@ export default {
           pwd: this.form.pwd
         }
       }).then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         this.show();
       });
       this.$message.success(`修改第 ${this.idx + 1} 行成功`);
@@ -361,16 +361,16 @@ export default {
       this.state = row.state;
       this.delVisible = true;
     },
-    delAll() {
-      const length = this.multipleSelection.length;
-      let str = "";
-      this.del_list = this.del_list.concat(this.multipleSelection);
-      for (let i = 0; i < length; i++) {
-        str += this.multipleSelection[i].name + " ";
-      }
-      // this.$message.error("删除了" + str);
-      this.multipleSelection = [];
-    },
+    // delAll() {
+    //   const length = this.multipleSelection.length;
+    //   let str = "";
+    //   this.del_list = this.del_list.concat(this.multipleSelection);
+    //   for (let i = 0; i < length; i++) {
+    //     str += this.multipleSelection[i].name + " ";
+    //   }
+    //   // this.$message.error("删除了" + str);
+    //   this.multipleSelection = [];
+    // },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -378,7 +378,7 @@ export default {
     // 确定删除
     deleteRow() {
       this.delVisible = false;
-      console.log(this.state == "正常");
+      // console.log(this.state == "正常");
       if (this.state == "正常") {
         axios({
           method: "put",
@@ -387,7 +387,7 @@ export default {
             state: 3
           }
         }).then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           this.$message.success("修改状态成功");
           this.delVisible = false;
           this.setPetowners();

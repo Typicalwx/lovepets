@@ -146,7 +146,11 @@ export default new Router({
                     component: StatisticsMoney,
                     meta: { title: '统计' }
                 },
-               
+                {
+                    path: '/statisticsmoneys',
+                    component: Statisticsmoneys,
+                    meta: { title: '销售统计' }
+                },
 
             ]
         },

@@ -64,7 +64,7 @@ export default {
                {
           icon: "el-icon-edit-outline",
           index: "statisticsmoneys",
-          title: "统计测试"
+          title: "销售额统计"
         }
       ]
     };

@@ -112,7 +112,7 @@ export default ({
             }).then(({ data }) => {
                 console.log(data)
                 var res = data.rows.map(function (item) {
-                    if (item.users.role == "门店管理员" && item.users.state !== 0) {
+                    if (item.users.role == "门店管理员" && item.users.state != 0) {
                         console.log(item.users.state)
                         if (item.users.state == 1) {
                             item.users.state = "可用"

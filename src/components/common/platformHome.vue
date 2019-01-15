@@ -3,7 +3,7 @@
     <v-head :headtitle="headtitle" :usersession="usersession"></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags :dashboardmoney="dashboardmoney"></v-tags>
+      <v-tags  :dashboard="dashboardmoney"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -64,7 +64,7 @@ export default {
                {
           icon: "el-icon-edit-outline",
           index: "statisticsmoneys",
-          title: "统计测试"
+          title: "销售额统计"
         }
       ]
     };

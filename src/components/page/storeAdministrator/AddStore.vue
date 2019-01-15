@@ -45,7 +45,7 @@
                :show-file-list="false"
                :on-success="handleAvatar"
                :before-upload="beforeAvatar">
-               <img v-if="licenseImage" :src="licenseImage" class="avatar">
+               <img v-if="licenseImage" :src="'/upload/'+licenseImage" class="avatar">
                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
                 </el-form-item>
@@ -76,7 +76,7 @@
                  :show-file-list="false"
                  :on-success="handleAvatarSuccess"
                  :before-upload="beforeAvatarUpload">
-                 <img v-if="storeImage" :src="storeImage" class="avatar">
+                 <img v-if="storeImage" :src="'/upload/'+storeImage" class="avatar">
                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
                 </el-form-item>
@@ -143,7 +143,7 @@ export default {
           }
         }).then(({ data }) => {
           // console.log(1111);
-          console.log(data);
+          // console.log(data);
           if (data.status == 0) {
             callback(new Error("账号已经被使用"));
           } else {
@@ -159,7 +159,7 @@ export default {
         callback(new Error("手机号码有误!"));
       } else {
         // typeof
-        console.log(typeof value);
+        // console.log(typeof value);
         axios({
           method: "get",
           url: "/users/phone",
@@ -241,7 +241,6 @@ export default {
         return this.addDetailVisible;
       },
       set(addDetailVisible) {
-        console.log(111);
         this.setAddDetailVisible(addDetailVisible);
       }
     }
@@ -308,13 +307,13 @@ export default {
     // },
     // 增加门店详情
     selected(data) {
-      console.log(data);
+      // console.log(data);
       this.detail.city =
         data.province.value + data.city.value + data.area.value;
       this.city = data.city.value;
     },
     saveDetail() {
-      console.log(this.id);
+      // console.log(this.id);
       axios({
         method: "post",
         url: "/stores",
@@ -333,14 +332,14 @@ export default {
           commission: "0.003"
         }
       }).then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         this.setAddDetailVisible(false);
         this.setStoreAdministrator();
       });
     },
     // 上传营业执照图片
     handleAvatar(res, file) {
-      this.licenseImage = "http://localhost:3001/upload/" + res;
+      this.licenseImage =  res;
     },
     beforeAvatar(file) {
       const isJPG = file.type === "image/jpeg";
@@ -356,8 +355,8 @@ export default {
     },
     // 上传头像图片
     handleAvatarSuccess(res, file) {
-      console.log(res);
-      this.storeImage = "http://localhost:3001/upload/" + res;
+      // console.log(res);
+      this.storeImage =  res;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";

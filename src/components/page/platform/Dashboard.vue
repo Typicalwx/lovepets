@@ -11,8 +11,8 @@
             </div>
           </div>
           <div class="user-info-list">
-            上次登录时间：
-            <span>2019-01-01</span>
+            联系电话：
+            <span>{{phone}}</span>
           </div>
           <div class="user-info-list">
             上次登录地点：
@@ -32,13 +32,19 @@ export default {
       method: "get",
       url: "/getsession"
     }).then(({ data }) => {
-      this.usersession = data.account;
+      if (data.account) {
+        this.usersession = data.account;
+         this.phone = data.phone;
+      } else {
+        this.$router.push("/login")
+      }
     });
   },
   name: "dashboard",
   data() {
     return {
-      usersession: ""
+      usersession: "",
+      phone:""
     };
   }
 };

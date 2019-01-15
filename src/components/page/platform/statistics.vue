@@ -1,6 +1,8 @@
 <template>
   <div>
     <el-radio-group v-model="type" @change="showChart">
+      <!-- <el-radio-button label="班级人数统计"></el-radio-button>
+      <el-radio-button label="年龄分布统计"></el-radio-button> -->
       <el-radio-button label="地图分布"></el-radio-button>
     </el-radio-group>
     <div class="total" id="myChart" ref="myChart" @click="showInfo"></div>
@@ -317,10 +319,10 @@ export default {
 };
 </script>
     
-<style>
+<style >
 .total {
   width: 100%;
-  height: 500px;
+  height: 700px;
 }
 .BMap_mask{
   height: 500px;

@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <v-head :headtitle="headtitle" :usersession="usersession"></v-head>
+    <v-head :headtitle="headtitle" :usersession="usersession" :imgUrl="headImg"></v-head>
     <v-sidebar :items="items"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
-      <v-tags :storedashboard="storedashboard"></v-tags>
+      <v-tags :dashboard="storedashboard"></v-tags>
       <div class="content">
         <transition name="move" mode="out-in">
           <keep-alive :include="tagsList">
@@ -124,6 +124,7 @@ export default {
           }
         }).then(res => {
           this.setserveStoreId(res.data._id);
+          this.headImg = res.data.storeImage;
         });
         this.setStoreInfoData();
       } else {

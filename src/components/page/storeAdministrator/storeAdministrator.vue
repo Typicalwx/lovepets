@@ -8,7 +8,7 @@
         <div class="container">
             <div class="handle-box">
                 <el-button type="primary" icon="delete" class="handle-add " @click="add">增加门店</el-button>
-                <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+                <!-- <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button> -->
                 <el-select v-model="type" placeholder="筛选" class="handle-select mr10">
                    <el-option key="0" label="全部" value=""></el-option>
                 <el-option key="1" label="姓名" value="name"></el-option>
@@ -20,8 +20,8 @@
                 <el-button type="primary" icon="search" @click="searchUser">搜索</el-button>
             </div>
             <el-table :data="storeAdministrator" border class="table" ref="multipleTable">
-                <el-table-column type="selection" width="55" align="center">
-                </el-table-column>
+                <!-- <el-table-column type="selection" width="55" align="center">
+                </el-table-column> -->
                 <el-table-column prop="users.account" label="登录名" sortable width="150">
                 </el-table-column>
                 <el-table-column prop="users.phone" label="手机号" width="120">
@@ -199,7 +199,7 @@ export default {
     handleEdit(index, row) {
       this.idx = index;
       this.id = row._id;
-      console.log(row);
+      // console.log(row);
       // this.detail = row;
       this.setStoreId(row._id);
       this.setUpdateStore(row);
@@ -239,7 +239,7 @@ export default {
     // 删除
 
     handleDelete(index, row) {
-      console.log(row);
+      // console.log(row);
       this.idx = index;
       this.id = row._id;
       this.usersId = row.users._id;
@@ -261,8 +261,8 @@ export default {
     },
     // 确定封禁
     deleteRow() {
-      console.log("id", this.usersId);
-      console.log("state", this.form.sate == "可用");
+      // console.log("id", this.usersId);
+      // console.log("state", this.form.sate == "可用");
       if (this.form.sate == "可用") {
         axios({
           method: "put",

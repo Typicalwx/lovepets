@@ -95,9 +95,7 @@
 import axios from "axios";
 import { createNamespacedHelpers } from "vuex";
 const { mapState, mapActions, mapMutations } = createNamespacedHelpers("store");
-const { mapState:gession} = createNamespacedHelpers(
-  "storeModule"
-);
+const { mapState: gession } = createNamespacedHelpers("storeModule");
 import Serveadd from "./Serveadd";
 import Serveupdate from "./Serveupdate";
 export default {
@@ -123,9 +121,8 @@ export default {
     };
   },
   mounted() {
-    
     //  console.log(localStorage.getItem(key) )
-    this.show({ page: 1, rows: 5,storeId:this.storeId});
+    this.show({ page: 1, rows: 5, storeId: this.storeId });
   },
   computed: {
     ...mapState(["serveitem", "pagenation"]),
@@ -162,25 +159,25 @@ export default {
     // 分页导航
     prevpage(page) {
       // console.log(page);
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      this.show({ page, rows: this.curpage, storeId: this.storeId });
     },
     nextpage(page) {
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      this.show({ page, rows: this.curpage, storeId: this.storeId });
     },
     currentchange(page) {
-      this.show({ page, rows: this.curpage,storeId:this.storeId });
+      this.show({ page, rows: this.curpage, storeId: this.storeId });
     },
     sizechange(rows) {
       // console.log(page)
       this.curpage = rows;
-      this.show({ page: this.pagenation.curpage,rows ,storeId:this.storeId});
+      this.show({ page: this.pagenation.curpage, rows, storeId: this.storeId });
     },
     // 获取 easy-mock 的模拟数据
     search() {
       // console.log("啊哈哈哈",this.storeId)
-        this.settype(this.select_cate);
-        this.settext(this.select_word);
-        this.show({ page: 1, rows: 5,storeId:this.storeId});
+      this.settype(this.select_cate);
+      this.settext(this.select_word);
+      this.show({ page: 1, rows: 5, storeId: this.storeId });
     },
     formatter(row, column) {
       return row.address;
@@ -205,18 +202,18 @@ export default {
             rows: this.pagenation.eachpage
           }
         }).then(res => {
-          console.log(res.data.rows)
+          console.log(res.data.rows);
           if (res.data.rows.length == 0) {
             this.show({
               page: this.pagenation.curpage - 1,
               rows: this.pagenation.eachpage,
-              storeId:this.storeId
+              storeId: this.storeId
             });
           } else {
             this.show({
               page: this.pagenation.curpage,
               rows: this.pagenation.eachpage,
-              storeId:this.storeId
+              storeId: this.storeId
             });
           }
         });
@@ -225,13 +222,17 @@ export default {
     delAll() {
       //待解决
       const length = this.serveitem.length;
-      let str = "";
-      this.del_list = this.del_list.concat(this.serveitem);
-      // for (let i = 0; i < length; i++) {
-      //     str += this.serveitem[i].name + ' ';
-      // }
-      this.$message.error("删除了" + str);
-      this.multipleSelection = [];
+      axios({
+        url: "/servetime",
+        method: "delete",
+        data: {
+          data: JSON.stringify(this.multipleSelection)
+        }
+      }).then(({ data }) => {
+        this.$message.error("删除成功");
+        this.multipleSelection = [];
+        this.show({ page: 1, rows: 5, storeId: this.storeId });
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

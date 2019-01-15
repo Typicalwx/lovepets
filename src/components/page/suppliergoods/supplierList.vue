@@ -235,15 +235,17 @@ export default {
       return row.tag === value;
     },
     delAll() {
-      console.log("s数据", this.multipleSelection);
-      const length = this.multipleSelection.length;
-      let str = "";
-      this.del_list = this.del_list.concat(this.multipleSelection);
-      for (let i = 0; i < length; i++) {
-        str += this.multipleSelection[i].name + " ";
-      }
-      this.$message.error("删除了" + str);
-      this.multipleSelection = [];
+      axios({
+        url: "/suppliergoods",
+        method: "delete",
+        data: {
+          data: JSON.stringify(this.multipleSelection)
+        }
+      }).then(({ data }) => {
+        this.$message.error("删除成功");
+        this.multipleSelection = [];
+       this.setSuppliergoods({ page: 1, rows: 5, supplierId: this.supId }); //重新加载所有数据
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -289,7 +291,7 @@ export default {
   margin-left: 20px;
   width: 89px;
 }
-.container{
-  padding: 0
+.container {
+  padding: 0;
 }
 </style>

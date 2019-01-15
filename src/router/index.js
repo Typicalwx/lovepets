@@ -102,12 +102,12 @@ export default new Router({
                 {
                     path: '/storestatistics',
                     component: StoreStatistics,
-                    meta: { title: '统计' }
+                    meta: { title: '销售量统计' }
                 },
                 {
                     path: '/markdown',
                     component: Markdown,
-                    meta: { title: '统计' }
+                    meta: { title: '销售额统计' }
                 },
 
             ]

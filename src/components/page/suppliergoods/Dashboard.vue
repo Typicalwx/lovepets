@@ -37,6 +37,8 @@ export default {
         console.log("data", data);
         this.userName = data.name;
         this.post = data.role;
+      } else {
+        this.$router.push("/login");
       }
     });
   },

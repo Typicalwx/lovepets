@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <v-head :header="headTitle" ></v-head>
+    <v-head :usersession="userName" :headtitle="headTitle"></v-head>
     <v-sidebar :items="item"></v-sidebar>
     <div class="content-box" :class="{'content-collapse':collapse}">
       <v-tags :dashboard="dashboard"></v-tags>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import vHead from "./Header.vue";
 import vSidebar from "./Sidebar.vue";
 import vTags from "./Tags.vue";
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       tagsList: [],
-      dashboard:"dashboard",
+      dashboard: "dashboard",
       collapse: false,
       headTitle: "供应商管理系统",
       item: [
@@ -49,7 +50,9 @@ export default {
           index: "statistics",
           title: "统计"
         }
-      ]
+      ],
+      userName: "",
+      post: ""
     };
   },
   components: {
@@ -68,6 +71,19 @@ export default {
         msg[i].name && arr.push(msg[i].name);
       }
       this.tagsList = arr;
+    });
+
+    axios({
+      url: "/getsession",
+      method: "get"
+    }).then(({ data }) => {
+      if (data.phone) {
+        console.log("data", data);
+        this.userName = data.account;
+        this.post = data.role;
+      } else {
+        this.$router.push("/login");
+      }
     });
   }
 };

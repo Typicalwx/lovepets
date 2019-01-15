@@ -96,7 +96,7 @@ export default {
                     this.$router.push("/detailses");
                   }
                 } else if (data.state == "1") {
-                  this.$router.push("/suppliergoods");
+                  this.$router.push("/dashboard");
                 } else if (data.state == "2") {
                   this.$alert("你得账号正在被检查，暂时禁封！");
                 }

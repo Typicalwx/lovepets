@@ -101,7 +101,7 @@ export default {
                   this.$alert("你得账号正在被检查，暂时禁封！");
                 }
               } else if (data.role == "平台管理员") {
-                this.$router.push("/platform");
+                this.$router.push("/dashboardmoney");
               }
             } else {
               this.$alert("你得账号或密码不正确！");

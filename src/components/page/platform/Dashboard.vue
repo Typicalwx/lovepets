@@ -32,7 +32,11 @@ export default {
       method: "get",
       url: "/getsession"
     }).then(({ data }) => {
-      this.usersession = data.account;
+      if (data.account) {
+        this.usersession = data.account;
+      } else {
+        this.$router.push("/login")
+      }
     });
   },
   name: "dashboard",

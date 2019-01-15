@@ -110,7 +110,7 @@ export default {
             }
           });
         } else {
-          this.$alert("错误", "失败");
+          this.$alert("你得账号或密码不正确！");
         }
       });
     },

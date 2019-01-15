@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <el-card class="box-card">
-      <h1>注册</h1>
+      <h1 class="zhuce">注册</h1>
       <el-form :model="regForm" status-icon :rules="rules" ref="regForm" label-width="100px">
         <el-form-item label="登录名" prop="account">
           <el-input type="text" v-model="regForm.account" autocomplete="off"></el-input>
@@ -188,5 +188,9 @@ export default {
   height: 100%;
   background-image: url(../../assets/img/login-bg.jpg);
   background-size: 100%;
+}
+.zhuce{
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>

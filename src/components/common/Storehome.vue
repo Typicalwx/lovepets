@@ -67,8 +67,17 @@ export default {
         },
         {
           icon: "el-icon-edit-outline",
-          index: "storestatistics",
-          title: "统计"
+          title: "统计",
+          subs: [
+            {
+              index: "storestatistics",
+              title: "销量统计"
+            },
+            {
+              index: "markdown",
+              title: "销售额统计"
+            }
+          ]
         }
       ],
       headImg: ""

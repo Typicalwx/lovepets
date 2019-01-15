@@ -111,17 +111,21 @@ export default ({
                 }
             }).then(({ data }) => {
                 console.log(data)
-                var res = data.rows.map(function (item) {
-                    if (item.users.role == "门店管理员" && item.users.state !== 0) {
-                        console.log(item.users.state)
+                let res = []
+                for (let i = 0; i < data.rows.length; i++) {
+                    let item = data.rows[i]
+                    if (item.users.role == "门店管理员" && item.users.state != 0) {
                         if (item.users.state == 1) {
                             item.users.state = "可用"
                         } else if (item.users.state == 3) {
                             item.users.state = "封禁"
                         }
-                        return item
+                        res.push(item)
+                        console.log(item)
+                        // return res
                     }
-                })
+                }
+                console.log(res,456)
                 if (res[0]) {
                     // console.log(res)
                     context.commit("setStoreAdmin", res)
@@ -130,9 +134,7 @@ export default ({
                         maxpage: data.maxpage,
                         total: data.total
                     });
-                } else { context.commit("setStoreAdmin", []) }
-
-
+                } else { context.commit("setStoreAdmin", data.rowscc) }
             });
         },
 

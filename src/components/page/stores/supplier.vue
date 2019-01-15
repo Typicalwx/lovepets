@@ -17,10 +17,10 @@ export default {
               console.log(myDate.toLocaleDateString()+" "+myDate.toLocaleTimeString())
               let arr = [
                 //   {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c371132bd089a29cce23fdc',goodState:"商品",shangpingname:"怡亲",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3b3bd4722b1c0acca16ae7',goodState:"服务",shangpingname:"洗护",num:3,price:40,total:120},
-              {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3c5a965d8d5a2ac894fc0e',goodState:"服务",shangpingname:"寄养",num:10,price:40,total:400},
+              {'storeId':'5c3ca548e9f400204889b500','shangpingid':'5c3d6ea53dc1253fbcb533f6',goodState:"服务",shangpingname:"洗护",num:1,price:123,total:123},
+              {'storeId':'5c3ca548e9f400204889b500','shangpingid':'5c3d6ee13dc1253fbcb533f8',goodState:"服务",shangpingname:"寄养",num:2,price:56,total:112},
             //    {'storeId':'5c358b2d100838196886b25c','shangpingid':'5c3b3bd4722b1c0acca16ae7',goodState:"商品",shangpingname:"怡亲",num:10,price:40,total:400},
-              {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c3c5a825d8d5a2ac894fc0d',goodState:"服务",shangpingname:"凯锐思",num:3,price:30,total:120},
+              {'storeId':'5c3ca548e9f400204889b500','shangpingid':'5c3d6f143dc1253fbcb533f9',goodState:"服务",shangpingname:"洗护",num:2,price:68,total:136},
                 // {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
                 //   {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120},
                     // {'storeId':'5c37fe883563f80d381a7924','shangpingid':'5c36a1e0bd089a29cce23fdb',goodState:"商品",shangpingname:"凯锐思",num:3,price:30,total:120}

@@ -3,7 +3,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <el-select
+        <!-- <el-select
           v-if="storesData.length"
           v-model="type"
           placeholder="搜索属性"
@@ -15,7 +15,7 @@
             :label="item.name"
             :value="item.name"
           ></el-option>
-        </el-select>
+        </el-select> -->
         <!-- <div>{{storesData[0].name}}</div> -->
         <div class="total" id="myChart" ref="myChart"></div>
       </el-col>
@@ -139,7 +139,7 @@ export default {
     serverOptions() {
       return {
         title: {
-          text: "商品近六个月销量"
+          text: "服务近六个月销量"
         },
         tooltip: {},
         legend: {

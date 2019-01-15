@@ -18,12 +18,8 @@ import Statistical from "../components/statistical/index"
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-<<<<<<< HEAD
-import StoreStatistics from "../components/page/stores/tongji/statisticsMonth";
-=======
 import StoreStatistics from "../components/page/stores/tongji/statistics";
 import Markdown from "../components/page/stores/tongji/statisticsMonth"
->>>>>>> 3e235f5e265bd70dd1b10afc8014e6e7cab7965c
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"

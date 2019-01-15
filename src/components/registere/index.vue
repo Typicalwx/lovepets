@@ -169,7 +169,10 @@ export default {
 <style scoped>
 .box-card {
   width: 500px;
-  margin: auto;
+  /* margin: auto; */
+  position: absolute;
+  top:20%;
+  left: 38%;
    background-color: rgba(255, 255, 255, 0.5);
 }
 .juese {

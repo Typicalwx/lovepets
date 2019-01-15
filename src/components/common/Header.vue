@@ -15,7 +15,7 @@
         </div>
         <!-- 用户头像 -->
         <div class="user-avator">
-          <img src="../../assets/img/img.jpg">
+          <img v-if="imgUrl" :src="'/upload/'+imgUrl">
         </div>
         <!-- 用户名下拉菜单 -->
         <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -35,12 +35,12 @@
 import bus from "../common/bus";
 import axios from "axios";
 export default {
-  props: ["headtitle", "usersession"],
+  props: ["headtitle", "usersession", "imgUrl"],
   data() {
     return {
       collapse: false,
       fullscreen: false,
-    
+
       message: 2
     };
   },
@@ -163,11 +163,16 @@ export default {
 }
 .user-avator {
   margin-left: 20px;
+  background-image: url("../../assets/img/img.jpg");
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: 100%;
 }
 .user-avator img {
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 }
 .el-dropdown-link {

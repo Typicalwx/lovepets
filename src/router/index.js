@@ -18,7 +18,8 @@ import Statistical from "../components/statistical/index"
 import StoreGoods from "../components/page/stores/goods/index.vue";
 import Storehome from "../components/common/Storehome.vue";
 import StoreDashboard from "../components/page/stores/HomePage/Dashboard";
-import StoreStatistics from "../components/page/stores/tongji/statisticsMonth";
+import StoreStatistics from "../components/page/stores/tongji/statistics";
+import Markdown from "../components/page/stores/tongji/statisticsMonth"
 // import Users from "../components/page/stores/users.vue";
 import Serve from "../components/page/stores/serve/serveindex"
 import Order from "../components/page/stores/order/orderindex"
@@ -101,7 +102,12 @@ export default new Router({
                 {
                     path: '/storestatistics',
                     component: StoreStatistics,
-                    meta: { title: '统计' }
+                    meta: { title: '销售量统计' }
+                },
+                {
+                    path: '/markdown',
+                    component: Markdown,
+                    meta: { title: '销售额统计' }
                 },
 
             ]
@@ -140,11 +146,7 @@ export default new Router({
                     component: StatisticsMoney,
                     meta: { title: '统计' }
                 },
-                {
-                    path: '/statisticsmoneys',
-                    component: Statisticsmoneys,
-                    meta: { title: '统计测试' }
-                },
+               
 
             ]
         },
